@@ -22,3 +22,7 @@ h1{
 	width: 50%;
 	float: left;
 }
+.btn {
+	background: transparent;
+	border: none;
+}

@@ -10,50 +10,17 @@
 	border-width: 6px;
 	border-color: #C0D4E3;
 	border-radius: 20px;
-	
-	overflow: auto;
 }
 
 #firstname, #surname, #email, #username, #password{
+	border-radius: 20px;
 	font-size: larger;
-	padding: 5px;
+	padding: 10px;
 }
 
-.tutormenu{
-	position: relative;
-	display: inline-block;
+#tutors {
+	border-radius: 20px;
+	font-size: larger;
+	text-align-last: center;
+	padding: 15px;
 }
-
-.dropbtn{
-	background: #91AEC1;
-	padding: 10px 40px; 
-	font-size: 15pt;
-	border: 2px solid white;
-	cursor: pointer;
-}
-
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
-}
-
-.tutors{
-	display: none;
-	position: absolute;
-	z-index:1;
-}
-
-.tutors a{
-	background: #DFDFDF;
-	color: black;
-	font-size: 12pt;
-	text-decoration: none;
-	padding: 10px 36px;
-	margin-top: 2px;
-	display: block;
-}
-
-.tutors a:hover {
-	background-color: #ddd
-}
-
-.show {display:block;}

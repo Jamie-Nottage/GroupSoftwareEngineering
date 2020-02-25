@@ -14,27 +14,21 @@
 		<div class="login">
 			<p style="font-size: 30pt">CONTINUE YOUR START TO UNIVERSITY</p>
             <form>	
-				<input type = "text" id = "username" placeholder="Username"> 
+				<input type = "text" id = "username" placeholder="Username" required> 
 				<br /><br />
-				<input type = "password" id = "password" placeholder="Password">
+				<input type = "password" id = "password" placeholder="Password" required>
 				<br /><br />
 				<p style="font-size: 15pt" align="right">
 				FORGOT PASSWORD?
 				</p>
+				<div class="left-button">
+					<button onclick="location.href = 'HomePage.html';" class="btn"><img src="img/back.png" alt="back"></button>
+				</div>
+				
+				<div class="right-button">
+					<button class="btn"><img src="img/sign.png" alt="login"></button>
+				</div>
             </form>
-        </div>
-        
-		<div class="left-button">
-            <form action="HomePage.html">
-                <input type="image" src="img/back.png" alt="back">
-            </form>
-        </div>
-		
-		<div class="right-button">
-            <form action="index.html">
-                <input type="image" src="img/sign.png" alt="login">
-            </form>
-        </div>
-        
+        </div>        
     </body> 
 </html> 

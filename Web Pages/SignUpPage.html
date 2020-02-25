@@ -4,7 +4,6 @@
         <title>Exeter Orientation</title>
         <link rel="stylesheet" type="text/css" href="css/SignUpPagestyle.css">
         <link rel="stylesheet" type="text/css" href="css/HomePageStyle.css">
-		<script type="text/javascript" src="js/TutorDropdown.js"></script>
     </head>
 
     <body>
@@ -14,38 +13,31 @@
 
 		<div class="signup">
 			<p style="font-size: 30pt">BEGIN YOUR START TO UNIVERSITY</p>
-            <form>
-				<input type = "text" id = "firstname" placeholder="First Name">                        
+            <form style="padding:10px 0;">
+				<input type = "text" id = "firstname" placeholder="First Name" required>                        
 				<br /><br />
-				<input type = "text" id = "surname" placeholder="Surname">
+				<input type = "text" id = "surname" placeholder="Surname" required>
 				<br /><br />
-				<input type = "text" id = "email" placeholder="Email">
+				<input type = "email" id = "email" placeholder="Email" required>
 				<br /><br />
-				<input type = "text" id = "username" placeholder="Username">
+				<input type = "text" id = "username" placeholder="Username" required>
 				<br><br>
-				<input type = "password" id = "password" placeholder="Password">
+				<input type = "password" id = "password" placeholder="Password" required>
 				<br /><br />
-            </form>
-			<div class="tutormenu">
-				<button onclick="showTutors()" class="dropbtn">Tutor</button>
-				<div id="tutornames" class="tutors">
-					<a href="#">Anna</a>
-					<a href="#">Mike</a>
-					<a href="#">John</a>
+				<select id="tutors" name="tutors" required>
+					<option class="options" value="" disabled selected hidden>Please select a tutor</option>
+					<option class="options" value="Anna">Anna</option>
+					<option class="options" value="Mike">Mike</option>
+					<option class="options" value="John">John</option>
+				</select>
+				<br>
+				<div class="left-button">
+					<button onclick="location.href = 'HomePage.html';" class="btn"><img src="img/back.png" alt="back"></button>
 				</div>
-			</div>	
-        </div>
-
-		<div class="left-button">
-            <form action="HomePage.html">
-                <input type="image" src="img/back.png" alt="back">
-            </form>
-        </div>
-
-        <div class="right-button">
-            <form action="index.html">
-                <input type="image" src="img/SignUp.png" alt="signup">
-            </form>
+				<div class="right-button">
+					<button class="btn"><img src="img/SignUp.png" alt="signup"></button>
+				</div>
+			</form>
         </div>
     </body> 
 </html> 

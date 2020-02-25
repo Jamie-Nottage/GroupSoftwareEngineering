@@ -13,8 +13,9 @@
 }
 
 #username, #password{
+	border-radius: 20px;
 	font-size: larger;
-	padding: 5px;
+	padding: 10px;
 }
 
 
