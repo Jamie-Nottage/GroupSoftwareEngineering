@@ -1,0 +1,10 @@
+Information about qr-code.html
+
+1. qr-code.html is simply an html file that contains a bit of JavaScript to allow for the
+   scanning of QR codes.
+2. The important part to include is the <script> tag in the head of the file that links to
+   some JavaScript hosted in a GitHub repo. This link pulls the raw JS from GitHub. 
+   https://raw.githack.com/jbialobr/JsQRScanner/master/war/js/jsqrscanner.nocache.js
+3. The value returned by scanning a QR code is stored as text (I believe in the variable
+   scannedText).
+4. Just about anything can be modified if needed, besides the JavaScript.
