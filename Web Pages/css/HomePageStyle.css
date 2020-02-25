@@ -2,14 +2,23 @@ body{
     background: #BFD7EA;
     text-align: center;
 	
+	overflow: auto;
 }
 
 h1{
     color:#48c77d;
     font-family: "Avenir", Verdana, Geneva, sans-serif;
     font-size:25pt;
+    position: static;
 }
 
+.logo{
+	height: 500px;
 }
 
+.left-button, .right-button{
+    position: static;
+	padding-top: 50px;
+	width: 50%;
+	float: left;
 }
