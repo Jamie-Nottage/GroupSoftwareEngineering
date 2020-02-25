@@ -17,7 +17,6 @@ h1{
 }
 
 .left-button, .right-button{
-    position: static;
 	padding-top: 50px;
 	width: 50%;
 	float: left;
