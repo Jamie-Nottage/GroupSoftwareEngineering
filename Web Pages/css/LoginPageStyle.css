@@ -1,0 +1,26 @@
+.login{
+    background:#48c77d;
+    position: absolute;
+	width: 700px;
+    left: 30%;
+	top: 45%;
+    font-family: "Avenir", Verdana, Geneva, sans-serif;
+    font-size: 15pt;
+}
+
+.back-button{
+    position: absolute;
+    left: 15%;
+    bottom: 10%;
+    transform: translateX(-50%) 
+}
+
+.login-button{
+    position: absolute;
+    right: -5%;
+    bottom: 10%;
+    transform: translateX(-50%) 
+}
+
+
+

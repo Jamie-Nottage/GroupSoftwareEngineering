@@ -1,0 +1,36 @@
+body{
+    background: #BFD7EA;
+    text-align: center;
+	
+	overflow: hidden;
+}
+
+h1{
+    color:#48c77d;
+    font-family: "Avenir", Verdana, Geneva, sans-serif;
+    font-size:25pt;
+    position: absolute;
+    left:50%;
+    top:43%;
+    transform:translateX(-50%) translateY(-50%)
+}
+
+.ExeterOrientation{
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%)
+}
+
+.sign-login{
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    transform: translateX(-50%) 
+}
+
+.sign-up{
+    position: absolute;
+    left: 70%;
+    top: 50%;
+    transform: translateX(-50%);
+}

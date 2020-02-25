@@ -1,0 +1,330 @@
+body {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+
+  background-color: #BFD7EA;
+
+  overflow: hidden;
+}
+
+#next-location-container {
+  position: fixed;
+  top: 23px;
+  left: 0px;
+
+  height: 207px;
+  width: 100%;
+}
+
+div.nlsign {
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #004F2C;
+}
+
+#nlsign-holder {
+  position: absolute;
+  height: 207px;
+  width: 10px;
+
+  background-color: #0A8754;
+
+  border-radius: 2px;
+  border-color: #004F2C;
+}
+
+#nlsign-fixed {
+  position: absolute;
+  top: 31px;
+
+  height: 145px;
+  width: 124px;
+
+  background-color: #004F2D;
+
+  border-radius: 0px 7px 7px 0px;
+  border-color: ##004F2C;
+}
+
+#fixed-sign-txt {
+  margin: auto;
+  margin-top: 43px;
+
+  width: 110px;
+
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  text-align: center;
+  line-height: 26px;
+  font-size: 20px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+#nlsign-movable {
+  position: absolute;
+  top: 76px;
+  left: 123px;
+
+  height: 50px;
+  width: 60%;
+
+  background-color: #0A8754;
+
+  border-color: ##004F2C;
+  border-radius: 0px 15px 15px 0px;
+}
+
+#movable-sign-txt {
+  margin: auto;
+  margin-top: 14px;
+  text-align: center;
+
+  font-size: 18px;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  color: #FFFFFF;
+}
+
+#central-view {
+  box-sizing: border-box;
+
+  position: absolute;
+  top: 246px;
+  left: 6px;
+  bottom: 126px;
+
+  width: 97%;
+
+  background-color: #CFE0ED;
+
+  border-style: solid;
+  border-width: 6px;
+  border-color: #C0D4E3;
+  border-radius: 20px;
+
+  overflow: scroll;
+}
+
+#central-list {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+
+  list-style-type: none
+}
+
+div.cl-element {
+  box-sizing: border-box;
+  margin: 31px 19px 31px 19px;
+
+  height: 98px;
+
+  background-color: #E2EAF0;
+
+  border-style: solid;
+  border-width: 1px;
+  border-color: #707070;
+  border-radius: 23px;
+}
+
+div.cl-left-hint {
+  box-sizing: border-box;
+  margin: -1px;
+
+  width: 100px;
+  height: 98px;
+
+  background-color: #CADDED;
+}
+
+p.hint-left-txt {
+  margin: auto;
+  margin-top: 28px;
+
+  text-align: center;
+
+  font-family: "Avenir", Verdana, Geneva, sans-serif;
+  font-size: 28px;
+  color: #676767;
+}
+
+p.hint-main-txt {
+  margin: 0px;
+
+  text-align: center;
+
+  position: relative;
+  left: 100px;
+  bottom: 72px;
+
+  width: calc(100% - 110px);
+
+  font-family: "Avenir", Verdana, Geneva, sans-serif;
+  font-size: 18px;
+  color: #676767;
+}
+
+div.cl-element-prev {
+  height: 108px;
+}
+
+div.cl-left-prev {
+  height: 108px;
+  width: 140px;
+}
+
+img.grey-img {
+  position: relative;
+  top: 17px;
+  left: 15px;
+
+  border-style: solid;
+  border-width: 3px;
+  border-color: #707070;
+}
+
+img.tick-img {
+  position: relative;
+  bottom: 50px;
+  left: 40px;
+}
+
+p.visited {
+  position: relative;
+  bottom: 115px;
+  left: 140px;
+
+  font-family: "Avenir", Verdana, Geneva, sans-serif;
+  color: #676767;
+  text-align: center;
+
+  width: calc(100% - 140px);
+}
+
+p.visited-title {
+  font-size: 5vmin;
+}
+
+p.visited-date {
+  bottom: 135px;
+  font-size: 3vmin;
+}
+
+p.visited-points {
+  bottom: 140px;
+  font-size: 3.8vmin;
+}
+
+@media screen and (min-width:465px) {
+	p.visited-title
+  {
+    font-size: 20px;
+  }
+  p.visited-date {
+    bottom: 135px;
+    font-size: 12px;
+  }
+
+  p.visited-points {
+    bottom: 140px;
+    font-size: 17px;
+  }
+}
+
+#navigation-bar {
+  margin: 0px;
+  padding: 0px;
+
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+
+  overflow: hidden;
+
+  height: 93px;
+  width: 100%;
+}
+
+div.navigation-bottom {
+  float: left;
+  position: relative;
+
+  background-color: #508CA4;
+
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #6C6C6C;
+}
+
+div.navigation-bottom.smallest {
+  height: 54px;
+  width: 19%;
+
+  top: 39px;
+}
+
+div.navigation-bottom.medium {
+  height: 72px;
+  width: 17%;
+
+  top: 21px;
+}
+
+img.button-art {
+  display: block;
+  margin: auto;
+  margin-top: 3px;
+}
+
+#leaderboard-button {
+  border-right-width: 0px;
+}
+
+#chatbot-button {
+  border-left-width: 0px;
+}
+
+#chatbot-img {
+  margin-top: 7px;
+}
+
+#map-button {
+  border-right-width: 0px;
+}
+
+#map-img {
+  margin-top: 5px;
+}
+
+#achievements-button {
+  border-left-width: 0px;
+}
+
+#checkin-button {
+  background-color: #005AA8;
+
+  height: 109px;
+  width: 28%;
+
+  top: 0px;
+
+  border-color: #000000;
+  border-radius: 18px;
+}
+
+#checkin-text {
+  margin: auto;
+  margin-top: 5px;
+
+  width: 86px;
+
+  text-align: center;
+  line-height: 40px;
+
+  font-size: 26px;
+  color: #FFFFFF;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+}
