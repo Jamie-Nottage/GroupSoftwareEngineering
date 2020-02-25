@@ -13,7 +13,7 @@ body {
   top: 23px;
   left: 0px;
 
-  height: 207px;
+  height: 187px;
   width: 100%;
 }
 
@@ -22,11 +22,13 @@ div.nlsign {
   border-style: solid;
   border-width: 1px;
   border-color: #004F2C;
+
+  box-shadow: 0px -3px 6px grey;
 }
 
 #nlsign-holder {
   position: absolute;
-  height: 207px;
+  height: 187px;
   width: 10px;
 
   background-color: #0A8754;
@@ -39,7 +41,7 @@ div.nlsign {
   position: absolute;
   top: 31px;
 
-  height: 145px;
+  height: 125px;
   width: 124px;
 
   background-color: #004F2D;
@@ -50,7 +52,7 @@ div.nlsign {
 
 #fixed-sign-txt {
   margin: auto;
-  margin-top: 43px;
+  margin-top: 38px;
 
   width: 110px;
 
@@ -64,24 +66,28 @@ div.nlsign {
 
 #nlsign-movable {
   position: absolute;
-  top: 76px;
+  top: 70px;
   left: 123px;
 
   height: 50px;
-  width: 60%;
+  width: calc(80vw - 70px);
 
   background-color: #0A8754;
 
   border-color: ##004F2C;
   border-radius: 0px 15px 15px 0px;
+
+  text-align: center;
 }
 
 #movable-sign-txt {
+    box-sizing: border-box;
   margin: auto;
-  margin-top: 14px;
+  padding-left: 5px;
+  padding-right: 5px;
+
   text-align: center;
 
-  font-size: 18px;
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
   color: #FFFFFF;
 }
@@ -90,7 +96,7 @@ div.nlsign {
   box-sizing: border-box;
 
   position: absolute;
-  top: 246px;
+  top: 226px;
   left: 6px;
   bottom: 126px;
 
@@ -103,7 +109,7 @@ div.nlsign {
   border-color: #C0D4E3;
   border-radius: 20px;
 
-  overflow: auto;
+  overflow: scroll;
 }
 
 #central-list {
@@ -126,9 +132,15 @@ div.cl-element {
   border-width: 1px;
   border-color: #707070;
   border-radius: 23px;
+
+  box-shadow: 0px 1px 5px grey;
 }
 
-div.cl-left-hint {
+div.cl-element.hint {
+  background-color: #ECEDEF;
+}
+
+div.cl-element.left {
   box-sizing: border-box;
   margin: -1px;
 
@@ -165,11 +177,11 @@ p.hint-main-txt {
   color: #676767;
 }
 
-div.cl-element-prev {
+div.cl-element.prev {
   height: 108px;
 }
 
-div.cl-left-prev {
+div.cl-element.left.prev {
   height: 108px;
   width: 140px;
 }
@@ -202,31 +214,32 @@ p.visited {
   width: calc(100% - 140px);
 }
 
-p.visited-title {
+p.visited.title {
   font-size: 5vmin;
 }
 
-p.visited-date {
+p.visited.date {
   bottom: 135px;
   font-size: 3vmin;
 }
 
-p.visited-points {
+p.visited.points {
   bottom: 140px;
   font-size: 3.8vmin;
 }
 
 @media screen and (min-width:465px) {
-	p.visited-title
+	p.visited.title
   {
     font-size: 20px;
   }
-  p.visited-date {
+  p.visited.date {
     bottom: 135px;
     font-size: 12px;
   }
 
-  p.visited-points {
+
+  p.visited.points {
     bottom: 140px;
     font-size: 17px;
   }
@@ -242,7 +255,7 @@ p.visited-points {
 
   overflow: hidden;
 
-  height: 93px;
+  height: 113px;
   width: 100%;
 }
 
@@ -262,14 +275,18 @@ div.navigation-bottom.smallest {
   height: 54px;
   width: 19%;
 
-  top: 39px;
+  top: 59px;
+
+  box-shadow: 0px -2px 10px grey;
 }
 
 div.navigation-bottom.medium {
   height: 72px;
   width: 17%;
 
-  top: 21px;
+  top: 41px;
+
+  box-shadow: 0px -3px 10px grey;
 }
 
 img.button-art {
@@ -305,13 +322,16 @@ img.button-art {
 #checkin-button {
   background-color: #005AA8;
 
-  height: 109px;
+  height: 93px;
   width: 28%;
 
-  top: 0px;
+  top: 20px;
 
   border-color: #000000;
-  border-radius: 18px;
+  border-radius: 18px 18px 0px 0px;
+  border-bottom-width: 0px;
+
+  box-shadow: 0px -6px 15px grey;
 }
 
 #checkin-text {
@@ -327,4 +347,61 @@ img.button-art {
   color: #FFFFFF;
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-weight: bold;
+}
+
+
+#portrait-warning {
+  display: none;
+}
+
+#warning-img {
+  display: none;
+}
+
+#warning-txt {
+  display: none;
+}
+
+@media screen and (orientation:landscape) {
+  #portrait-container {
+    filter: blur(10px);
+  }
+
+  #portrait-warning {
+    position: fixed;
+    top: 10%;
+    left: 20%;
+
+    height: 80%;
+    width: 60%;
+
+    background-color: grey;
+
+    display: block;
+
+    filter: blur(1px);
+    border-style: solid;
+    border-color: #6C6C6C;
+    border-width: 2px;
+    border-radius: 6px;
+  }
+
+  #warning-img {
+    display: block;
+    position: absolute;
+    top: calc(50% - 110px);
+    left: calc(50% - 139.5px);
+
+  }
+
+  #warning-txt {
+    display: block;
+    position: absolute;
+    top: calc(50% + 70px);
+    left: calc(50% - 145px);
+
+    color: white;
+    font-family: "Avenir", Verdana, Geneva, sans-serif;
+  }
+
 }

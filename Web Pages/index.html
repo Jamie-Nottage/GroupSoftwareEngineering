@@ -6,10 +6,15 @@
 
   <link rel="stylesheet" type="text/css" href="css/centralui.css">
   <title>Exeter Orienteering</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1,
+  user-scalable=no">
+  <script src="js/fitty.min.js"></script>
 
 </head>
 
 <body>
+
+  <div id="portrait-container">
 
   <div id="next-location-container">
 
@@ -18,7 +23,7 @@
       <p id="fixed-sign-txt">NEXT LOCATION</p>
     </div>
     <div class="nlsign" id="nlsign-movable">
-      <p id="movable-sign-txt">Harrison Building</p>
+      <p id="movable-sign-txt">The Harrison Building</p>
     </div>
 
   </div>
@@ -27,35 +32,35 @@
 
     <ul id="central-list">
 
-        <li><div class="cl-element">
-          <div class="cl-element cl-left-hint">
+        <li><div class="cl-element hint">
+          <div class="cl-element left">
             <p class="hint-left-txt">Hint 1</p>
           </div>
             <p class="hint-main-txt">Use the chatbot below for a clue</p>
         </div>
       </li>
-        <li><div class="cl-element cl-element-prev">
-          <div class="cl-element cl-left-hint cl-left-prev">
+        <li><div class="cl-element prev">
+          <div class="cl-element left prev">
             <img src="img/forum-grey.jpg" alt="Forum" height="65"
              class="grey-img">
             <img src="img/tick.png" alt="Tick" height="60"
               class="tick-img">
           </div>
-          <p class="visited visited-title">The Forum</p>
-          <p class="visited visited-date">Found at 16:33, 11/02/2020</p>
-          <p class="visited visited-points">Points earned: 50</p>
+          <p class="visited title">The Forum</p>
+          <p class="visited date">Found at 16:33, 11/02/2020</p>
+          <p class="visited points">Points earned: 50</p>
         </div>
       </li>
-        <li><div class="cl-element cl-element-prev">
-          <div class="cl-element cl-left-hint cl-left-prev">
+        <li><div class="cl-element prev">
+          <div class="cl-element left prev">
             <img src="img/innovation-grey.png" alt="Innovation Centre"
              height="65" class="grey-img">
             <img src="img/tick.png" alt="Tick" height="60"
               class="tick-img">
           </div>
-          <p class="visited visited-title">Innovation Centre</p>
-          <p class="visited visited-date">Found at 16:46, 11/02/2020</p>
-          <p class="visited visited-points">Points earned: 100</p>
+          <p class="visited title">Innovation Centre</p>
+          <p class="visited date">Found at 16:46, 11/02/2020</p>
+          <p class="visited points">Points earned: 100</p>
         </div>
       </li>
 
@@ -85,6 +90,29 @@
       class="button-art" id="chatbot-img">
     </div>
 
+  </div>
+
+</div>
+
+    <div id="portrait-warning"></div>
+      <img id="warning-img" src="img/LandscapeWarning.png" height=180px>
+      <p id="warning-txt">
+        Please turn your device to portrait mode
+      </p>
+
+    <script>
+    // Code to dynamically change font size of movable sign text and its margin
+    var movableSignValues = fitty('#movable-sign-txt', {
+      maxSize: 30,
+      multiLine: true
+    });
+
+    var signElement = movableSignValues[0].element;
+    signElement.addEventListener('fit', function(e) {
+      var topMargin = (50 - e.detail.newValue) / 2;
+      document.getElementById("movable-sign-txt").style.marginTop = topMargin + "px";
+    });
+    </script>
 
 </body>
 
