@@ -69,13 +69,14 @@ PRIMARY KEY (`clueLevel`)
 
 CREATE TABLE IF NOT EXISTS Score(
 `scoreId` INT AUTO_INCREMENT NOT NULL,
-`clueLevel` INT DEFAULT NULL,
+`clueLevel` INT DEFAULT 1,
 `taskId` INT NOT NULL,
 `teamId` INT NOT NULL,
-FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`) ON DELETE SET NULL,
+FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),
 FOREIGN KEY (`taskId`) REFERENCES Task(`taskId`),
 FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
-PRIMARY KEY (`scoreId`)
+PRIMARY KEY (`scoreId`),
+UNIQUE(`teamId`,`taskId`)
 );
 
 -- RELATIONSHIP ATTRICBUTES --
@@ -155,23 +156,24 @@ SELECT tasks. description, tasks.points, buildings.buildingName, tasks.required 
 
 CREATE OR REPLACE VIEW display AS
 
-SELECT times.teamId, totalPoints, times.buildingName, times.imageSource, visited.time FROM 
-(SELECT DISTINCT teamId, SUM(pointsEarned) AS totalPoints, buildingId, buildingName, imageSource FROM
-	(SELECT T4.teamId, T4.buildingId, b.buildingName, b.imageSource, T4.pointsEarned FROM
-		(SELECT T3.teamId, Task.buildingId, (SELECT Task.points - T3.pointsDeducted) AS pointsEarned  FROM  
-			(SELECT c.clueLevel,c.pointsDeducted, s.taskId, s.teamId FROM
-				(SELECT cl.clueLevel, cl.pointsDeducted FROM Clue cl) AS c
-					JOIN
-				(SELECT sc.taskId, sc.teamId, sc.clueLevel FROM Score sc) AS s
-					ON c.clueLevel=s.clueLevel) AS T3
-			INNER JOIN Task
-			ON T3.taskId = Task.taskId
-			WHERE buildingId=1) AS T4
-	INNER JOIN Building b
-	ON T4.buildingID=b.buildingId) AS lists
-GROUP BY teamId) AS times
-INNER JOIN visited
-ON times.buildingId=visited.buildingId;
+SELECT addclue.teamId, addclue.buildingName, addclue.time, addclue.imageSource, (SELECT addclue.points - clues.pointsDeducted) AS pointsEarned FROM
+	(SELECT addtask.clueLevel, addtask.taskId, addtask.teamId, addtask.buildingName, addtask.time, addtask.imageSource, points.points FROM
+		(SELECT score.clueLevel, score.taskId, score.teamId, visit.buildingName, visit.time, visit.imageSource FROM
+			(SELECT * FROM Score) as score
+			JOIN
+			(SELECT T1.buildingId, T1.teamId, T2.buildingName, T1.time, T2.imageSource FROM
+				(SELECT * FROM VisitBuilding) AS T1
+				JOIN
+				(SELECT buildingName, buildingId, imageSource FROM Building) AS T2
+			ON T1.BuildingId=T2.BuildingId
+			ORDER BY time DESC) as visit
+			ON score.teamId = visit.teamId) AS addtask
+		JOIN
+		(SELECT taskId, points FROM Task) as points 
+		ON points.taskId=addtask.taskId) addclue
+	JOIN
+	(SELECT * FROM Clue) as clues
+	ON clues.clueLevel=addclue.clueLevel;
 
 -- INSERTING DATA --
 
@@ -236,19 +238,16 @@ INSERT INTO Task VALUES
 (NULL, 25, 'Visit the Study Zone', 6, 0);
 
 INSERT INTO Clue VALUES
+(NULL, 'clue0', 0),
 (NULL, 'clue1', 10),
 (NULL, 'clue2', 20),
 (NULL, 'clue3', 30);
 
 INSERT INTO Score VALUES
-(NULL, 1, 1, 1),
-(NULL, 1, 1, 2),
-(NULL, 2, 2, 1),
-(NULL, 1, 2, 2);
+(NULL, 1, 1, 2);
 
 INSERT INTO VisitBuilding VALUES
-(1, 2, '2019-09-25 11:25:10'),
-(2, 1, '2019-09-25 12:23:10');
+(1, 1, '2019-09-25 11:25:10');
 
 INSERT INTO Route VALUES
 (1,6,1),
