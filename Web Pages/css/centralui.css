@@ -334,6 +334,10 @@ img.button-art {
   box-shadow: 0px -6px 15px grey;
 }
 
+#checkin-button:active {
+  background-color: orange;
+}
+
 #checkin-text {
   margin: auto;
   margin-top: 5px;

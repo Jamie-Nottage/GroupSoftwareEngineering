@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exeter Orientation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      #map {
+        height: 100%;
+		width:100%
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+	<button id="hint3">HINT 3: Location on the map (-10)</button>
+	<button id="hint">HINT: Find current location (-5)</button>
+	<button id="checkIn">Check In</button>
+	<button id="distance">Calculate Distance</button>
+    <div id="map"></div>
+    <script>
+		function initMap() {
+
+        // Create a new StyledMapType object, passing it an array of styles,
+        // and the name to be displayed on the map type control.
+        var styledMapType = new google.maps.StyledMapType(
+			[
+			  {
+				"elementType": "labels",
+				"stylers": [
+				  {
+					"visibility": "off"
+				  }
+				]
+			  },
+			  {
+				"featureType": "administrative",
+				"elementType": "geometry",
+				"stylers": [
+				  {
+					"visibility": "off"
+				  }
+				]
+			  },
+			  {
+				"featureType": "administrative.land_parcel",
+				"stylers": [
+				  {
+					"visibility": "off"
+				  }
+				]
+			  },
+			  {
+				"featureType": "administrative.neighborhood",
+				"stylers": [
+				  {
+					"visibility": "off"
+				  }
+				]
+			  },
+			  {
+				"featureType": "poi",
+				"stylers": [
+				  {
+					"visibility": "off"
+				  }
+				]
+			  },
+			  {
+				"featureType": "poi.school",
+				"elementType": "geometry.fill",
+				"stylers": [
+				  {
+					"color": "#48c77d"
+				  },
+				  {
+					"visibility": "on"
+				  }
+				]
+			  },
+			  {
+				"featureType": "poi.school",
+				"elementType": "geometry.stroke",
+				"stylers": [
+				  {
+					"color": "#3fabfc"
+				  },
+				  {
+					"visibility": "on"
+				  }
+				]
+			  },
+			  {
+				"featureType": "poi.school",
+				"elementType": "labels.icon",
+				"stylers": [
+				  {
+					"color": "#0080ff"
+				  },
+				  {
+					"visibility": "off"
+				  }
+				]
+			  },
+			  {
+				"featureType": "poi.school",
+				"elementType": "labels.text",
+				"stylers": [
+				  {
+					"color": "#bfd7ea"
+				  }
+				]
+			  },
+			  {
+				"featureType": "poi.school",
+				"elementType": "labels.text.fill",
+				"stylers": [
+				  {
+					"color": "#bfd7ea"
+				  }
+				]
+			  },
+			  {
+				"featureType": "poi.school",
+				"elementType": "labels.text.stroke",
+				"stylers": [
+				  {
+					"color": "#000000"
+				  },
+				  {
+					"weight": 5
+				  }
+				]
+			  },
+			  {
+				"featureType": "road",
+				"elementType": "geometry.fill",
+				"stylers": [
+				  {
+					"color": "#bfd7ea"
+				  },
+				  {
+					"weight": 2.5
+				  }
+				]
+			  },
+			  {
+				"featureType": "road",
+				"elementType": "geometry.stroke",
+				"stylers": [
+				  {
+					"color": "#000000"
+				  },
+				  {
+					"weight": 0.5
+				  }
+				]
+			  },
+			  {
+				"featureType": "road",
+				"elementType": "labels",
+				"stylers": [
+				  {
+					"color": "#bfd7ea"
+				  }
+				]
+			  },
+			  {
+				"featureType": "road",
+				"elementType": "labels.icon",
+				"stylers": [
+				  {
+					"visibility": "off"
+				  }
+				]
+			  },
+			  {
+				"featureType": "road",
+				"elementType": "labels.text",
+				"stylers": [
+				  {
+					"color": "#bfd7ea"
+				  },
+				  {
+					"visibility": "on"
+				  },
+				  {
+					"weight": 0.5
+				  }
+				]
+			  },
+			  {
+				"featureType": "road",
+				"elementType": "labels.text.stroke",
+				"stylers": [
+				  {
+					"color": "#4b4b4b"
+				  },
+				  {
+					"weight": 2.0
+				  }
+				]
+			  },
+			  {
+				"featureType": "road.local",
+				"elementType": "geometry.fill",
+				"stylers": [
+				  {
+					"visibility": "on"
+				  }
+				]
+			  },
+			  {
+				"featureType": "transit",
+				"stylers": [
+				  {
+					"visibility": "off"
+				  }
+				]
+			  }
+			],
+				{name: 'Styled Map'});
+		
+		var university = {lat:50.736137,lng:-3.534247}
+		var innovation = {lat: 50.738506, lng: -3.531004} 
+		var harrison = {lat:50.737739,lng:-3.532628} 
+		var streathamCourt = {lat:50.73567,lng:-3.530897}
+		var devonshireHouse ={lat:50.735167,lng:-3.534269}
+		var queens = {lat:50.734044,lng:-3.535082}
+		var forum = {lat:50.735459,lng:-3.533207}
+		var newmann = {lat:50.736491,lng:-3.535967}
+		var buildings = [ innovation, harrison, streathamCourt,devonshireHouse,queens,forum,newmann] 
+		var building = [ "innovation", "harrison", "streathamCourt","devonshireHouse","queens","forum","newmann"] 
+		var markerImg = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+		var infoImg = 'https://img.icons8.com/officexs/2x/info.png'
+		var minZoomLevel = 16;
+		var infoWindow;
+		var hintWindow;
+		var pos;
+        var map = new google.maps.Map(document.getElementById('map'), {
+			center: university,
+			zoom: minZoomLevel,
+			minZoom: minZoomLevel,
+			style:styledMapType,
+			disableDefaultUI: true,
+			zoomControl: true,
+			zoomControlOptions: {
+				position: google.maps.ControlPosition.LEFT_CENTER
+			}
+		});
+		map.mapTypes.set('styled_map', styledMapType);
+		map.setMapTypeId('styled_map');
+	  
+		infoWindow = new google.maps.InfoWindow; 
+		hintWindow = new google.maps.InfoWindow;
+	  
+		function findMyLocation(){
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+				pos = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+				};
+
+				infoWindow.setPosition(pos);
+				infoWindow.setContent('YOU ARE HERE!');
+				infoWindow.open(map);
+				map.setCenter(pos);
+			  }, function() {
+				handleLocationError(true, infoWindow, map.getCenter());
+			  });
+			} else {
+			  handleLocationError(false, infoWindow, map.getCenter());
+			}
+		}
+      
+	  
+		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+			infoWindow.setPosition(pos);
+			infoWindow.setContent(browserHasGeolocation ?
+								'Error: The Geolocation service failed.' :
+								'Error: Your browser doesn\'t support geolocation.');
+			infoWindow.open(map);
+		}
+	  
+		building = new google.maps.Marker({
+			map: map,
+			draggable: false,
+			icon: markerImg,
+			animation: google.maps.Animation.DROP,	
+			position: buildings[0]
+		});
+
+	
+		var InnoDesc = '<div id="content">'+
+			'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 id="firstHeading" class="firstHeading">Innovation</h1>'
+	  
+		var innovationInfo = new google.maps.InfoWindow({
+			content: InnoDesc
+		});
+	 
+		var harrisonDesc = '<div id="content">'+
+			'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 id="firstHeading" class="firstHeading">Harrison</h1>'
+	  
+		var harrisonInfo = new google.maps.InfoWindow({
+			content: harrisonDesc
+		});
+	
+		var queensDesc = '<div id="content">'+
+			'<div id="siteNotice">'+
+		'</div>'+
+		'<h1 id="firstHeading" class="firstHeading">Queens</h1>'
+
+		var queensInfo = new google.maps.InfoWindow({
+			content: queensDesc
+		});
+	
+		var forumDesc = '<div id="content">'+
+			'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 id="firstHeading" class="firstHeading">Forum</h1>'
+	  
+		var forumInfo = new google.maps.InfoWindow({
+			content: forumDesc
+		});
+	
+		var devonshireDesc = '<div id="content">'+
+			'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 id="firstHeading" class="firstHeading">Devonshire House</h1>'
+	  
+		var devonshireInfo = new google.maps.InfoWindow({
+			content: devonshireDesc
+		});
+	
+		var streathamDesc = '<div id="content">'+
+			'<div id="siteNotice">'+
+		  '</div>'+
+		  '<h1 id="firstHeading" class="firstHeading">Streatham Court</h1>'
+		  
+		 var streathamInfo = new google.maps.InfoWindow({
+			content: streathamDesc
+		});
+			
+		var newmannDesc = '<div id="content">'+
+		  '<div id="siteNotice">'+
+		  '</div>'+
+		  '<h1 id="firstHeading" class="firstHeading">Newmann</h1>'
+
+		var newmannInfo = new google.maps.InfoWindow({
+			content: newmannDesc
+		});
+		
+		var info = [innovationInfo, harrisonInfo, streathamInfo,devonshireInfo,queensInfo,forumInfo,newmannInfo]
+		
+		function calculateDistance(){
+			var distance = new google.maps.DistanceMatrixService();
+			distance.getDistanceMatrix(
+				{
+					origins: [building.getPosition()],
+					destinations: [building.getPosition()]
+				}, callback);
+		}
+		
+		function callback(response,status){
+			if (status == 'OK') {
+				var origins = response.originAddresses;
+				var destinations = response.destinationAddresses;
+				var distance = response.rows[0].elements[0].distance;
+			}
+		}
+		
+		function handleNearLocation(intWindow, pos) {
+			hintWindow.setPosition(pos);
+			hintWindow.setContent('YOURE NEAR A LOCATION!');
+			hintWindow.open(map);
+		}
+		
+		var num=0;
+		function foundBuilding(){
+			building.setIcon(infoImg);
+			building.addListener('click',function() {
+				 info[num].open(map, building);
+				});
+			}
+		 
+		function addMarker(location,icon){
+			if(building.getPosition() == building[building.length-1]){
+				handleFinishedError(hintWindow, map.getCenter()); 
+			}
+			if(building.getIcon() == infoImg){
+				building = new google.maps.Marker({
+					map: map,
+					draggable: false,
+					icon: markerImg,
+					animation: google.maps.Animation.DROP,	
+					position: buildings[1]
+					
+				});
+				buildings.shift();
+			}
+			else {
+				handleDisplayError(hintWindow, building.getPosition());
+				}	
+		}	
+		
+		function handleDisplayError(intWindow, pos) {
+			hintWindow.setPosition(pos);
+			hintWindow.setContent('The location of your next building is already displayed');
+			hintWindow.open(map);
+		}
+		
+		function handleFinishedError(intWindow, pos) {
+			hintWindow.setPosition(pos);
+			hintWindow.setContent('Youve found all the locations of our map! Congrats!');
+			hintWindow.open(map);
+		}
+		
+
+		google.maps.event.addListener(map, 'zoom_changed', function() {
+			if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
+		});
+		google.maps.event.addDomListener(document.getElementById('hint3'),'click',addMarker);
+		google.maps.event.addDomListener(document.getElementById('hint'),'click',findMyLocation);
+		google.maps.event.addDomListener(document.getElementById('checkIn'),'click',foundBuilding);
+		google.maps.event.addDomListener(document.getElementById('distance'),'click',calculateDistance); 
+		}
+    </script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR63gcZxCokH-0tp8YGK8ztlucu4epRzs&callback=initMap">
+    </script>
+  </body>
+</html>
