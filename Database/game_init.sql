@@ -76,7 +76,7 @@ FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),
 FOREIGN KEY (`taskId`) REFERENCES Task(`taskId`),
 FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
 PRIMARY KEY (`scoreId`),
-UNIQUE(`teamId`,`taskId`)
+UNIQUE(`teamId`, `taskId`)
 );
 
 -- RELATIONSHIP ATTRICBUTES --
@@ -161,19 +161,15 @@ SELECT addclue.teamId, addclue.buildingName, addclue.time, addclue.imageSource, 
 		(SELECT score.clueLevel, score.taskId, score.teamId, visit.buildingName, visit.time, visit.imageSource FROM
 			(SELECT * FROM Score) as score
 			JOIN
-			(SELECT T1.buildingId, T1.teamId, T2.buildingName, T1.time, T2.imageSource FROM
-				(SELECT * FROM VisitBuilding) AS T1
-				JOIN
-				(SELECT buildingName, buildingId, imageSource FROM Building) AS T2
-			ON T1.BuildingId=T2.BuildingId
-			ORDER BY time DESC) as visit
+			(SELECT * FROM visited) as visit
 			ON score.teamId = visit.teamId) AS addtask
 		JOIN
 		(SELECT taskId, points FROM Task) as points 
 		ON points.taskId=addtask.taskId) addclue
 	JOIN
 	(SELECT * FROM Clue) as clues
-	ON clues.clueLevel=addclue.clueLevel;
+	ON clues.clueLevel=addclue.clueLevel
+ORDER BY addclue.time DESC;
 
 -- INSERTING DATA --
 
@@ -244,7 +240,7 @@ INSERT INTO Clue VALUES
 (NULL, 'clue3', 30);
 
 INSERT INTO Score VALUES
-(NULL, 1, 1, 2);
+(NULL, 1, 1, 1);
 
 INSERT INTO VisitBuilding VALUES
 (1, 1, '2019-09-25 11:25:10');
@@ -277,3 +273,4 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
+ 
