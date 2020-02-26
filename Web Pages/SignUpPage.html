@@ -14,9 +14,9 @@
 		<div class="signup">
 			<p style="font-size: 30pt">BEGIN YOUR START TO UNIVERSITY</p>
             <form style="padding:10px 0;">
-				<input type = "text" id = "firstname" placeholder="First Name" pattern="[A-Za-z]" required>                        
+				<input type = "text" id = "firstname" placeholder="First Name" pattern="[A-Za-z]{1,}" required>                        
 				<br /><br />
-				<input type = "text" id = "surname" placeholder="Surname" pattern="[A-Za-z]" required>
+				<input type = "text" id = "surname" placeholder="Surname" pattern="[A-Za-z]{1,}" required>
 				<br /><br />
 				<input type = "email" id = "email" placeholder="Email" 
 					pattern=".+@exeter.ac.uk" 
@@ -36,13 +36,15 @@
 					<option class="options" value="Mike">Mike</option>
 					<option class="options" value="John">John</option>
 				</select>
-				<br>
+				<br /><br />
+				<input type="checkbox" id="terms" name="terms" value="agree" required>
+				<label style="font-size: larger;" for="terms"> I accept the following <a target="blank" href="Terms.html">terms of service</a> and <a target = "blank" href = "Privacy.html">privacy policy</a>.</label><br>	
 				<div class="left-button">
 					<button onclick="location.href = 'HomePage.html';" class="btn"><img src="img/back.png" alt="back"></button>
-				</div>
+				</div>	
 				<div class="right-button">
 					<button class="btn"><img src="img/SignUp.png" alt="signup"></button>
-				</div>
+				</div>	
 			</form>
         </div>
     </body> 
