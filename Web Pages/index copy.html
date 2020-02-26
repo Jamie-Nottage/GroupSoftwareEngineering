@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="static/css/centralui.css">
+  <link rel="stylesheet" type="text/css" href="static/css/overlayui.css">
+  <title>Exeter Orienteering</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1,
+  user-scalable=no">
+  <script type="text/javascript" src="https://raw.githack.com/jbialobr/JsQRScanner/master/war/js/jsqrscanner.nocache.js"></script>
+  <script src="static/js/fitty.min.js"></script>
+  <script src="static/js/jsevents.js"></script>
+
+</head>
+
+<body onload="setSign()">
+
+  <div id="portrait-container">
+
+  <div id="underlay-container">
+
+  <div id="next-location-container">
+
+    <div class="nlsign" id="nlsign-holder"></div>
+    <div class="nlsign" id="nlsign-fixed">
+      <p id="fixed-sign-txt">NEXT LOCATION</p>
+    </div>
+    <div class="nlsign" id="nlsign-movable">
+      <p id="movable-sign-txt"></p>
+    </div>
+
+  </div>
+
+  <div id="central-view">
+
+    <ul id="central-list">
+
+        <!--<li><div class="cl-element hint">
+          <div class="cl-element left">
+            <p class="hint-left-txt">Hint 1</p>
+          </div>
+            <p class="hint-main-txt">Use the chatbot below for a clue</p>
+        </div>
+      </li>
+        <li><div class="cl-element prev" id="cl-element-table">
+          <div class="cl-element left prev">
+            <img src="static/img/forum-grey.jpg" alt="Forum" height="65"
+             class="grey-img">
+            <img src="static/img/tick.png" alt="Tick" height="60"
+              class="tick-img">
+          </div>
+          <p class="visited title">The Forum</p>
+          <p class="visited date">Found at 16:33, 11/02/2020</p>
+          <p class="visited points">Points earned: 50</p>
+        </div>
+      </li>
+        <li><div class="cl-element prev">
+          <div class="cl-element left prev">
+            <img src="static/img/innovation-grey.png" alt="Innovation Centre"
+             height="65" class="grey-img">
+            <img src="static/img/tick.png" alt="Tick" height="60"
+              class="tick-img">
+          </div>
+          <p class="visited title">Innovation Centre</p>
+          <p class="visited date">Found at 16:46, 11/02/2020</p>
+          <p class="visited points">Points earned: 100</p>
+        </div>
+      </li>-->
+
+    </ul>
+
+  </div>
+
+  </div>
+
+  <div id="navigation-bar">
+
+    <div class="navigation-bottom smallest" id="leaderboard-button" onclick="showOverlay()">
+      <img src="static/img/trophy.png" alt="Leaderboard" height="45"
+      class="button-art">
+    </div>
+    <div class="navigation-bottom medium" id="map-button">
+      <img src="static/img/map.png" alt="Map" height="60"
+      class="button-art" id="map-img">
+    </div>
+    <div class="navigation-bottom" id="checkin-button" onclick="checkIn()">
+      <p id="checkin-text">Check in<p>
+    </div>
+    <div class="navigation-bottom medium" id="achievements-button">
+      <img src="static/img/badge.png" alt="Achiements" height="63"
+      class="button-art">
+    </div>
+    <div class="navigation-bottom smallest" id="chatbot-button">
+      <img src="static/img/chatbot.png" alt="Chatbot" height="40"
+      class="button-art" id="chatbot-img">
+    </div>
+
+  </div>
+
+    <div id="overlay-container" class="overlay">
+
+      <div class="row-element-set row-element-set-QRScanner">
+        <div class="row-element">
+          <div class="FlexPanel detailsPanel QRScannerShort">
+            <div class="FlexPanel shortInfoPanel">
+
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row-element">
+          <div class="qrscanner" id="scanner">
+          </div>
+        </div>
+        <div class="row-element" style="display: none">
+          <div class="form-field form-field-memo">
+            <div class="form-field-caption-panel">
+              <div class="gwt-Label form-field-caption">
+                Scanned text
+              </div>
+            </div>
+            <div class="FlexPanel form-field-input-panel">
+                  <textarea id="scannedTextMemo" class="textInput form-memo form-field-input textInput-readonly" rows="3" readonly>
+                  </textarea>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+
+    </div>
+
+    <div id="portrait-warning"></div>
+      <img id="warning-img" src="static/img/LandscapeWarning.png" height=180px>
+      <p id="warning-txt">
+        Please turn your device to portrait mode
+      </p>
+
+    <script>
+    // Code to dynamically change font size of movable sign text and its margin
+    var movableSignValues = fitty('#movable-sign-txt', {
+      maxSize: 30,
+      multiLine: true
+    });
+
+    var signElement = movableSignValues[0].element;
+    signElement.addEventListener('fit', function(e) {
+      var topMargin = (50 - e.detail.newValue) / 2;
+      document.getElementById("movable-sign-txt").style.marginTop = topMargin + "px";
+    });
+    </script>
+
+    <script type="text/javascript">
+      function onQRCodeScanned(scannedText)
+      {
+        var scannedTextMemo = document.getElementById("scannedTextMemo");
+        if(scannedTextMemo)
+        {
+          scannedTextMemo.value = scannedText;
+        }
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          if(this.responseText == "true"){
+            hideOverlay();
+            setSign();
+
+          }
+        }
+        };
+        xhttp.open("POST", "/checkIn", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("teamname="+tn+"&qrstring="+scannedText);
+      }
+
+      //this function will be called when JsQRScanner is ready to use
+      function JsQRScannerReady()
+      {
+        //create a new scanner passing to it a callback function that will be invoked when
+        //the scanner succesfully scan a QR code
+        var jbScanner = new JsQRScanner(onQRCodeScanned);
+        //reduce the size of analyzed images to increase performance on mobile devices
+        jbScanner.setSnapImageMaxSize(200);
+        var scannerParentElement = document.getElementById("scanner");
+        if(scannerParentElement)
+        {
+          //append the jbScanner to an existing DOM element
+          jbScanner.appendTo(scannerParentElement);
+        }
+      }
+    </script>
+
+</body>
+
+</html>
