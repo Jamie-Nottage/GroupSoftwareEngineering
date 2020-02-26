@@ -242,9 +242,6 @@ INSERT INTO Clue VALUES
 INSERT INTO Score VALUES
 (NULL, 1, 1, 1);
 
-INSERT INTO VisitBuilding VALUES
-(1, 1, '2019-09-25 11:25:10');
-
 INSERT INTO Route VALUES
 (1,6,1),
 (1,1,2),
@@ -273,4 +270,4 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
- 
+
