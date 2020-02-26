@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    font-family: "Avenir", Verdana, Geneva, sans-serif;
+    background-color: #A9A9A9; /* dark grey */
+
+}
+
+.signupGK{
+    background-color: #f1f1f1; /* light grey */
+    padding-bottom: 20px;
+    height: 100%;
+    width: 700px;
+    margin-left: 25%;
+}
+
+#firstname, #surname, #email, #username, #password{
+    font-size: larger;
+    padding: 10px;
+    margin-left: 33%;
+}
+
+.submit-button{
+    background-color: #A9A9A9; /* dark grey */ 
+    padding: 4px 4px 4px 4px;
+    font-size: 25px;
+    margin-left: 43%;
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #555; /*darkest grey*/
+    color: white;
+
+}
+
