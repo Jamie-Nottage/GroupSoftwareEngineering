@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: exeter-orientation-redeployed-two
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flasknode
+  template:
+    metadata:
+      labels:
+        app: flasknode
+    spec:
+      containers:
+      - name: flasknode
+        image: uk.icr.io/exeterexpeditiongroup/sprint2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
