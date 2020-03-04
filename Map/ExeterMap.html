@@ -233,7 +233,14 @@
 		var queens = {lat:50.734044,lng:-3.535082}
 		var forum = {lat:50.735459,lng:-3.533207}
 		var newman = {lat:50.736491,lng:-3.535967}
-		var buildingMarkers = []
+		var innoMarker
+		var harrMarker
+		var streathamMarker
+		var devonshireMarker
+		var queensMarker
+		var forumMarker
+		var newmanMarker 
+		var buildingMarkers = [innoMarker,harrMarker,streathamMarker,devonshireMarker,queensMarker,forumMarker,newmanMarker]
 		var buildings = [ innovation, harrison, streathamCourt,devonshireHouse,queens,forum,newman] 
 		var building = [ "innovation", "harrison", "streathamCourt","devonshireHouse","queens","forum","newman"] 
 		var markerImg = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
@@ -381,43 +388,59 @@
 			hintWindow.open(map);
 		}
 		
-		var num=0;
 		function foundBuilding(){
-			building.setIcon(infoImg);
-			building.addListener('click',function() {
-				 info[num].open(map, building);
-				});
-			}
+			var i = buildingMarkers.length - buildings.length - 1
+			buildingMarkers[i].setIcon(infoImg);
+		}
 			
-		building = new google.maps.Marker({
-			map: map,
-			draggable: false,
-			icon: markerImg,
-			animation: google.maps.Animation.DROP,	
-			position: buildings[0]
-		});
-		
-		buildingMarkers.push(building); 
+
 		 
 		function addMarker(){
-			if(building.getPosition() == building[building.length-1]){
-				handleFinishedError(hintWindow, map.getCenter()); 
+			var i = buildingMarkers.length - buildings.length
+			var prevMarker = buildingMarkers[i - 1]
+			
+			if(i==0){
+				buildingMarkers[i] = new google.maps.Marker({
+				map: map,
+				draggable: false,
+				icon: markerImg,
+				animation: google.maps.Animation.DROP,	
+				position: buildings[0]
+				});
+				var addListener = function(i){
+					google.maps.event.addListener(buildingMarkers[0],'click',function(){
+						info[0].open(map,buildingMarkers[0]); 
+					});
+				}
+				buildings.shift();
+				addListener(0);
+				
 			}
-			else if(building.getIcon() == infoImg){
-				building = new google.maps.Marker({
+		
+			else if(prevMarker.getPosition() == building[building.length-1]){
+				handleFinishedError(hintWindow, map.getCenter()); 
+				window.alert('Youve found all the locations of our map! Congrats!');
+
+			}
+			else if(prevMarker.getIcon() == infoImg){
+				buildingMarkers[i] = new google.maps.Marker({
 					map: map,
 					draggable: false,
 					icon: markerImg,
 					animation: google.maps.Animation.DROP,	
-					position: buildings[1]
-					
-				});
-				buildingMarkers.push(building); 
-				num = num+1;
-				buildings.shift();
+					position: buildings[0]	
+					});
+					var addListener = function(i){
+						google.maps.event.addListener(buildingMarkers[i],'click',function(){
+							info[i].open(map,buildingMarkers[i]); 
+						});
+					}
+					buildings.shift();					
+					addListener(i);
 			}
 			else {
-				handleDisplayError(hintWindow, building.getPosition());
+				handleDisplayError(hintWindow, prevMarker.getPosition());
+				window.alert('The location of your next building is already displayed');
 				}	
 		}
 		
