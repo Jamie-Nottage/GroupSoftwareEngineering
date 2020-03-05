@@ -33,12 +33,23 @@ CREATE TABLE IF NOT EXISTS Users(
 `lName` VARCHAR(50) NOT NULL,
 `emailAddress` VARCHAR(255) NOT NULL,
 `username` VARCHAR(50) NOT NULL UNIQUE,
-`password` VARCHAR(50) NOT NULL,
+`password` VARCHAR(255) NOT NULL,
 `tutorId` INT NOT NULL,
 `teamId` INT NOT NULL,
 PRIMARY KEY (`userID`),
 FOREIGN KEY (`tutorId`) REFERENCES Tutor(`tutorId`),
 FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
+UNIQUE (`fName`, `lName`, `emailAddress`)
+);
+
+CREATE TABLE IF NOT EXISTS Gamekeeper(
+`gamekeeperId` INT AUTO_INCREMENT NOT NULL,
+`fName` VARCHAR(50) NOT NULL,
+`lName` VARCHAR(50) NOT NULL,
+`emailAddress` VARCHAR(255) NOT NULL,
+`username` VARCHAR(50) NOT NULL UNIQUE,
+`password` VARCHAR(255) NOT NULL,
+PRIMARY KEY (`gamekeeperId`),
 UNIQUE (`fName`, `lName`, `emailAddress`)
 );
 
@@ -197,6 +208,9 @@ INSERT INTO Users VALUES
 (NULL, 'Name3', 'Surname3', 'email3', 'username3', 'password3', 2, 2),
 (NULL, 'Name4', 'Surname4', 'email4', 'username4', 'password4', 3, 3);
 
+INSERT INTO Gamekeeper VALUES
+(NULL, 'group','o', 'groupO@exeter.ac.uk', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2');
+
 INSERT INTO Building VALUES
 (NULL, 'Devonshire House', 'code1', 'devonshirehouse.png'),
 (NULL, 'Queens', 'code2', 'queens.png'),
@@ -270,4 +284,5 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
+
 
