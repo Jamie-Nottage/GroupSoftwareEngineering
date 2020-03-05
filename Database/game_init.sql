@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS Tutor(
 `title` VARCHAR(4) NOT NULL,
 `fName` VARCHAR(50) NOT NULL,
 `lName` VARCHAR(50) NOT NULL,
-PRIMARY KEY (`tutorId`)
+PRIMARY KEY (`tutorId`),
+UNIQUE (`title`,`fName`,`lName`)
 );
 
 CREATE TABLE IF NOT EXISTS Paths(
@@ -19,7 +20,6 @@ PRIMARY KEY (`pathId`)
 CREATE TABLE IF NOT EXISTS Team(
 `teamId` INT AUTO_INCREMENT NOT NULL,
 `teamName` VARCHAR(50) NOT NULL,
-`lastLocation` VARCHAR(50),
 `tutorId` INT NOT NULL,
 `pathId`INT NOT NULL,
 PRIMARY KEY (`teamId`),
@@ -80,7 +80,7 @@ PRIMARY KEY (`clueLevel`)
 
 CREATE TABLE IF NOT EXISTS Score(
 `scoreId` INT AUTO_INCREMENT NOT NULL,
-`clueLevel` INT DEFAULT 1,
+`clueLevel` INT DEFAULT 0,
 `taskId` INT NOT NULL,
 `teamId` INT NOT NULL,
 FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),
@@ -194,13 +194,15 @@ INSERT INTO Paths VALUES
 (NULL, 6),
 (NULL, 6),
 (NULL, 6),
+(NULL, 6),
+(NULL, 6),
 (NULL, 6);
 
 INSERT INTO Team VALUES
-(NULL, 'Name1', NULL, 1, 1),
-(NULL, 'Name2', NULL, 2, 2),
-(NULL, 'Name3', NULL, 3, 3),
-(NULL, 'Name4', NULL, 4, 4);
+(NULL, 'Team Matthew Collison', 1, 1),
+(NULL, 'Team Jonathon Fieldsend', 2, 2),
+(NULL, 'Team Ronaldo Meenezes', 3, 3),
+(NULL, 'Team David Wakeling', 4, 4);
 
 INSERT INTO Users VALUES
 (NULL, 'Name1', 'Surname1', 'email1', 'username1', 'password1', 1, 1),
@@ -220,7 +222,7 @@ INSERT INTO Building VALUES
 (NULL, 'Forum', 'code6', 'forum-grey.jpg');
 
 INSERT INTO Task VALUES
-(NULL, 150, 'Find Devoshire House', 1, 1),
+(NULL, 150, 'Find Devonshire House', 1, 1),
 (NULL, 75, 'Grab a seat in The Loft', 1, 0),
 (NULL, 75, 'Find the hot water point in DH2', 1, 0),
 (NULL, 25, 'Locate the drama room', 1, 0),
@@ -248,7 +250,7 @@ INSERT INTO Task VALUES
 (NULL, 25, 'Visit the Study Zone', 6, 0);
 
 INSERT INTO Clue VALUES
-(NULL, 'clue0', 0),
+(NULL, 'full marks', 0),
 (NULL, 'clue1', 10),
 (NULL, 'clue2', 20),
 (NULL, 'clue3', 30);
@@ -284,5 +286,3 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
-
-

@@ -13,7 +13,7 @@ body {
     margin-left: 25%;
 }
 
-#firstname, #surname, #email, #username, #password{
+#firstname, #surname, #email, #username, #password, #title{
     font-size: larger;
     padding: 10px;
     margin-left: 33%;
