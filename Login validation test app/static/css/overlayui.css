@@ -1,0 +1,39 @@
+#overlay-container {
+  display: none;
+  overflow: hidden;
+
+  position: fixed;
+  top: 4%;
+  left: 10%;
+  height: calc(96% - 113px);
+  width: 80%;
+
+  background-color: #ACCEEA;
+
+  border-style: solid;
+  border-width: 3px;
+  border-color: #E2EAF0;
+  border-radius: 8px;
+}
+
+.overlay {
+  display: none;
+}
+
+#scanner {
+  align-content: center;
+}
+
+.qrPreviewVideo {
+  position: fixed;
+  left: 10vw;
+  top: 25%;
+
+  max-width: 80%;
+  max-height: 40%;
+
+  border-style: solid;
+  border-width: 3px;
+  border-color: #E2EAF0;
+  border-radius: 8px;
+}

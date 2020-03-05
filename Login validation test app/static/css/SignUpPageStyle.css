@@ -1,0 +1,32 @@
+.signup{
+	box-sizing: border-box;
+	background:#48c77d;
+    position: static;
+	padding: 15px;
+    font-family: "Avenir", Verdana, Geneva, sans-serif;
+    font-size: 15pt;
+
+	border-style: solid;
+	border-width: 6px;
+	border-color: #C0D4E3;
+	border-radius: 20px;
+}
+
+#firstname, #surname, #email, #username, #password{
+	border-radius: 20px;
+	font-size: larger;
+	padding: 10px;
+	width: 50%;
+}
+
+#tutors {
+	border-radius: 20px;
+	font-size: larger;
+	text-align-last: center;
+	padding: 15px;
+	width:50%;
+}
+
+input[type=checkbox] {
+    transform: scale(2);
+}
