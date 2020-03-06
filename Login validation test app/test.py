@@ -1,7 +1,16 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
+
+app.config['MYSQL_USER'] = 'groupo@exeter-expedition-db'
+app.config['MYSQL_PASSWORD'] = 'MatthewYates2000'
+app.config['MYSQL_HOST'] = 'exeter-expedition-db.mysql.database.azure.com'
+app.config['MYSQL_DB'] = 'GAME_DATABASE'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+mysql = MySQL(app)
 
 app.secret_key = b'BtE\x046X \xebs\x7f6\x98\x82\xe3\xc5\xca'
 
@@ -9,7 +18,7 @@ app.secret_key = b'BtE\x046X \xebs\x7f6\x98\x82\xe3\xc5\xca'
 def index():
     if 'uname' in session:
         return 'Logged in as ' + session['uname']
-    return redirect(url_for('login_page'))
+    return redirect(url_for('home_page'))
 
 @app.route('/home')
 def home_page():
@@ -21,7 +30,7 @@ def login():
         if 'uname' in session:
             return redirect(url_for('index'))
         else:
-            if validateLogin('uname', 'psw') == 0:
+            if validateLogin(request.form["username"], request.form["password"]) == 0:
                 return redirect(url_for('index'))
             else:
                 return 'Not valid login'
@@ -35,7 +44,7 @@ def login_page():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        if verifySignup('firstname', 'surname', 'email', 'username', 'password', 'tutor') == 0:
+        if verifySignup(request.form["firstname"], request.form["surname"], request.form["email"], request.form["username"], request.form["password"], request.form["tutor"]) == 0:
             return redirect(url_for('index'))
         else:
             return 'Signup failed'
