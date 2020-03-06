@@ -1,0 +1,36 @@
+Creating a Docker image:
+
+(From within the directory containing the Dockerfile and all project resources)
+
+docker build -t exeter-expedition-final:5 .
+
+
+Running a Docker image locally:
+
+docker run -d -p 5000:5000 exeter-expedition-final:5
+
+
+Upload a Docker image to IBM Cloud Registry:
+
+1) Log into IBM Cloud using CLI.
+
+2) Give the Docker image a registry repository and tag:
+
+docker tag hello-world uk.icr.io/<my_namespace>/<my_repository>:<my_tag>
+
+3) Push the Docker image to the registry repository:
+
+docker push uk.icr.io/<my_namespace>/<my_repository>:<my_tag>
+
+
+Push Docker image onto Kubernetes from the registry:
+
+1) Create a deployment:
+
+kubectl create deployment hello-world-deployment --image=<region>.icr.io/<namespace>/hello-world:1
+
+2) Expose the deployment:
+
+kubectl expose deployment/hello-world-deployment --type=NodePort --port=5000 --name=hello-world-service --target-port=5000
+
+(Source: https://cloud.ibm.com/docs/containers?topic=containers-cs_cluster_tutorial)

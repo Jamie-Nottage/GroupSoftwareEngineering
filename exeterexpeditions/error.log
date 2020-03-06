@@ -1,0 +1,24 @@
+[Wed Mar 04 21:47:53.144042 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390] mod_wsgi (pid=26080): Target WSGI script '/var/www/exeterexpeditions/exeterexpeditions.wsgi' cannot be loaded as Python module.
+[Wed Mar 04 21:47:53.144961 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390] mod_wsgi (pid=26080): Exception occurred processing WSGI script '/var/www/exeterexpeditions/exeterexpeditions.wsgi'.
+[Wed Mar 04 21:47:53.145007 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390] Traceback (most recent call last):
+[Wed Mar 04 21:47:53.145041 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390]   File "/var/www/exeterexpeditions/exeterexpeditions.wsgi", line 7, in <module>
+[Wed Mar 04 21:47:53.145123 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390]     from exeterexpeditions import app as application
+[Wed Mar 04 21:47:53.145138 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390]   File "/var/www/exeterexpeditions/exeterexpeditions/__init__.py", line 1, in <module>
+[Wed Mar 04 21:47:53.145269 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390]     from flask import Flask, render_template, request
+[Wed Mar 04 21:47:53.145296 2020] [wsgi:error] [pid 26080:tid 140662940931840] [client 92.239.154.98:49390] ImportError: No module named flask
+[Wed Mar 04 21:52:59.555010 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425] mod_wsgi (pid=26208): Target WSGI script '/var/www/exeterexpeditions/exeterexpeditions.wsgi' cannot be loaded as Python module.
+[Wed Mar 04 21:52:59.555063 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425] mod_wsgi (pid=26208): Exception occurred processing WSGI script '/var/www/exeterexpeditions/exeterexpeditions.wsgi'.
+[Wed Mar 04 21:52:59.555087 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425] Traceback (most recent call last):
+[Wed Mar 04 21:52:59.555110 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425]   File "/var/www/exeterexpeditions/exeterexpeditions.wsgi", line 10, in <module>
+[Wed Mar 04 21:52:59.555180 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425]     from exeterexpeditions import app as application
+[Wed Mar 04 21:52:59.555195 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425]   File "/var/www/exeterexpeditions/exeterexpeditions/__init__.py", line 1, in <module>
+[Wed Mar 04 21:52:59.555262 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425]     from flask import Flask, render_template, request
+[Wed Mar 04 21:52:59.555284 2020] [wsgi:error] [pid 26208:tid 140594143819520] [client 92.239.154.98:49425] ImportError: No module named flask
+[Wed Mar 04 21:54:19.626405 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435] mod_wsgi (pid=26317): Target WSGI script '/var/www/exeterexpeditions/exeterexpeditions.wsgi' cannot be loaded as Python module.
+[Wed Mar 04 21:54:19.626452 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435] mod_wsgi (pid=26317): Exception occurred processing WSGI script '/var/www/exeterexpeditions/exeterexpeditions.wsgi'.
+[Wed Mar 04 21:54:19.626475 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435] Traceback (most recent call last):
+[Wed Mar 04 21:54:19.626496 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435]   File "/var/www/exeterexpeditions/exeterexpeditions.wsgi", line 10, in <module>
+[Wed Mar 04 21:54:19.626598 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435]     from exeterexpeditions import app as application
+[Wed Mar 04 21:54:19.626615 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435]   File "/var/www/exeterexpeditions/exeterexpeditions/__init__.py", line 1, in <module>
+[Wed Mar 04 21:54:19.626685 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435]     from flask import Flask, render_template, request
+[Wed Mar 04 21:54:19.626730 2020] [wsgi:error] [pid 26317:tid 140718706198272] [client 92.239.154.98:49435] ImportError: No module named flask
