@@ -90,6 +90,27 @@ PRIMARY KEY (`scoreId`),
 UNIQUE(`teamId`, `taskId`)
 );
 
+CREATE TABLE IF NOT EXISTS BuildingClue(
+`clueId` INT AUTO_INCREMENT NOT NULL,
+`clue` VARCHAR(255) NOT NULL, 
+`buildingId` INT NOT NULL,
+`clueLevel` INT NOT NULL,
+PRIMARY KEY (`clueId`),
+FOREIGN KEY (`buildingId`) REFERENCES Building(`buildingId`),
+FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),
+UNIQUE(`clueLevel`, `buildingId`)
+);
+
+CREATE TABLE IF NOT EXISTS Used(
+`clueId` INT NOT NULL, 
+`teamId` INT NOT NULL, 
+`used` INT NOT NULL, 
+PRIMARY KEY (`clueId`, `teamId`),
+FOREIGN KEY (`clueId`) REFERENCES BuildingClue(`clueId`),
+FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
+UNIQUE(`clueId`, `teamId`, `used`)
+);
+
 -- RELATIONSHIP ATTRICBUTES --
 CREATE TABLE IF NOT EXISTS VisitBuilding(
 `buildingId` INT NOT NULL,
@@ -250,13 +271,27 @@ INSERT INTO Task VALUES
 (NULL, 25, 'Visit the Study Zone', 6, 0);
 
 INSERT INTO Clue VALUES
-(NULL, 'full marks', 0),
-(NULL, 'clue1', 10),
-(NULL, 'clue2', 20),
-(NULL, 'clue3', 30);
+(NULL, 'Full marks', 0),
+(NULL, 'Click here for a text clue', 10),
+(NULL, 'Click here for an image clue', 20),
+(NULL, 'Click here for a clue on the map', 30);
 
 INSERT INTO Score VALUES
 (NULL, 1, 1, 1);
+
+INSERT INTO BuildingClue VALUES
+(NULL,'Where you’d grab a pint and meet with the Guild President (attached to the Forum)', 1, 2),
+(NULL,'Next to the Student’s Guild, full of classrooms', 2, 2),
+(NULL,'Walk up Forum hill and turn right down North Park Road', 3, 2),
+(NULL,'Up the hill from Harrison, big white building', 4, 2),
+(NULL,'Near the main entrance to the University. Off of Rennes Drive', 5, 2),
+(NULL,'Center of campus, up the steep hill from the campus main entrance', 6, 2),
+(NULL, 'devonshirehouse.png', 1, 3),
+(NULL, 'queens.png', 2, 3),
+(NULL, 'harrison.png', 3, 3),
+(NULL, 'innovation-grey.png', 4, 3),
+(NULL, 'streathamcourt.png', 5, 3),
+(NULL, 'forum-grey.jpg', 6, 3);
 
 INSERT INTO Route VALUES
 (1,6,1),
@@ -286,3 +321,4 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
+
