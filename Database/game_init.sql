@@ -80,7 +80,7 @@ PRIMARY KEY (`clueLevel`)
 
 CREATE TABLE IF NOT EXISTS Score(
 `scoreId` INT AUTO_INCREMENT NOT NULL,
-`clueLevel` INT DEFAULT 0,
+`clueLevel` INT DEFAULT 1,
 `taskId` INT NOT NULL,
 `teamId` INT NOT NULL,
 FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),
@@ -104,11 +104,10 @@ UNIQUE(`clueLevel`, `buildingId`)
 CREATE TABLE IF NOT EXISTS Used(
 `clueId` INT NOT NULL, 
 `teamId` INT NOT NULL, 
-`used` INT NOT NULL, 
 PRIMARY KEY (`clueId`, `teamId`),
 FOREIGN KEY (`clueId`) REFERENCES BuildingClue(`clueId`),
 FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
-UNIQUE(`clueId`, `teamId`, `used`)
+UNIQUE(`clueId`, `teamId`)
 );
 
 -- RELATIONSHIP ATTRICBUTES --
@@ -131,6 +130,16 @@ FOREIGN KEY (`pathId`) REFERENCES Paths(`pathId`)
 );
 
 -- CREATING VIEWS --
+
+-- CLUE DETAILS --
+    
+CREATE OR REPLACE VIEW usedclues AS
+
+SELECT T2.clueId, T1.buildingId, T1.clueLevel, T2.teamId FROM
+	(SELECT * FROM BuildingClue) AS T1
+		JOIN
+	(SELECT * FROM Used) AS T2
+	ON  T1.clueId = T2.clueId;
 
 -- VISITED --
 
@@ -173,6 +182,7 @@ SELECT r.pathId, b.buildingName, r.stopNo FROM
 		JOIN
 	(SELECT bl.buildingId, bl.buildingName FROM Building bl) AS b
 	ON b.buildingId=r.buildingId;
+
     
 -- FULL TASKS AND DESCRIPTIONS --
 
@@ -276,9 +286,6 @@ INSERT INTO Clue VALUES
 (NULL, 'Click here for an image clue', 20),
 (NULL, 'Click here for a clue on the map', 30);
 
-INSERT INTO Score VALUES
-(NULL, 1, 1, 1);
-
 INSERT INTO BuildingClue VALUES
 (NULL,'Where you’d grab a pint and meet with the Guild President (attached to the Forum)', 1, 2),
 (NULL,'Next to the Student’s Guild, full of classrooms', 2, 2),
@@ -292,6 +299,7 @@ INSERT INTO BuildingClue VALUES
 (NULL, 'innovation-grey.png', 4, 3),
 (NULL, 'streathamcourt.png', 5, 3),
 (NULL, 'forum-grey.jpg', 6, 3);
+
 
 INSERT INTO Route VALUES
 (1,6,1),
@@ -321,4 +329,3 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
-
