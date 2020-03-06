@@ -13,7 +13,7 @@
 
 		<div class="signup">
 			<p style="font-size: 30pt">BEGIN YOUR START TO UNIVERSITY</p>
-            <form style="padding:10px 0;">
+            <form action="/signup" method="post" style="padding:10px 0;">
 				<input type = "text" id = "firstname" placeholder="First Name" pattern="[A-Za-z]{1,}" required>                        
 				<br /><br />
 				<input type = "text" id = "surname" placeholder="Surname" pattern="[A-Za-z]{1,}" required>
@@ -43,7 +43,7 @@
 					<button onclick="location.href = 'HomePage.html';" class="btn"><img src="img/back.png" alt="back"></button>
 				</div>	
 				<div class="right-button">
-					<button class="btn"><img src="img/SignUp.png" alt="signup"></button>
+					<button type="submit" class="btn"><img src="img/SignUp.png" alt="signup"></button>
 				</div>	
 			</form>
         </div>
