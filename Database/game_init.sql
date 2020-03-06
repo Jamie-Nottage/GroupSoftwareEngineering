@@ -87,7 +87,7 @@ FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),
 FOREIGN KEY (`taskId`) REFERENCES Task(`taskId`),
 FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
 PRIMARY KEY (`scoreId`),
-UNIQUE(`teamId`, `taskId`)
+UNIQUE(`teamId`, `taskId`,`clueLevel`)
 );
 
 CREATE TABLE IF NOT EXISTS BuildingClue(
