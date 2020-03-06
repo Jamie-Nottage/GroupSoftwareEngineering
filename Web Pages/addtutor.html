@@ -1,22 +1,50 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+ <head>
         <title>Add Tutor</title>
-        <link rel="stylesheet" type="text/css" href="css/AddGKStyle.css">
+        <link rel="stylesheet" type="text/css" href="css/AddTutorStyle.css">
+
     </head>
     <body>
-        <div class=signupGK>
-            <p style="font-size: 30px; text-align: center">Add Tutor</p>
+
+
+        <ul>
+            <li><img src="img/logo.PNG" alt="Exeter Expedition Logo" class="responsive" width="600" height="400"></li>
+            <li><a class="active" href="gamekeeperv2">Home</a></li>
+            <li><a href="addTeam">Add Team</a></li>
+            <li><a href="addGK">Add Game Keeper</a></li>
+            <li><a href="#upload">Edit Route</a></li>
+            <li><a href="#LogOut">Log Out</a></li>
+        </ul>
+
+        <div class="account">
+            <h1>Game Keeper Account</h1>
+        </div>
+
+        <div class="addTutor-title">
+            <p><b>Add Tutor</b></p> 
+        </div>
+
+        <div class="addTutor">
+            <h3>Tutor Details</h3>
             <form>
                 <input type = "text" id = "title" placeholder="Title" pattern="[A-Za-z]{1,}" required>                        
                 <br /><br />
-                <input type = "text" id = "firstname" placeholder="First Name" pattern="[A-Za-z]{1,}" required>
+                <input type = "text" id = "firstname" placeholder="First Name" pattern="[A-Za-z]{1,}" required>                        
                 <br /><br />
                 <input type = "text" id = "surname" placeholder="Surname" pattern="[A-Za-z]{1,}" required>
                 <br /><br />
-                <button class="submit-button">Submit</button>
-            </form>
+                <input type = "email" id = "email" placeholder="Email" 
+                       pattern=".+@exeter.ac.uk" 
+                       title="Must by your exeter.ac.uk email address"
+                       required>
+                <br /><br />
+
+            </form>			
+
         </div>
+
+        <button class="submitTutor">Submit Tutor</button>
     </body>
 </html>
