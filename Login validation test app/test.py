@@ -16,8 +16,8 @@ app.secret_key = b'BtE\x046X \xebs\x7f6\x98\x82\xe3\xc5\xca'
 
 @app.route('/')
 def index():
-    if 'uname' in session:
-        return 'Logged in as ' + session['uname']
+    if 'username' in session:
+        return 'Logged in as ' + session['username']
     return redirect(url_for('home_page'))
 
 @app.route('/home')
