@@ -127,6 +127,13 @@ function map() {
 
 function loadMap() {
   document.getElementById("map-container").style.display = "block";
+  document.getElementById("overlay-container").style.width = "95%";
+  document.getElementById("overlay-container").style.borderWidth = "0.5vh";
+  document.getElementById("overlay-container").style.left = "2.5%";
+
+  $(function(){
+      $("#map-container").load("static/htmlcontent/map.html");
+    });
 }
 
 function achievements() {
@@ -207,6 +214,9 @@ function hideOverlay() {
   document.getElementById("map-container").style.display = "none";
   document.getElementById("achievements-container").style.display = "none";
   document.getElementById("chatbot-container").style.display = "none";
+  document.getElementById("overlay-container").style.width = "80%";
+  document.getElementById("overlay-container").style.borderWidth = "2vh";
+  document.getElementById("overlay-container").style.left = "10%";
 }
 
 function showOverlay() {
