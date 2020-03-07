@@ -14,16 +14,22 @@
 		<div class="signup">
 			<p style="font-size: 30pt; color: #FFFFFF;">BEGIN YOUR START TO UNIVERSITY</p>
             <form action="/signup" method="post" style="padding:10px 0;">
-				<input type = "text" id = "firstname" placeholder="First Name" pattern="[A-Za-z]{1,}" required>                        
+				<input type = "text" id = "firstname" placeholder="First Name" 
+					pattern="[A-Za-z]{1,}" 
+					required>                        
 				<br /><br />
-				<input type = "text" id = "surname" placeholder="Surname" pattern="[A-Za-z]{1,}" required>
+				<input type = "text" id = "surname" placeholder="Surname" 
+					pattern="[A-Za-z]{1,}" 
+					required>
 				<br /><br />
 				<input type = "email" id = "email" placeholder="Email" 
 					pattern=".+@exeter.ac.uk" 
 					title="Must by your exeter.ac.uk email address"
 					required>
 				<br /><br />
-				<input type = "text" id = "username" placeholder="Username" pattern="[A-Za-z0-9]{1,15}" required>
+				<input type = "text" id = "username" placeholder="Username" 
+					pattern="[A-Za-z0-9]{1,15}" 
+					required>
 				<br><br>
 				<input type = "password" id = "password" placeholder="Password" 
 					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
