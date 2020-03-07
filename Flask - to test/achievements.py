@@ -1,6 +1,6 @@
 def display_achievements(teamid):
     cur = mysql.connection.cursor()
-    cur.execute(''' SELECT COUNT(*) AS count FROM visited; ''')
+    cur.execute(''' SELECT COUNT(*) AS count FROM visited WHERE teamId=%d; ''' %int(teamid))
     result = cur.fetchall()
     s = "<h2>Extra Achievements</h2><table><tr><th>Task Description</th><th>Points</th></tr>"
     if result[0]['count'] == 0:

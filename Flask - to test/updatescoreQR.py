@@ -1,7 +1,7 @@
 
 def checkQR(QRcode, teamid):
     cur = mysql.connection.cursor()
-    cur.execute(''' SELECT COUNT(*) AS count FROM visited; ''')
+    cur.execute(''' SELECT COUNT(*) AS count FROM visited WHERE teamId=%d; ''' %int(teamid))
     first = cur.fetchall();
     if first[0]['count'] == 0:
         cur.execute(''' SELECT verificationCode FROM Building WHERE buildingId = (SELECT buildingId FROM Route WHERE stopNo=1 AND pathId=%d); ''' %int(teamid))
