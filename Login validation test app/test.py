@@ -12,14 +12,16 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
-app.secret_key = b'BtE\x046X \xebs\x7f6\x98\x82\xe3\xc5\xca'
-
 @app.route('/')
 def index():
     if 'username' in session:
         return 'Logged in as ' + session['username']
     return redirect(url_for('home_page'))
-
+	
+@app.route('/main')
+def main_app():
+    return render_template('index.html')
+	
 @app.route('/home')
 def home_page():
     return render_template('home-page.html')
@@ -31,7 +33,7 @@ def login():
             return redirect(url_for('index'))
         else:
             if validateLogin(request.form["username"], request.form["password"]) == 0:
-                return redirect(url_for('index'))
+                return redirect(url_for('main_app'))
             else:
                 return 'Not valid login'
     else:
@@ -45,17 +47,31 @@ def login_page():
 def signup():
     if request.method == 'POST':
         if verifySignup(request.form["firstname"], request.form["surname"], request.form["email"], request.form["username"], request.form["password"], request.form["tutor"]) == 0:
-            return redirect(url_for('index'))
+            return redirect(url_for('main_app'))
         else:
             return 'Signup failed'
     else:
         return ''
 
-
 @app.route('/signup-page')
 def signup_page():
     return render_template('signup-page.html')
 
+@app.route('/getTutors', methods=['POST','GET'])
+def get_tutors():
+    if request.method == 'POST':
+        return tutor_list()
+    return redirect(url_for('signup-page'))
+	
+# adding tutors into drop down list in signup page
+def tutor_list():
+    cur = mysql.connection.cursor()
+    cur.execute(''' SELECT title, fName, lName FROM Tutor''')
+    result = cur.fetchall()
+    s = "<option class=\"options\" value=\"\" disabled selected hidden>Please select a tutor</option>"
+    for x in result:
+        s += "<option class=\"options\" value="+str(x['fName'])+" "+str(x['lName'])+">"+str(x['title'])+" "+str(x['fName'])+" "+str(x['lName'])+"</option>"
+    return s
 
 def validateLogin(username, password):
     cur = mysql.connection.cursor()
