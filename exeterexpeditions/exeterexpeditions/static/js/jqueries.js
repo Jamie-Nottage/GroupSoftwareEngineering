@@ -3,13 +3,13 @@ pageWidth = 0;
 
 $(document).ready(function(){
 
-    /*videoWidth = $(".qrPreviewVideo").width()
-    pageWidth = $("#underlay-container").width()
+    $(".faq-question").click(function(elem) {
+      if($(this).next().css("display") == "none") {
+        $(this).next().css("display", "block");
+      } else {
+        $(this).next().css("display", "none");
+      }
 
-    leftSpace = (pageWidth - videoWidth) / 2
-
-    alert(leftSpace);
-
-    $(".qrPreviewVideo").css("left", leftSpace);*/
+    });
 
 });
