@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS Users(
 `emailAddress` VARCHAR(255) NOT NULL,
 `username` VARCHAR(50) NOT NULL UNIQUE,
 `password` VARCHAR(255) NOT NULL,
-`achievement` INT DEFAULT 0,
 `tutorId` INT NOT NULL,
 `teamId` INT NOT NULL,
 PRIMARY KEY (`userID`),
@@ -91,6 +90,18 @@ PRIMARY KEY (`scoreId`),
 UNIQUE(`teamId`, `taskId`,`clueLevel`)
 );
 
+CREATE TABLE IF NOT EXISTS UsersScore(
+`userscoreId` INT AUTO_INCREMENT NOT NULL,
+`clueLevel` INT DEFAULT 1,
+`taskId` INT NOT NULL,
+`userId` INT NOT NULL,
+FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),
+FOREIGN KEY (`taskId`) REFERENCES Task(`taskId`),
+FOREIGN KEY (`userId`) REFERENCES Users(`userId`),
+PRIMARY KEY (`userscoreId`),
+UNIQUE(`userscoreId`, `userId`,`clueLevel`)
+);
+
 CREATE TABLE IF NOT EXISTS BuildingClue(
 `clueId` INT AUTO_INCREMENT NOT NULL,
 `clue` VARCHAR(255) NOT NULL, 
@@ -109,17 +120,6 @@ PRIMARY KEY (`clueId`, `teamId`),
 FOREIGN KEY (`clueId`) REFERENCES BuildingClue(`clueId`),
 FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
 UNIQUE(`clueId`, `teamId`)
-);
-
-CREATE TABLE IF NOT EXISTS AchievementUsed(
-`taskId` INT NOT NULL, 
-`teamId`INT NOT NULL,
-`status` INT NOT NULL, 
-`clueLevel` INT NOT NULL DEFAULT 1,
-PRIMARY KEY(`taskId`, `teamId`),
-FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
-FOREIGN KEY (`taskId`) REFERENCES Task(`taskId`),
-FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`)
 );
 
 CREATE TABLE IF NOT EXISTS Answers(
@@ -151,7 +151,7 @@ FOREIGN KEY (`pathId`) REFERENCES Paths(`pathId`)
 
 -- CREATING VIEWS --
 
--- ACHIEVEMENT DETAILS
+-- ACHIEVEMENT DETAILS --
 
 CREATE OR REPLACE VIEW achievementdetails AS
 
@@ -160,6 +160,27 @@ SELECT T1.taskId, T1.answer, T1.correct, T2.description, T2.points, T2.buildingI
 	JOIN
 (SELECT * FROM Task) AS T2
 ON T1.taskId=T2.taskId;
+
+-- INDIVIDUAL SCORE --
+
+CREATE OR REPLACE VIEW individualLeaderboard AS
+
+SELECT DISTINCT username, sum(totalPoints) AS score FROM
+(SELECT users.username, users.pointsDeducted, tasks.points, (SELECT tasks.points - users.pointsDeducted) AS totalPoints FROM 
+(SELECT clues.pointsDeducted, clues.taskId, u.username FROM
+	(SELECT c.clueLevel,c.pointsDeducted, s.taskId, s.userId FROM
+		(SELECT cl.clueLevel, cl.pointsDeducted FROM Clue cl) AS c
+			JOIN
+		(SELECT sc.taskId, sc.userId, sc.clueLevel FROM UsersScore sc) AS s
+			ON c.clueLevel=s.clueLevel) AS clues
+				JOIN
+			(SELECT us.userId, us.username FROM Users us) AS u
+				ON u.userId=clues.userId) AS users
+					JOIN
+				(SELECT ts.taskId, ts.points FROM Task ts) AS tasks
+                ON tasks.taskId=users.taskId) AS score
+GROUP BY username
+ORDER BY score DESC;
 
 -- CLUE DETAILS --
     
@@ -286,23 +307,22 @@ INSERT INTO Task VALUES
 (NULL, 150, 'Find Devonshire House', 1, 1),
 (NULL, 75, 'Which is NOT a flavour of pie at the Pieminister truck?', 1, 0),
 (NULL, 50, 'How much do curly fries cost at The Ram?', 1, 0),
-(NULL, 25, 'Which Floor is The Loft located on?', 1, 0),
+(NULL, 50, 'Which Floor is The Loft located on?', 1, 0),
 (NULL, 150, 'Locate Queens', 2, 1),
 (NULL, 75, 'What’s the price of a large cappuccino from Camper coffee?', 2, 0),
 (NULL, 200, 'Locate Harrison', 3, 1),
-(NULL, 75, 'How much is a Cornish pasty at the café?', 3, 0),
+(NULL, 50, 'How much is a Cornish pasty at the café?', 3, 0),
 (NULL, 75, 'What floor is the cold water only bottle filler on? ', 3, 0),
 (NULL, 50, 'There is a microwave and hot water point around the corner from the café.', 3, 0),
 (NULL, 250, 'Locate The Innovation Centre', 4, 1),
-(NULL, 100, 'What colour seat cushions do the chairs in the Lovelace computer lab have?', 4, 0),
-(NULL, 100, 'What is the room number of Ronaldo Menezes’s office?', 4, 0),
-(NULL, 100, 'Locate Streatham Court', 5, 1),
+(NULL, 50, 'What colour seat cushions do the chairs in the Lovelace computer lab have?', 4, 0),
+(NULL, 75, 'What is the room number of Ronaldo Menezes’s office?', 4, 0),
+(NULL, 150, 'Locate Streatham Court', 5, 1),
 (NULL, 50, 'What is the room number of Lecture Theatre A?', 5, 0),
 (NULL, 100, 'Locate The Forum', 6, 1),
-(NULL, 50, 'What is the title of the book with identifier 001.6425 COC?', 6, 0),
-(NULL, 100, 'How much is cheapest coffee from the Marketplace?', 6, 0),
-(NULL, 50, 'Find the cheapest coffee', 6, 0),
-(NULL, 25, 'Where is the Study Zone?', 6, 0);
+(NULL, 75, 'What is the title of the book with identifier 001.6425 COC?', 6, 0),
+(NULL, 50, 'How much is cheapest coffee from the Marketplace?', 6, 0),
+(NULL, 50, 'Where is the Study Zone?', 6, 0);
 
 INSERT INTO Clue VALUES
 (NULL, 'Full marks', 0),
