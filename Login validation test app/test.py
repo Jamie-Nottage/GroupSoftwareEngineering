@@ -29,7 +29,7 @@ def home_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
-		if 'uname' in session:
+		if 'username' in session:
 			return redirect(url_for('index'))
 		else:
 			if validateLogin(request.form["username"], request.form["password"]) == 0:
@@ -58,6 +58,15 @@ def get_tutors():
 	if request.method == 'POST':
 		return tutor_list()
 	return redirect(url_for('signup-page'))
+	
+@app.route('/terms')
+def terms_page():
+	return render_template('terms-page.html')
+
+@app.route('/privacy')
+def privacy_page():
+	return render_template('privacy-page.html')
+
 	
 # adding tutors into drop down list in signup page
 def tutor_list():
