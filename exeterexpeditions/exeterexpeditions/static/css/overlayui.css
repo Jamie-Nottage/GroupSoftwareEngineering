@@ -51,6 +51,11 @@
   color: #FFFFFF;
 }
 
+#photo-container {
+  display: none;
+  overflow: none;
+}
+
 #qr-scanner-container {
   display: none;
 }
@@ -176,6 +181,18 @@
   animation: spin 2s linear infinite;
 }
 
+.loader.small {
+  position: absolute;
+  left: calc(50% - 25px);
+  top: 20%;
+
+  width: 25px;
+  height: 25px;
+
+  border: 16px solid #91AEC1;
+  border-top: 16px solid #0A8754;
+}
+
 #leaderboard-loader {
   border: 16px solid #ACCEEA;
   border-top: 16px solid #0A8754;
@@ -185,7 +202,35 @@
   animation: spin 2s linear infinite;
 }
 
+#photo-loader {
+  position: absolute;
+  left: calc(50% - 40px);
+  top: 20%;
+
+  width: 50px;
+  height: 50px;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.faq-question {
+  position: relative;
+  left: -2vw;
+  background-color: #508CA4;
+  width: 100%;
+
+  color: #FFFFFF;
+}
+
+.faq-answer {
+  display: none;
+  padding-right: 2vw;
+}
+
+.faq-q-txt {
+  padding-left: 4vw;
+  padding-right: 2vw;
 }
