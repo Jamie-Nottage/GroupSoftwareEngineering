@@ -282,9 +282,9 @@ INSERT INTO Task VALUES
 
 INSERT INTO Clue VALUES
 (NULL, 'Full marks', 0),
-(NULL, 'Click here for a text clue', 10),
-(NULL, 'Click here for an image clue', 20),
-(NULL, 'Click here for a clue on the map', 30);
+(NULL, 'Click here for a text clue', 25),
+(NULL, 'Click here for an image clue', 75),
+(NULL, 'Click here for a clue on the map', 100);
 
 INSERT INTO BuildingClue VALUES
 (NULL,'Attached to the Forum, make your way to where the Guild President works', 1, 2),
@@ -299,6 +299,12 @@ INSERT INTO BuildingClue VALUES
 (NULL, 'innovation-grey.png', 4, 3),
 (NULL, 'streathamcourt.png', 5, 3),
 (NULL, 'forum-grey.jpg', 6, 3);
+
+INSERT INTO Used VALUES
+(1, 1),
+(2, 1),
+(7, 1),
+(9, 1);
 
 INSERT INTO Route VALUES
 (1,6,1),
@@ -328,3 +334,5 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
+
+
