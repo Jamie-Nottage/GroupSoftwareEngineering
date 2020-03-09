@@ -287,19 +287,18 @@ INSERT INTO Clue VALUES
 (NULL, 'Click here for a clue on the map', 30);
 
 INSERT INTO BuildingClue VALUES
-(NULL,'Where you’d grab a pint and meet with the Guild President (attached to the Forum)', 1, 2),
-(NULL,'Next to the Student’s Guild, full of classrooms', 2, 2),
-(NULL,'Walk up Forum hill and turn right down North Park Road', 3, 2),
-(NULL,'Up the hill from Harrison, big white building', 4, 2),
-(NULL,'Near the main entrance to the University. Off of Rennes Drive', 5, 2),
-(NULL,'Center of campus, up the steep hill from the campus main entrance', 6, 2),
+(NULL,'Attached to the Forum, make your way to where the Guild President works', 1, 2),
+(NULL,'Next to the Student’s Guild, full of classrooms, you’re looking for Lecture Theatre 2', 2, 2),
+(NULL,'Walk up Forum hill and turn right down North Park Road, find the front desk at the main entrance', 3, 2),
+(NULL,'Up the hill from Harrison, big white building. Walk across the bridge and find the computer labs', 4, 2),
+(NULL,'Near the main entrance to the University, off of Rennes Drive. Find a water fountain', 5, 2),
+(NULL,'Center of campus, up the steep hill from the campus main entrance. Locate the big white desk on the main floor', 6, 2),
 (NULL, 'devonshirehouse.png', 1, 3),
 (NULL, 'queens.png', 2, 3),
 (NULL, 'harrison.png', 3, 3),
 (NULL, 'innovation-grey.png', 4, 3),
 (NULL, 'streathamcourt.png', 5, 3),
 (NULL, 'forum-grey.jpg', 6, 3);
-
 
 INSERT INTO Route VALUES
 (1,6,1),
