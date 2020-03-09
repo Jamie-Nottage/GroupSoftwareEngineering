@@ -213,7 +213,7 @@ def unlock_clue(teamid):
         clueid = cur.fetchall()
         cur.execute(''' INSERT INTO Used VALUES (%d, %d)''' % (int(clueid[0]['clueId']),int(teamid)))
         mysql.connection.commit()
-        cur.execute(''' INSERT INTO Score VALUES (NULL, %d, (SELECT taskId FROM Task WHERE buildingId=%d and required=1),%d)''' %(clue_level,buildingid,int(teamid)))
+        cur.execute(''' UPDATE Score SET clueLevel=%d WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=%d and required=1) AND teamId=%d;''' %(clue_level,buildingid,int(teamid)))
         mysql.connection.commit()
         return s
     if result[0]['count'] == 1:
@@ -226,7 +226,7 @@ def unlock_clue(teamid):
         clueid = cur.fetchall()
         cur.execute(''' INSERT INTO Used VALUES (%d, %d)''' %(int(clueid[0]['clueId']),int(teamid)))
         mysql.connection.commit()
-        cur.execute(''' INSERT INTO Score VALUES (NULL, %d, (SELECT taskId FROM Task WHERE buildingId=%d and required=1),%d)''' %(clue_level,buildingid,int(teamid)))
+        cur.execute('''UPDATE Score SET clueLevel=%d WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=%d and required=1) AND teamId=%d;''' %(clue_level,buildingid,int(teamid)))
         mysql.connection.commit()
         return s
 
