@@ -45,21 +45,9 @@ def get_central_table():
         return taskDisplay(team_name)
     return main_app
 
-'''def getNextLocation(team):
-    cur = mysql.connection.cursor()
-    cur.execute(''''''SELECT buildingName FROM Building
-	WHERE buildingId = (SELECT buildingId FROM Route
-		WHERE stopNo=
-			(SELECT stopNo FROM Route
-			WHERE pathId=(SELECT teamId FROM visited WHERE teamId=%d LIMIT 1)
-			AND buildingId=(SELECT buildingId FROM visited WHERE teamId=%d LIMIT 1))+1
-		AND pathId=(SELECT teamId FROM visited WHERE teamId=%d LIMIT 1));'''''' % (int(team), int(team), int(team)))
-    result = cur.fetchall();
-    return result[0]["buildingName"]'''
-
 def getNextLocation(teamid):
     cur = mysql.connection.cursor()
-    cur.execute(''' SELECT COUNT(*) AS count FROM visited; ''')
+    cur.execute(''' SELECT COUNT(*) AS count FROM visited WHERE teamId=%d ''' %int(teamid))
     first = cur.fetchall();
     if first[0]['count'] == 0:
         cur.execute(''' SELECT buildingName FROM Building WHERE buildingId = (SELECT buildingId FROM Route WHERE stopNo=1 AND pathId=%d); ''' %int(teamid))
