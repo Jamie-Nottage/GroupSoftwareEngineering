@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS Users(
 `emailAddress` VARCHAR(255) NOT NULL,
 `username` VARCHAR(50) NOT NULL UNIQUE,
 `password` VARCHAR(255) NOT NULL,
+`achievement` INT DEFAULT 0,
 `tutorId` INT NOT NULL,
 `teamId` INT NOT NULL,
 PRIMARY KEY (`userID`),
@@ -110,6 +111,25 @@ FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
 UNIQUE(`clueId`, `teamId`)
 );
 
+CREATE TABLE IF NOT EXISTS AchievementUsed(
+`taskId` INT NOT NULL, 
+`teamId`INT NOT NULL,
+`status` INT NOT NULL, 
+`clueLevel` INT NOT NULL DEFAULT 1,
+PRIMARY KEY(`taskId`, `teamId`),
+FOREIGN KEY (`teamId`) REFERENCES Team(`teamId`),
+FOREIGN KEY (`taskId`) REFERENCES Task(`taskId`),
+FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`)
+);
+
+CREATE TABLE IF NOT EXISTS Answers(
+`taskId` INT NOT NULL,
+`answer` VARCHAR(50) NOT NULL,
+`correct` INT NOT NULL,
+PRIMARY KEY(`taskId`, `answer`),
+UNIQUE(`taskId`, `answer`, `correct`)
+);
+
 -- RELATIONSHIP ATTRICBUTES --
 CREATE TABLE IF NOT EXISTS VisitBuilding(
 `buildingId` INT NOT NULL,
@@ -130,6 +150,16 @@ FOREIGN KEY (`pathId`) REFERENCES Paths(`pathId`)
 );
 
 -- CREATING VIEWS --
+
+-- ACHIEVEMENT DETAILS
+
+CREATE OR REPLACE VIEW achievementdetails AS
+
+SELECT T1.taskId, T1.answer, T1.correct, T2.description, T2.points, T2.buildingId FROM 
+(SELECT * FROM Answers) AS T1
+	JOIN
+(SELECT * FROM Task) AS T2
+ON T1.taskId=T2.taskId;
 
 -- CLUE DETAILS --
     
@@ -236,10 +266,10 @@ INSERT INTO Team VALUES
 (NULL, 'Team David Wakeling', 4, 4);
 
 INSERT INTO Users VALUES
-(NULL, 'Name1', 'Surname1', 'email1', 'username1', 'password1', 1, 1),
-(NULL, 'Name2', 'Surname2', 'email2', 'username2', 'password2', 1, 1),
-(NULL, 'Name3', 'Surname3', 'email3', 'username3', 'password3', 2, 2),
-(NULL, 'Name4', 'Surname4', 'email4', 'username4', 'password4', 3, 3);
+(NULL, 'Name1', 'Surname1', 'email1', 'username1', 'password1', DEFAULT, 1, 1),
+(NULL, 'Name2', 'Surname2', 'email2', 'username2', 'password2', DEFAULT, 1, 1),
+(NULL, 'Name3', 'Surname3', 'email3', 'username3', 'password3', DEFAULT, 2, 2),
+(NULL, 'Name4', 'Surname4', 'email4', 'username4', 'password4', DEFAULT, 3, 3);
 
 INSERT INTO Gamekeeper VALUES
 (NULL, 'group','o', 'groupO@exeter.ac.uk', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2');
@@ -254,37 +284,73 @@ INSERT INTO Building VALUES
 
 INSERT INTO Task VALUES
 (NULL, 150, 'Find Devonshire House', 1, 1),
-(NULL, 75, 'Grab a seat in The Loft', 1, 0),
-(NULL, 75, 'Find the hot water point in DH2', 1, 0),
-(NULL, 25, 'Locate the drama room', 1, 0),
-(NULL, 25, 'Find the Pieminister truck', 1, 0),
-(NULL, 50, 'Order curly fries at The Ram', 1, 0),
+(NULL, 75, 'Which is NOT a flavour of pie at the Pieminister truck?', 1, 0),
+(NULL, 50, 'How much do curly fries cost at The Ram?', 1, 0),
+(NULL, 25, 'Which Floor is The Loft located on?', 1, 0),
 (NULL, 150, 'Locate Queens', 2, 1),
-(NULL, 75, 'Locate LT2', 2, 0),
-(NULL, 50, 'Buy a coffee at Costa', 2, 0),
-(NULL, 25, 'Find a place to study', 2, 0),
+(NULL, 75, 'What’s the price of a large cappuccino from Camper coffee?', 2, 0),
 (NULL, 200, 'Locate Harrison', 3, 1),
-(NULL, 75, 'Visit the Harrison Info Point', 3, 0),
-(NULL, 75, 'Find the microwave and hot water point', 3, 0),
-(NULL, 50, 'Buy a pasty at cafe', 3, 0),
+(NULL, 75, 'How much is a Cornish pasty at the café?', 3, 0),
+(NULL, 75, 'What floor is the cold water only bottle filler on? ', 3, 0),
+(NULL, 50, 'There is a microwave and hot water point around the corner from the café.', 3, 0),
 (NULL, 250, 'Locate The Innovation Centre', 4, 1),
-(NULL, 100, 'Visit the Lovelace and Babbage rooms', 4, 0),
-(NULL, 50, 'Login to a Linux machine', 4, 0),
-(NULL, 100, 'Visit Ronaldo Menezes office', 4, 0),
+(NULL, 100, 'What colour seat cushions do the chairs in the Lovelace computer lab have?', 4, 0),
+(NULL, 100, 'What is the room number of Ronaldo Menezes’s office?', 4, 0),
 (NULL, 100, 'Locate Streatham Court', 5, 1),
-(NULL, 50, 'Visit the fountain', 5, 0),
-(NULL, 25, 'Find a place to study', 5, 0),
+(NULL, 50, 'What is the room number of Lecture Theatre A?', 5, 0),
 (NULL, 100, 'Locate The Forum', 6, 1),
-(NULL, 50, 'Locate the SID desk', 6, 0),
-(NULL, 100, 'Checkout a computer science book from the library', 6, 0),
+(NULL, 50, 'What is the title of the book with identifier 001.6425 COC?', 6, 0),
+(NULL, 100, 'How much is cheapest coffee from the Marketplace?', 6, 0),
 (NULL, 50, 'Find the cheapest coffee', 6, 0),
-(NULL, 25, 'Visit the Study Zone', 6, 0);
+(NULL, 25, 'Where is the Study Zone?', 6, 0);
 
 INSERT INTO Clue VALUES
 (NULL, 'Full marks', 0),
 (NULL, 'Click here for a text clue', 25),
 (NULL, 'Click here for an image clue', 75),
-(NULL, 'Click here for a clue on the map', 100);
+(NULL, 'Click here for a clue on the map', 100),
+(NULL, 'achievement try 1', 20),
+(NULL, 'achievement try 2', 40);
+
+INSERT INTO Answers VALUES
+(2, 'Heidi', 0),
+(2, 'Ollie', 1),
+(2, 'Kevin', 0),
+(3, '£2.25', 1),
+(3, '£2.50', 0),
+(3, '£2.15', 0),
+(4, 'First Floor', 0),
+(4, 'Third Floor', 1),
+(4, 'Second Floor', 0),
+(6, '£2.20', 0),
+(6, '£2.60', 0),
+(6, '£2.80', 1),
+(8, '£2.60', 0),
+(8, '£2.35', 1),
+(8, '£3.00', 0),
+(9, 'Ground Floor', 0),
+(9, 'First Floor', 0),
+(9, 'Second Floor', 1),
+(10, 'True', 1),
+(10, 'False', 0),
+(12, 'Red', 0),
+(12, 'Blue', 1),
+(12, 'Green', 0),
+(13, 'B1C', 1),
+(13, 'A1A', 0),
+(13, 'B1B', 0),
+(15, '0.02', 0),
+(15, '0.04', 0),
+(15, '0.01', 1),
+(17, 'Software Development in C++', 0),
+(17, 'Agile Software Development', 1),
+(17, 'Software Engineering Principles', 0),
+(18, '£1', 1),
+(18, '£1.20', 0),
+(18, '£1.50', 0),
+(19, 'The basement', 0),
+(19, 'The top floor', 0),
+(19, 'Behind the SID', 0);
 
 INSERT INTO BuildingClue VALUES
 (NULL,'Attached to the Forum, make your way to where the Guild President works', 1, 2),
@@ -328,5 +394,3 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
-
-
