@@ -7,7 +7,7 @@
 		<script src="static/js/tutors.js"></script>
     </head>
 
-    <body>
+    <body onload="setTutorsInitially()">
         <div>
             <img class="logo" src="static/img/logo.PNG" alt="Exeter Orientation Logo" >
         </div>
@@ -25,7 +25,7 @@
 				<br /><br />
 				<input type = "email" id = "email" placeholder="Email" name = "email"
 					pattern=".+@exeter.ac.uk"
-					title="Must by your exeter.ac.uk email address"
+					title="Must by your @exeter.ac.uk email address"
 					required>
 				<br /><br />
 				<input type = "text" id = "username" placeholder="Username" name = "username" 
