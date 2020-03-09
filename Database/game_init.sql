@@ -300,12 +300,6 @@ INSERT INTO BuildingClue VALUES
 (NULL, 'streathamcourt.png', 5, 3),
 (NULL, 'forum-grey.jpg', 6, 3);
 
-INSERT INTO Used VALUES
-(1, 1),
-(2, 1),
-(7, 1),
-(9, 1);
-
 INSERT INTO Route VALUES
 (1,6,1),
 (1,1,2),
