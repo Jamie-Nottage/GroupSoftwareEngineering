@@ -6,6 +6,8 @@
 
   <link rel="stylesheet" type="text/css" href="static/css/centralui.css">
   <link rel="stylesheet" type="text/css" href="static/css/overlayui.css">
+  <link rel="stylesheet" type="text/css" href="static/css/mapstyle.css">
+  <link rel="stylesheet" type="text/css" href="static/css/achievements.css">
   <title>Exeter Expeditions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1,
   user-scalable=no">
@@ -14,6 +16,9 @@
   <script src="static/js/jsevents.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="static/js/jqueries.js"></script>
+  <script src="static/js/mapscript.js"></script>
+  <script src="static/js/achievements.js"></script>
+
 
 </head>
 
@@ -21,7 +26,7 @@
 
   <div id="portrait-container">
 
-  <div id="underlay-container" onclick="hideOverlay(); resetButtonColours();">
+  <div id="underlay-container" onclick="underlaySelected();">
 
   <div id="next-location-container">
 
@@ -36,6 +41,11 @@
   </div>
 
   <div id="central-view">
+
+  <ul id="clues-list">
+
+
+  </ul>
 
     <ul id="central-list">
 
@@ -127,6 +137,10 @@
     </ul>
       </div>
 
+      <div id="photo-container">
+        <div id="photo-loader" class="loader"></div>
+      </div>
+
       <div id="leaderboard-container">
         <div id="leaderboard-loader" class="loader"></div>
       </div>
@@ -136,65 +150,96 @@
       </div>
 
       <div id="achievements-container">
-        <div class="loader"></div>
+        <!-- <div class="loader"></div> -->
+        <h1 id="achievements-title">Achievements</h1>
+
+        <ul id="achievements-list">
+          <li>
+            <div class="achievement-head">
+              <div class="achievement-left">
+                <img class="achievement-badge-img" src="static/img/completed-achievement.png" height=46px>
+              </div>
+              <div class="achievement-right">
+                <div class="achievement-title-container"><p class="achievement-titles">HOW MUCH FOR CURLY FRIES???</p></div>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="achievement-head incomplete">
+              <div class="achievement-left incomplete">
+                <img class="achievement-badge-img" src="static/img/empty-achievement.png" height=46px>
+              </div>
+              <div class="achievement-right incomplete" onclick="achievementQButtonPressed(this)">
+                <div class="achievement-title-container incomplete"><p class="achievement-titles incomplete">OwO what's this?</p></div>
+              </div>
+              <div class="quiz-dropdown">
+                <p class="achievement-question-txt">What is the ISBN for discrete maths for beginners?</p>
+                <div class="achievement-answer-button">Big brain</div>
+                <div class="achievement-answer-button">Smöl brain</div>
+                <div class="achievement-answer-button">Medium brain</div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
 
       <div id="chatbot-container">
         <h2 style="text-align:center">Frequently Asked Questions</h2>
-        <p><b>How do I start playing Exeter Expeditions?</b></p>
-        <p>To begin you need to create an account and select your tutor. Selecting your tutor will automatically put you in your tutor group
-            so that can get to know the other people in your tutor group and complete the game together. </p>
-        <br>
+        <div id="q1" class="faq-question"><p class="faq-q-txt"><b>How do I start playing Exeter Expeditions?</b></p></div>
+        <div class="faq-answer"><p>To begin you need to create an account and select your tutor. Selecting your tutor will automatically put you in your tutor group
+            so that can get to know the other people in your tutor group and complete the game together. </p></div>
 
-        <p><b>How do I get the most out of Exeter Expeditions?</b></p>
-        <p>To get the most out of this game, don’t be shy and talk amongst your
+
+        <div id="q2" class="faq-question"><p class="faq-q-txt"><b>How do I get the most out of Exeter Expeditions?</b></p></div>
+        <div class="faq-answer"><p>To get the most out of this game, don’t be shy and talk amongst your
             tutor group when playing the game. Also complete the extra achievements
-            in the achievements tab so you have a good understanding of how to locate many facilities at University. </p>
-        <br>
+            in the achievements tab so you have a good understanding of how to locate many facilities at University. </p></div>
 
-        <p><b>What are achievements?</b></p>
-        <p>Achievements are the places you have successfully located. Each achievement
-            that you complete will gain your team more points and put you higher on the leaderboard. </p>
-        <br>
 
-        <p><b>What if I don’t have access to the internet?</b></p>
-        <p>Exeter Expedition is a web app meaning you need to be connected to wifi
+        <div id="q3" class="faq-question"><p class="faq-q-txt"><b>What are achievements?</b></p></div>
+        <div class="faq-answer"><p>Achievements are the places you have successfully located. Each achievement
+            that you complete will gain your team more points and put you higher on the leaderboard. </p></div>
+
+
+        <div id="q4" class="faq-question"><p class="faq-q-txt"><b>What if I don’t have access to the internet?</b></p></div>
+        <div class="faq-answer"><p>Exeter Expedition is a web app meaning you need to be connected to wifi
             or mobile data to use it. However, if you have activated your IT account
-            this should be no problem as you can simply connect to Exeter University wifi to play. </p>
-        <br>
+            this should be no problem as you can simply connect to Exeter University wifi to play. </p></div>
 
-        <p><b>Does Exeter Expedition continually use my location?</b></p>
-        <p>Exeter Expedition will only use your location when you are using the
-            game and will not continually use your location in the background. </p>
-        <br>
 
-        <p><b>Will my private information be kept private?</b></p>
-        <p>Privacy is a very important to us at Exeter Expedition. All your personal information will be kept private.
-            If you have further enquiries please read our privacy policy or contact us directly for further clarification. </p>
-        <br>
+        <div id="q5" class="faq-question"><p class="faq-q-txt"><b>Does Exeter Expedition continually use my location?</b></p></div>
+        <div class="faq-answer"><p>Exeter Expedition will only use your location when you are using the
+            game and will not continually use your location in the background. </p></div>
 
-        <p><b>How can I change my password?</b></p>
-        <p>If you require a change of password, please contact us via email and we will be able to help you through this. </p>
-        <br>
 
-        <p><b>How do I allow my camera to work so I can scan the QR code?</b></p>
-        <p>In order to scan the QR codes the game will need access to your camera.
+        <div id="q6" class="faq-question"><p class="faq-q-txt"><b>Will my private information be kept private?</b></p></div>
+        <div class="faq-answer"><p>Privacy is a very important to us at Exeter Expedition. All your personal information will be kept private.
+            If you have further enquiries please read our privacy policy or contact us directly for further clarification. </p></div>
+
+
+        <div id="q7" class="faq-question"><p class="faq-q-txt"><b>How can I change my password?</b></p></div>
+        <div class="faq-answer"><p>If you require a change of password, please contact us via email and we will be able to help you through this. </p></div>
+
+
+        <div id="q8" class="faq-question"><p class="faq-q-txt"><b>How do I allow my camera to work so I can scan the QR code?</b></p></div>
+        <div class="faq-answer"><p>In order to scan the QR codes the game will need access to your camera.
             If you did not allow this access when you first begun the game please go to your camera settings and allow your web browser access to your camera.
-            This will allow you to check in at each of the different locations. </p>
-        <br>
+            This will allow you to check in at each of the different locations. </p></div>
 
-        <p><b>The site has frozen. Help me!</b></p>
-        <p>Step one: quit your browser. Step two: try logging in and out again.
+
+        <div id="q9" class="faq-question"><p class="faq-q-txt"><b>The site has frozen. Help me!</b></p></div>
+        <div class="faq-answer"><p>Step one: quit your browser. Step two: try logging in and out again.
             Step three: update your browser to the latest version.
-            If it is still not working clear your cache and restart your computer. If this does not fix the problem please contact us.</p>
-        <br>
+            If it is still not working clear your cache and restart your computer. If this does not fix the problem please contact us.</p></div>
 
-        <p><b>I can’t login, what do I do?</b></p>
-        <p>Try updating your browser to the latest version, then check that your cookies are not set to ‘blocked’. Next clear your cache. </p>
-        <br>
 
-        <p><b>How can I contact you?</b></p>
-        <p>For general enquiries please email us at exeterexpedition@exeter.ac.uk</p>
+        <div id="q10" class="faq-question"><p class="faq-q-txt"><b>I can’t login, what do I do?</b></p></div>
+        <div class="faq-answer"><p>Try updating your browser to the latest version, then check that your cookies are not set to ‘blocked’. Next clear your cache. </p></div>
+
+
+        <div id="q11" class="faq-question"><p class="faq-q-txt"><b>How can I contact you?</b></p></div>
+        <div class="faq-answer"><p>For general enquiries please email us at exeterexpedition@exeter.ac.uk</p></div>
       </div>
 
       <div id="qr-scanner-container" class="row-element-set row-element-set-QRScanner">
@@ -235,6 +280,8 @@
         Please turn your device to portrait mode
       </p>
 
+      <script src="static/js/draggable.js"></script>
+
     <script>
     // Code to dynamically change font size of movable sign text and its margin
     var movableSignValues = fitty('#movable-sign-txt', {
@@ -248,6 +295,7 @@
       document.getElementById("movable-sign-txt").style.marginTop = topMargin + "px";
     });
     </script>
+
 
     <script type="text/javascript">
       function onQRCodeScanned(scannedText)
