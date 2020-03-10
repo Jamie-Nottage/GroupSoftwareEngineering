@@ -1,4 +1,7 @@
 def display_answers(taskid):
+    """
+    Display the answers for the 
+    """
     cur = mysql.connection.cursor()
     s = "<table><tr><th>Select the Answer</th>"
     cur.execute(''' SELECT answer FROM achievementdetails WHERE taskId=%d; ''' %taskid)
