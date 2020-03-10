@@ -374,7 +374,7 @@ INSERT INTO Answers VALUES
 (18, '£1.50', 0),
 (19, 'The basement', 0),
 (19, 'The top floor', 0),
-(19, 'Behind the SID', 0);
+(19, 'Behind the SID', 1);
 
 INSERT INTO BuildingClue VALUES
 (NULL,'Attached to the Forum, make your way to where the Guild President works', 1, 2),
