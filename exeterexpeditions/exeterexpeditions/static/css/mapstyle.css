@@ -1,0 +1,117 @@
+
+
+#distance {
+	padding: 10px 15px;
+	font-family: "Avenir", Verdana, Geneva, sans-serif;
+	text-align:center;
+}
+#distance.far { 
+	background-color: red; 	
+}
+#distance.close {
+	background-color: orange; 
+}
+
+#distance.there {
+	background-color: #48c77d; 
+}
+
+#distance.near {
+	background-color: yellow; 
+}
+#hint {
+	position: absolute;
+	right: 5%;
+	bottom: 5%;
+	
+	background-color: #508CA4;
+	width: 20%;
+	height: 15%;
+	
+	box-sizing: border-box;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #6C6C6C;
+	box-shadow: 0px -3px 10px grey;
+	
+	border-radius: 50%;
+	
+	opacity: 0.95;
+	
+	text-align: center;
+}
+
+#hintimg { 
+	position: absolute;
+} 
+
+
+.modal {
+	font-family: "Avenir", Verdana, Geneva, sans-serif;
+	position:fixed;
+	top: 50%;
+	left: 50%; 
+	transform: translate(-50%,-50%) scale(0);
+	transition: 200ms ease-in-out; 
+	border: 1px solid white; 
+	border-radius: 10px; 
+	box-sizing: border-box;
+	z-index: 10; 
+	background-color:  #508CA4;
+	width: 500px; 
+	max-width: 80%;
+}
+
+.modal.active {
+	transform: translate(-50%,-50%) scale(1);
+}
+
+
+.modal-header {
+	padding: 10px 15px;
+	display: flex; 
+	justify-content: space-between;
+	align-items: center; 
+	border-bottom: 1px solid white; 
+} 
+
+.modal-header .title {
+	font-size: 1.25rem;
+	font-weight: bold; 
+	color:white;
+}
+
+.modal-header .close-button {
+	cursor: pointer; 
+	border: none;
+	outline: none; 
+	background: none; 
+	font-size: 1.25rem;
+	font-weight:bold; 
+} 
+
+.modal-body {
+	padding: 10px 15px;
+	color:white;	
+} 
+
+.modal-body .close-button{ 
+	right:50%;
+}
+
+#map-overlay {
+	position:fixed;
+	opacity:0;
+	transition: 200ms ease-in-out;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0, .5);
+	pointer-events: none; 
+}
+
+#map-overlay.active{
+	opacity: 1;
+	pointer-events: all;
+}
