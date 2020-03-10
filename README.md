@@ -5,7 +5,7 @@
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Running the Testing](#running-the-testing)
-* [Usage](#usage)
+* [Features of App](#features-of-app)
 * [Contributing](#contributing)
 * [Versioning](#versioning)
 * [Authors](#authors)
@@ -23,16 +23,39 @@ This project is created with:
 * Selenium --- add version 
 
 ## Setup 
+download apache 
+upload the wsgi file to apache 
+should be able to make modifications
 
 ## Running the Testing
 
-## Usage
+
+## Features of App
+Exeter Expedition has been created for two different user profiles. Student users are the target auidence for the main app. These are predominately first year students to the University that will access the app primarily through a browser on a mobile device. The Game Keeper is a member of staff responsible for the students engaging with the app and its resources. Game Keepers have been created to allow them to configure and update the game and its resources through a desktop or laptop browser. 
+
+#### *Student User*
+* QR code check-in to different locations 
+* Location displayed on map 
+* Access to FAQ's page 
+* Reveal photo of another clue 
+* Ability to gain more points through completing achievements 
+
+#### *Game Keeper*
+* Add a new route 
+* Add a new Tutor 
+* Add another Game Keeper 
+* See people currently online and places visited 
+* Update leaderboard 
+
 
 ## Contributing
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
+Please read CONTRIBUTING.md for a guide on contributing to the project.
+
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.Please make sure to update tests as appropriate.
 
 ## Versioning 
-We use GitHub for version control. For verions avaliable please see the tags on this respository. --- add link to repository
+We use GitHub for version control. For verions avaliable please see the [tags on this respository](https://github.com/Jamie-Nottage/GroupSoftwareEngineering).
 
 ## Authors
 This project was developed by the following students from University of Exeter:
@@ -44,6 +67,10 @@ This project was developed by the following students from University of Exeter:
 * Analise Cowie 
 
 ## Acknowledgments 
-Participants in survey 
-Matt Collison 
-Other members of the module 
+We would like to acknowledge Dr Matt Collison the Learning Facilitator for this module ECM2434 and his contribution for acting as an end user and his guidance throughout this project. 
+
+
+The people who participated in our survey at the beginning of this project were immensely helpful as we used this information to rather requirements to ensure we had the necessary features for a successful project. 
+
+
+Furthermore, we would like to acknowledge the other members of the ECM2434 module and their handy hints during the project. 
