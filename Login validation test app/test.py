@@ -12,41 +12,54 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
+app.secret_key = b'\x8c\xec\xd3\x08T4b\xfd5\xee\x90Yy\x90\xd6\r'
+
 @app.route('/')
 def index():
 	if 'username' in session:
-		return 'Logged in as ' + session['username']
+		return redirect(url_for('main_app'))
 	return redirect(url_for('home_page'))
 	
 @app.route('/main')
 def main_app():
-	return render_template('index.html')
+	if 'username' in session:
+		return render_template('index.html')
+	else:
+		return redirect(url_for('home_page'))
 	
 @app.route('/home')
 def home_page():
+	if 'username' in session:
+		return redirect(url_for('main_app'))
 	return render_template('home-page.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	error = None
-	if request.method == 'POST':
-		if 'username' in session:
-			return redirect(url_for('index'))
+	if 'username' in session:
+		return redirect(url_for('main_app'))
+	elif 'GKUsername' in session:
+		return redirect(url_for('game_keeper'))
+	elif request.method == 'POST':
+		valid = validateLogin(request.form["username"], request.form["password"])
+		if valid == 0:
+			session["username"] = request.form["username"]
+			return redirect(url_for('main_app'))
+		elif valid == 1:
+			session["GKUsername"] = request.form["username"]
+			return redirect(url_for('game_keeper'))
 		else:
-			valid = validateLogin(request.form["username"], request.form["password"])
-			if valid == 0:
-				return redirect(url_for('main_app'))
-			elif valid == 1:
-				return redirect(url_for('game_keeper'))
-			else:
-				error = True
+			error = True
 	return render_template('login-page.html', loginError=error)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	error = None
-	if request.method == 'POST':
+	if 'username' in session:
+		return redirect(url_for('main_app'))
+	elif request.method == 'POST':
 		if verifySignup(request.form["firstname"], request.form["surname"], request.form["email"], request.form["username"], request.form["password"], request.form["tutor"]) == 0:
+			session["username"] = request.form["username"]
 			return redirect(url_for('main_app'))
 		else:
 			error = True
