@@ -209,7 +209,7 @@ INSERT INTO Users VALUES
 (NULL, 'Name4', 'Surname4', 'email4', 'username4', 'password4', 3, 3);
 
 INSERT INTO Gamekeeper VALUES
-(NULL, 'Admin','Admin', 'admin@exeter.ac.uk', 'admin', '$5$rounds=535000$3IcTOWDMczSjIhYl$5cS5hqZ8zQzfN3zMzBpSuBIg0I242UJ8qmFMZNmFPb9') 
+(NULL, 'Admin','Admin', 'admin@exeter.ac.uk', 'admin', '$5$rounds=535000$3IcTOWDMczSjIhYl$5cS5hqZ8zQzfN3zMzBpSuBIg0I242UJ8qmFMZNmFPb9');
 
 INSERT INTO Building VALUES
 (NULL, 'Devonshire House', 'code1', 'devonshirehouse.png'),
