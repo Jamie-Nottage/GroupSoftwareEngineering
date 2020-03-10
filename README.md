@@ -19,13 +19,17 @@ This project is created with:
 * Flask Python --- add version 
 * Microsoft Azure version 1 
 * MySQL version 8.0.19 for OSX10
-* Apache HTTP Server ---- add version 
+* Apache 2 version 2.4.41
 * Selenium --- add version 
 
 ## Setup 
-download apache 
-upload the wsgi file to apache 
-should be able to make modifications
+1. To run this project, install [Apache 2 version 2.4.41](https://httpd.apache.org/download.cgi#apache24)
+2. Locate the [Github repository](https://github.com/Jamie-Nottage/GroupSoftwareEngineering) connected to Exeter Expedition. 
+3. Install *exeterexpeditions.wsgi* file into Apache 2 
+```
+exeterexpeditions/exeterexpeditions.wsgi
+```
+4. After installation this should provide access to make modifications to the source code.
 
 ## Running the Testing
 
