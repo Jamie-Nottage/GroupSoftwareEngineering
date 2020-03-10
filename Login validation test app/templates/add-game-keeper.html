@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Game Keeper</title>
+        <link rel="stylesheet" type="text/css" href="static/css/AddGKStyle.css">
+    </head>
+    <body>
+        <ul>
+            <li><img src="static/img/logo.PNG" alt="Exeter Expedition Logo" class="responsive" width="600" height="400"></li>
+            <li><a class="active" href='/game-keeper'>Home</a></li>
+            <li><a href="#route">Add Route</a></li>
+            <li><a href='/add-tutor'>Add Tutor</a></li>
+            <li><a href='/add-game-keeper'>Add Game Keeper</a></li>
+            <li><a href="#LogOut">Log Out</a></li>
+        </ul>
+
+        <div class="account">
+            <h1>Game Keeper Account</h1>
+        </div>
+
+        <div class="addGK-title">
+            <p><b>Add Game Keeper</b></p> 
+        </div>
+
+        <div class="GK-form">
+            <h3>Game Keeper Details</h3>
+
+            <form action="/add-game-keeper" method="post">
+                <input type = "text" id = "firstname" placeholder="First Name" name="firstname" 
+					pattern="[A-Za-z]{1,}" 
+					required>
+				<br /><br />
+				<input type = "text" id = "surname" placeholder="Surname" name="surname" 
+					pattern="[A-Za-z]{1,}" 
+					required>
+				<br /><br />
+				<input type = "email" id = "email" placeholder="Email" name = "email"
+					pattern=".+@exeter.ac.uk"
+					title="Must by your @exeter.ac.uk email address"
+					required>
+				<br /><br />
+				<input type = "text" id = "username" placeholder="Username" name = "username" 
+					pattern="[A-Za-z0-9]{1,15}" 
+					required>
+				<br><br>
+				<input type = "password" id = "password" placeholder="Password" name="password"
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+					title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+					required>
+				<br /><br />
+				<div>
+					<button type="submit" class="submitTeamBtn">Add Game Keeper</button>
+				</div>
+            </form>
+        </div>
+    </body>
+</html>
+

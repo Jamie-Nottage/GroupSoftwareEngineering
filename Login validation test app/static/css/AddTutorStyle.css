@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    font-family: "Avenir", Verdana, Geneva, sans-serif;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 12%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #A9A9A9;
+    border-right: 1px solid #AFAFAF;
+    color: white;
+}
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.responsive {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.account{
+    margin-left:12%;
+    text-align: right;
+    padding:1px 16px;
+    font-size: 5pt;
+    width: auto;
+    background-color: #f1f1f1;
+}
+
+.addTutor-title{
+    margin-left:12%;
+    text-align: center;
+    padding:1px 16px;
+    font-size: 15pt;
+    width: 88%;
+    background-color: #A9A9A9;
+}
+
+.addTutor{
+    margin-left: 12%;
+	text-align: center;
+}
+
+#firstname, #surname, #email, #title{
+    font-size: 10pt;
+    padding: 8px;
+    width: 30%;
+}
+
+.submitTutor{
+    background-color: #A9A9A9;
+    color: white;
+    padding: 10px 16px;
+    font-size: 12pt;
+
+}
+
+.submitTutor:hover{
+    background-color: #555;
+    color: white;
+
+
+}

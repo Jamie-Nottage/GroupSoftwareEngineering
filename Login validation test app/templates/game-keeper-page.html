@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Game Keeper</title>
+        <link rel="stylesheet" type="text/css" href="static/css/GameKeeperStyle.css">
+    </head>
+    <body>
+        <ul>
+            <li><img src="static/img/logo.PNG" alt="Exeter Expedition Logo" class="responsive" width="600" height="400"></li>
+            <li><a class="active" href='/game-keeper'>Home</a></li>
+            <li><a href="#route">Add Route</a></li>
+            <li><a type="button" href='/add-tutor'>Add Tutor</a></li>
+            <li><a type="button" href='/add-game-keeper'>Add Game Keeper</a></li>
+            <li><a href="#LogOut">Log Out</a></li>
+        </ul>
+
+        <div class="account">
+            <h1>Game Keeper Account</h1>
+
+        </div>
+
+        <div id="usersOnline">
+            <div class="length">
+                <div class="title">Users Online: </div>
+                    <div class="totalNumber">
+                        {% if users %}
+                        {% for user in users %}
+                            <b>{{ user.usersonline|e }}</b>
+                        {% else %}
+                            <b>no users found</b>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+            </div>
+        </div>
+
+        <div id="placesVisited">
+            <div class="length">
+                <div class="title">Places Visited: </div>
+                    <div class="totalNumber">
+                        {% if places %}
+                        {% for place in places %}
+                            <b>{{ place.placesvisited|e }}</b>
+                        {% else %}
+                            <b>no places found</b>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+            </div>
+        </div>
+
+
+        <div class="leaderTitle">
+            <p style="font-size:25px"><b>Leaderboard</b></p>
+        </div>
+
+        <div id="container">
+            {% for team in teams %}
+            <div class="row">
+                <div class="name">{{ team.teamName }}</div><div class="score">{{ team.score }}</div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </body>
+</html>
