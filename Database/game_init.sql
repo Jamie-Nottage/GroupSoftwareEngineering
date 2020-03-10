@@ -66,6 +66,7 @@ UNIQUE(`longitude`, `latitude` )
 
 CREATE TABLE IF NOT EXISTS Task(
 `taskId` INT AUTO_INCREMENT NOT NULL,
+`title` VARCHAR(50) NOT NULL,
 `points` INT NOT NULL,
 `description` VARCHAR(255) NOT NULL,
 `buildingId` INT NOT NULL,
@@ -307,25 +308,25 @@ INSERT INTO Building VALUES
 (NULL, 'Forum', 'code6', 'forum-grey.jpg', '50.735459', '-3.533207');
 
 INSERT INTO Task VALUES
-(NULL, 150, 'Find Devonshire House', 1, 1),
-(NULL, 75, 'Which is NOT a flavour of pie at the Pieminister truck?', 1, 0),
-(NULL, 50, 'How much do curly fries cost at The Ram?', 1, 0),
-(NULL, 50, 'Which Floor is The Loft located on?', 1, 0),
-(NULL, 150, 'Locate Queens', 2, 1),
-(NULL, 75, 'What’s the price of a large cappuccino from Camper coffee?', 2, 0),
-(NULL, 200, 'Locate Harrison', 3, 1),
-(NULL, 50, 'How much is a Cornish pasty at the café?', 3, 0),
-(NULL, 75, 'What floor is the cold water only bottle filler on? ', 3, 0),
-(NULL, 50, 'There is a microwave and hot water point around the corner from the café.', 3, 0),
-(NULL, 250, 'Locate The Innovation Centre', 4, 1),
-(NULL, 50, 'What colour seat cushions do the chairs in the Lovelace computer lab have?', 4, 0),
-(NULL, 75, 'What is the room number of Ronaldo Menezes’s office?', 4, 0),
-(NULL, 150, 'Locate Streatham Court', 5, 1),
-(NULL, 50, 'What is the room number of Lecture Theatre A?', 5, 0),
-(NULL, 100, 'Locate The Forum', 6, 1),
-(NULL, 75, 'What is the title of the book with identifier 001.6425 COC?', 6, 0),
-(NULL, 50, 'How much is cheapest coffee from the Marketplace?', 6, 0),
-(NULL, 50, 'Where is the Study Zone?', 6, 0);
+(NULL, 'N/A', 150, 'Find Devonshire House', 1, 1),
+(NULL, 'Bye, bye Miss Exeter Pie ', 75, 'Which is NOT a flavour of pie at the Pieminister truck?', 1, 0),
+(NULL, 'HOW MUCH ???', 50, 'How much do curly fries cost at The Ram?', 1, 0),
+(NULL, 'Study Heaven', 50, 'Which Floor is The Loft located on?', 1, 0),
+(NULL, 'N/A', 150, 'Locate Queens', 2, 1),
+(NULL, 'Boujie Student', 75, 'What’s the price of a large cappuccino from Camper coffee?', 2, 0),
+(NULL, 'N/A', 200, 'Locate Harrison', 3, 1),
+(NULL, 'Listen to me I am cultured', 50, 'How much is a Cornish pasty at the café?', 3, 0),
+(NULL, 'Im just getting a drink', 75, 'What floor is the cold water only bottle filler on? ', 3, 0),
+(NULL, 'Dont put a spoon in the works', 50, 'There is a microwave and hot water point around the corner from the café.', 3, 0),
+(NULL, 'N/A', 250, 'Locate The Innovation Centre', 4, 1),
+(NULL, 'Lovelace would be proud', 50, 'What colour seat cushions do the chairs in the Lovelace computer lab have?', 4, 0),
+(NULL, 'Onde?', 75, 'What is the room number of Ronaldo Menezes’s office?', 4, 0),
+(NULL, 'N/A', 150, 'Locate Streatham Court', 5, 1),
+(NULL, '011001101', 50, 'What is the room number of Lecture Theatre A?', 5, 0),
+(NULL, 'N/A', 100, 'Locate The Forum', 6, 1),
+(NULL, 'Book Worm', 75, 'What is the title of the book with identifier 001.6425 COC?', 6, 0),
+(NULL, 'Student Budget', 50, 'How much is cheapest coffee from the Marketplace?', 6, 0),
+(NULL, 'WhErE?', 50, 'Where is the Study Zone?', 6, 0);
 
 INSERT INTO Clue VALUES
 (NULL, 'Full marks', 0),
@@ -417,3 +418,4 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
+ 
