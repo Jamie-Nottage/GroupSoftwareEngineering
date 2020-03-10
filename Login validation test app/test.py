@@ -23,6 +23,8 @@ def index():
 	"""
 	if 'username' in session:
 		return redirect(url_for('main_app'))
+	elif 'GKUsername' in session:
+		return redirect(url_for('game_keeper'))
 	return redirect(url_for('home_page'))
 	
 @app.route('/main')
@@ -143,6 +145,7 @@ def verifySignup(name, surname, email, username, password, tutor):
 		cur.execute('''INSERT INTO Users (fName, lName, emailAddress, username, password, tutorId, teamId) VALUES (\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',%d,%d)''' % (name, surname, email, username, hashedPassword, tutorID, tutorID))
 		mysql.connection.commit()
 		return 0
+		
 #ADDED GAME KEEPER CODE#
 @app.route('/add-route')
 def add_route():
