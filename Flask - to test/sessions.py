@@ -1,4 +1,10 @@
 def get_teamid(username):
+    """
+    Gets the teamid based on the username in the session
+    :parameter username: The username is a session variable
+    :return: Returns the teamid given the username
+    :rtype: int.
+    """
     cur = mysql.connection.cursor()
     cur.execute(''' SELECT teamId FROM Users WHERE username=%s ''' %username)
     result = cur.fetchall()
