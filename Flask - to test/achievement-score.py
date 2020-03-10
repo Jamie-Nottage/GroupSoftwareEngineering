@@ -55,5 +55,12 @@ def individual_leaderboard():
         s += "<tr class=\"leaderboard-row\"><td class=\"leaderboard-data\">" + str(x['username']) + "</td><td class=\"leaderboard-data\">"+ str(x['score']) +"</td></tr>"
     s += "</tbody></table>"
     return s
-    
-    
+
+def check_completed(taskid, userid):
+    cur = mysql.connection.cursor()
+    cur.execute(''' SELECT COUNT(*) AS count FROM UsersScore WHERE taskId=%d AND userId=%d ''' %(taskid,userid))
+    result = cur.fetchall()
+    if result[0]['count'] == 0:
+        return False
+    else:
+        return True
