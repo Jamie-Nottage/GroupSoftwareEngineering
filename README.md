@@ -17,7 +17,8 @@ Exeter Expedition is a web app that allows users to navigate their way around th
 ## Technologies
 This project is created with:
 * Flask Python --- add version 
-* MySQL --- add version 
+* Microsoft Azure version 1 
+* MySQL version 8.0.19 for OSX10
 * Apache HTTP Server ---- add version 
 * Selenium --- add version 
 
