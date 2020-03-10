@@ -16,10 +16,10 @@ Exeter Expedition is a web app that allows users to navigate their way around th
 	
 ## Technologies
 This project is created with:
-* Flask Python
-* MySQL
-* Apache HTTP Server
-* Selenium 
+* Flask Python --- add version 
+* MySQL --- add version 
+* Apache HTTP Server ---- add version 
+* Selenium --- add version 
 
 ## Setup 
 
@@ -28,9 +28,10 @@ This project is created with:
 ## Usage
 
 ## Contributing
+Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning 
-We use GitHub for versioning. For verions avaliable please see the tags on this respository.
+We use GitHub for version control. For verions avaliable please see the tags on this respository. --- add link to repository
 
 ## Authors
 This project was developed by the following students from University of Exeter:
@@ -42,3 +43,6 @@ This project was developed by the following students from University of Exeter:
 * Analise Cowie 
 
 ## Acknowledgments 
+Participants in survey 
+Matt Collison 
+Other members of the module 
