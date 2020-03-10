@@ -112,6 +112,14 @@ div.nlsign {
   overflow: scroll;
 }
 
+#clues-list {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+
+  list-style-type: none;
+}
+
 #central-list {
   margin: 0px;
   border: 0px;
@@ -121,6 +129,9 @@ div.nlsign {
 }
 
 div.cl-element {
+  position: relative;
+  left: -1px;
+  top: -1px;
   box-sizing: border-box;
   margin: 31px 19px 31px 19px;
 
@@ -141,13 +152,101 @@ div.cl-element.hint {
 }
 
 div.cl-element.left {
+
   box-sizing: border-box;
-  margin: -1px;
+  margin: 0px;
 
   width: 100px;
   height: 98px;
 
   background-color: #CADDED;
+}
+
+#clue1 {
+  position: absolute;
+
+  background-color: #508CA4;
+}
+
+#clue1-container {
+  overflow: hidden;
+  touch-action: none;
+}
+
+#clue1-img {
+  user-drag: none;
+user-select: none;
+-moz-user-select: none;
+-webkit-user-drag: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+}
+
+#uncovered-clue1-container {
+  text-align: center;
+
+  overflow: scroll;
+
+}
+
+#uncovered-clue1-txt {
+  margin: 5%;
+
+  text-align: center;
+  position: static;
+
+  font-family: "Avenir", Verdana, Geneva, sans-serif;
+  font-size: 18px;
+  color: #676767;
+}
+
+#clue2 {
+  position: absolute;
+
+  background-color: #508CA4;
+}
+
+#clue2-container {
+  overflow: hidden;
+  touch-action: none;
+}
+
+#clue2-txt {
+  position: absolute;
+}
+
+#clue2-img {
+  user-drag: none;
+user-select: none;
+-moz-user-select: none;
+-webkit-user-drag: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+}
+
+#uncovered-clue2-container {
+  text-align: center;
+}
+
+#uncovered-clue2-button {
+  position: absolute;
+  left: 10%;
+  top: 30px;
+
+  background-color: #508CA4;
+  width: 80%;
+
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #6C6C6C;
+  border-radius: 20px;
+
+  color: #FFFFFF;
+  font-family: "Avenir", Verdana, Geneva, sans-serif;
+  font-size: 25px;
+
+  box-shadow: 0px -2px 10px grey;
 }
 
 p.hint-left-txt {
@@ -166,15 +265,21 @@ p.hint-main-txt {
 
   text-align: center;
 
-  position: relative;
+  position: absolute;
   left: 100px;
-  bottom: 72px;
+  bottom: 25px;
 
   width: calc(100% - 110px);
 
   font-family: "Avenir", Verdana, Geneva, sans-serif;
   font-size: 18px;
   color: #676767;
+}
+
+p.hint-main-txt.uncovered {
+  left: 20px;
+  bottom: 40px;
+  width: 90%;
 }
 
 div.cl-element.prev {
@@ -293,6 +398,12 @@ img.button-art {
   display: block;
   margin: auto;
   margin-top: 3px;
+}
+
+img.clue-button-art {
+  position: absolute;
+  left: 18px;
+  top: 22px;
 }
 
 #leaderboard-button {

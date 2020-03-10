@@ -1,4 +1,8 @@
 var timedSignUpdate = setInterval(setSign, 3000);
+var timedCluesUpdate = setInterval(updateClueContent, 3000);
+var clueNotBeingLoaded = true;
+var sliderSnappingBack = false;
+var clue_image_source = "";
 
 tn = "1";
 
@@ -30,6 +34,25 @@ function setSignInitially() {
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("teamname="+tn);
   updateVisitedLocations(true);
+  updateClueContent();
+}
+
+function updateClueContent() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200 && clueNotBeingLoaded && !(sliderSnappingBack)) {
+    response_json = JSON.parse(this.responseText);
+    document.getElementById("clues-list").innerHTML = response_json['clue_list_content'];
+    if(response_json['clue_level'] == 1) {
+      initialiseDraggable("#clue1", "#clue1-img", "#clue1-container");
+    } else if (response_json['clue_level'] == 2){
+      initialiseDraggable("#clue2", "#clue2-img", "#clue2-container");
+    }
+    clue_image_source = response_json['clue_img'];
+  }
+  };
+  xhttp.open("GET", "/displayClueContent", true);
+  xhttp.send();
 }
 
 function updateVisitedLocations(initialUpdate) {
@@ -158,6 +181,14 @@ function achievements() {
 
 function loadAchievements() {
   document.getElementById("achievements-container").style.display = "block";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("achievements-container").innerHTML = this.responseText;
+  }
+  };
+  xhttp.open("GET", "/displayAchievements", true);
+  //xhttp.send();
 }
 
 function chatbot() {
@@ -203,6 +234,21 @@ function showQR() {
   $(".qrPreviewVideo").css("left", leftSpace);
 }
 
+function revealPhoto() {
+  hideOverlay();
+  resetButtonColours();
+  showOverlay();
+  document.getElementById("overlay-container").style.overflow = "scroll";
+  document.getElementById("photo-container").style.display = "block";
+  document.getElementById("overlay-container").style.width = "95%";
+  document.getElementById("overlay-container").style.height = ($("#overlay-container").width()) * 0.75 + "px";
+  document.getElementById("overlay-container").style.top = ((($(window).height()) - ($("#overlay-container").height())) / 3) + "px";
+  document.getElementById("overlay-container").style.left = "2.5%";
+  document.getElementById("photo-container").innerHTML = '<img id="photo-clue-img" src="'+ clue_image_source + '" alt="">'
+  document.getElementById("photo-clue-img").style.height = $("#overlay-container").height() + "px";
+  document.getElementById("overlay-container").style.overflow = "hidden";
+}
+
 function hideOverlay() {
   document.getElementById("overlay-container").style.display = "none";
   document.getElementById("overlay-container").style.overflow = "hidden";
@@ -214,9 +260,11 @@ function hideOverlay() {
   document.getElementById("map-container").style.display = "none";
   document.getElementById("achievements-container").style.display = "none";
   document.getElementById("chatbot-container").style.display = "none";
+  document.getElementById("photo-container").style.display = "none";
   document.getElementById("overlay-container").style.width = "80%";
   document.getElementById("overlay-container").style.borderWidth = "2vh";
   document.getElementById("overlay-container").style.left = "10%";
+  document.getElementById("overlay-container").style.top = "4%";
 }
 
 function showOverlay() {
@@ -236,4 +284,11 @@ function resetButtonColours() {
   document.getElementById("map-button").style.backgroundColor = "#508CA4";
   document.getElementById("achievements-button").style.backgroundColor = "#508CA4";
   document.getElementById("chatbot-button").style.backgroundColor = "#508CA4";
+}
+
+function underlaySelected() {
+  if(document.getElementById("overlay-container").style.display != "none") {
+    hideOverlay();
+    resetButtonColours();
+  }
 }
