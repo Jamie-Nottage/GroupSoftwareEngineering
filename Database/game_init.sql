@@ -201,10 +201,10 @@ SELECT T2.clueId, T1.buildingId, T1.clueLevel, T2.teamId FROM
 
 CREATE OR REPLACE VIEW visited AS
 
-SELECT T1.buildingId, T1.teamId, T2.buildingName, T1.time, T2.imageSource FROM
+SELECT T1.buildingId, T1.teamId, T2.buildingName, T2.latitude, T2.longitude, T1.time, T2.imageSource FROM
 	(SELECT * FROM VisitBuilding) AS T1
 		JOIN
-	(SELECT buildingName, buildingId, imageSource FROM Building) AS T2
+	(SELECT buildingName, buildingId, imageSource, latitude, longitude FROM Building) AS T2
 ON T1.BuildingId=T2.BuildingId
 ORDER BY time DESC;
 
