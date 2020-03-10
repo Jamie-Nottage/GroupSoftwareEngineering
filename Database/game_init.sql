@@ -97,6 +97,7 @@ UNIQUE(`teamId`, `taskId`,`clueLevel`)
 CREATE TABLE IF NOT EXISTS UsersScore(
 `userscoreId` INT AUTO_INCREMENT NOT NULL,
 `clueLevel` INT DEFAULT 1,
+`completed` INT NOT NULL DEFAULT 0,
 `taskId` INT NOT NULL,
 `userId` INT NOT NULL,
 FOREIGN KEY (`clueLevel`) REFERENCES Clue(`clueLevel`),

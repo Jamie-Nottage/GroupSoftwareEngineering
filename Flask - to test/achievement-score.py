@@ -22,7 +22,7 @@ def wrong_answer(userid, taskid):
     cur.execute(''' SELECT clueLevel FROM UsersScore WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
     clues = cur.fetchall()
     if result[0]['count'] == 0:
-        cur.execute(''' INSERT INTO UsersScore VALUES (NULL, 5, %d, %d) ''' %(taskid,int(userid)))
+        cur.execute(''' INSERT INTO UsersScore VALUES (NULL, DEFAULT, 5, %d, %d) ''' %(taskid,int(userid)))
         cur.connection.commit()
     if result[0]['count'] == 1:
         cur.execute(''' UPDATE UsersScore SET clueLevel=6 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
@@ -36,13 +36,13 @@ def score(userid, taskid):
     cur.execute(''' SELECT clueLevel FROM UsersScore WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
     clues = cur.fetchall()
     if result[0]['count'] == 0:
-        cur.execute(''' INSERT INTO UsersScore VALUES (NULL, DEFAULT, %d, %d) ''' %(taskid,int(userid)))
+        cur.execute(''' INSERT INTO UsersScore VALUES (NULL, 1, DEFAULT, %d, %d) ''' %(taskid,int(userid)))
         cur.connection.commit()
     elif result[0]['count'] == 1 and clues[0]['clueLevel'] == 1:
-        cur.execute(''' UPDATE UsersScore SET clueLevel=5 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
+        cur.execute(''' UPDATE UsersScore SET clueLevel=5, completed=1 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
         cur.connection.commit()
     elif result[0]['count'] == 1 and clues[0]['clueLevel'] == 5:
-        cur.execute(''' UPDATE UsersScore SET clueLevel=6 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
+        cur.execute(''' UPDATE UsersScore SET clueLevel=6, completed=1 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
         cur.connection.commit()
         
 def individual_leaderboard():
