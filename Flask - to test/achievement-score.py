@@ -36,7 +36,7 @@ def score(userid, taskid):
     cur.execute(''' SELECT clueLevel FROM UsersScore WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
     clues = cur.fetchall()
     if result[0]['count'] == 0:
-        cur.execute(''' INSERT INTO UsersScore VALUES (NULL, 1, DEFAULT, %d, %d) ''' %(taskid,int(userid)))
+        cur.execute(''' INSERT INTO UsersScore VALUES (NULL, DEFAULT, 1,  %d, %d) ''' %(taskid,int(userid)))
         cur.connection.commit()
     elif result[0]['count'] == 1 and clues[0]['clueLevel'] == 1:
         cur.execute(''' UPDATE UsersScore SET clueLevel=5, completed=1 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
@@ -58,7 +58,7 @@ def individual_leaderboard():
 
 def check_completed(taskid, userid):
     cur = mysql.connection.cursor()
-    cur.execute(''' SELECT COUNT(*) AS count FROM UsersScore WHERE taskId=%d AND userId=%d ''' %(taskid,userid))
+    cur.execute(''' SELECT COUNT(*) AS count FROM UsersScore WHERE taskId=%d AND userId=%d AND completed=1 ''' %(taskid,userid))
     result = cur.fetchall()
     if result[0]['count'] == 0:
         return False
