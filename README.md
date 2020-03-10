@@ -51,6 +51,14 @@ Exeter Expedition has been created for two different user profiles. Student user
 * See people currently online and places visited 
 * Update leaderboard 
 
+## How to Play 
+1. The top of the webpage will display the location you are to visit.
+2. When you reach the building, look for a QR code to scan and press the "Check in" button to scan the code and check in.
+You'll earn points for each location you visit.
+3. Each location also has additional activities you can perform to earn bonus points, which can be viewed by clicking the icon to the right of the "Check in" button.
+4. Press on the trophy icon in the bottom left corner to view the leaderboard and see how your team ranks.
+5. The map icon will bring up the map view and display your next location as a pin on the map.
+6. You can also bring up an FAQ page if you get lost or confused by tapping the icon in the far right.
 
 ## Contributing
 Please read CONTRIBUTING.md for a guide on contributing to the project.
