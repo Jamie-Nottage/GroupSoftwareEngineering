@@ -9,7 +9,7 @@ def display_achievements(teamid):
         s += "<tr><td>"+ str(task1[0]['description']) +"</td><td>"+ str(task1[0]['points']) +"</td></tr></table>"
         return s
     else:
-        cur.execute(''' SELECT * FROM Task WHERE required=0 AND buildingId=(SELECT buildingId FROM visited WHERE teamId=%d LIMIT 1); '''%int(teamid))
+        cur.execute(''' SELECT * FROM Task WHERE required=0 AND buildingId=(SELECT buildingId FROM Route WHERE stopNo=(SELECT stopNo FROM Route WHERE pathId=%d and buildingId=(SELECT buildingId FROM visited WHERE teamId=%d LIMIT 1) + 1);''' % (int(teamid), int(teamid)))
         tasks = cur.fetchall()
         for x in tasks:
             s += "<tr><td>"+ str(x['description']) +"</td><td>"+ str(x['points']) +"</td></tr>"
