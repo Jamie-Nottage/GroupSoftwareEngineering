@@ -64,6 +64,7 @@ def getNextLocation(teamid):
         return "Game Completed"
     return result[0]['buildingName']
 
+
 def checkQR(QRcode, teamid):
     cur = mysql.connection.cursor()
     cur.execute(''' SELECT COUNT(*) AS count FROM visited WHERE teamId=%d; ''' %int(teamid))
@@ -78,6 +79,15 @@ def checkQR(QRcode, teamid):
             mysql.connection.commit()
             cur.execute('''INSERT INTO Score VALUES (NULL, DEFAULT, (SELECT taskId from Task where buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') and required=1), %d);''' %(QRcode, int(teamid)))
             mysql.connection.commit()
+            # finding out if clues have been used for first stop
+            cur.execute(''' SELECT count(*) AS count FROM usedclues WHERE buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') AND teamId=%d; ''' %(QRcode, int(teamid)))
+            count = cur.fetchall()
+            if count[0]['count'] == 1:
+                cur.execute('''UPDATE Score SET clueLevel=2 WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') and required=1) AND teamId=%d;''' %(QRcode,int(teamid)))
+                mysql.connection.commit()
+            elif count[0]['count'] == 2:
+                cur.execute('''UPDATE Score SET clueLevel=3 WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') and required=1) AND teamId=%d;''' %(QRcode,int(teamid)))
+                mysql.connection.commit()
             return "true"
     else:
         cur.execute('''SELECT verificationCode FROM Building WHERE buildingId = (SELECT buildingId FROM Route WHERE stopNo= (SELECT stopNo FROM Route WHERE pathId=(SELECT teamId FROM visited WHERE teamId=%d LIMIT 1)AND buildingId=(SELECT buildingId FROM visited WHERE teamId=%d LIMIT 1))+1 AND pathId=(SELECT teamId FROM visited WHERE teamId=%d LIMIT 1));''' % (int(teamid), int(teamid), int(teamid)))
@@ -89,7 +99,17 @@ def checkQR(QRcode, teamid):
         mysql.connection.commit()
         cur.execute('''INSERT INTO Score VALUES (NULL, DEFAULT, (SELECT taskId from Task where buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') and required=1), %d);''' %(QRcode, int(teamid)))
         mysql.connection.commit()
+        # finding out if clues have been used for rest
+        cur.execute(''' SELECT count(*) AS count FROM usedclues WHERE buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') AND teamId=%d; ''' %(QRcode, int(teamid)))
+        count = cur.fetchall()
+        if count[0]["count"] == 1:
+            cur.execute('''UPDATE Score SET clueLevel=2 WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') and required=1) AND teamId=%d;''' %(QRcode,int(teamid)))
+            mysql.connection.commit()
+        elif count[0]['count'] == 2:
+            cur.execute('''UPDATE Score SET clueLevel=3 WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=(SELECT buildingId FROM Building WHERE verificationCode=\'%s\') and required=1) AND teamId=%d;''' %(QRcode,int(teamid)))
+            mysql.connection.commit()
         return "true"
+
 
 def taskDisplay(teamId):
     cur = mysql.connection.cursor()
@@ -97,7 +117,8 @@ def taskDisplay(teamId):
     result = cur.fetchall();
     s = ""
     for x in result:
-        s += "<li><div class=\"cl-element prev\"><div class=\"cl-element left prev\"><img src=\"static/img/"+ x['imageSource'] +"\" alt=\" "+ x['buildingName'] + "\" height=\"65\" class=\"grey-img\"><img src=\"static/img/tick.png\" alt=\"Tick\" height=\"60\" class=\"tick-img\"></div><p class=\"visited title\">"+ x['buildingName'] +"</p><p class=\"visited date\">" + str(x['time']).split(" ")[0] + "</p><p class=\"visited points\">Time Visited: " + str(x['time']).split(" ")[1] + "</p></div></li>"
+
+        s = s + "<li><div class=\"cl-element prev\"><div class=\"cl-element left prev\"><img src=\"static/img/"+ x['imageSource'] +"\" alt=\" "+ x['buildingName'] + "\" height=\"65\" class=\"grey-img\"><img src=\"static/img/tick.png\" alt=\"Tick\" height=\"60\" class=\"tick-img\"></div><p class=\"visited title\">"+ x['buildingName'] +"</p><p class=\"visited date\">" + str(x['time']).split(" ")[0] + "</p><p class=\"visited points\">Time Visited: " + str(x['time']).split(" ")[1] + "</p></div></li>"
     return s
 
 @app.route('/getLeaderboard', methods=['POST', 'GET'])
@@ -165,7 +186,7 @@ def clue_content(team_name):
 
     #clue 1 content (either slider to clue itself)
     if (hint_level == 1):
-        clue_container_content += '<li><div id="clue1-container" class="cl-element hint"><p id="clue1-txt" class="hint-main-txt">Slide to reveal a clue (-50 points)</p><div id="clue1" class="cl-element left"><img id="clue1-img" src="static/img/rightarrow.png" alt="->" height="50"class="clue-button-art"></div></div></li>'
+        clue_container_content += '<li><div id="clue1-container" class="cl-element hint"><p id="clue1-txt" class="hint-main-txt">Slide to reveal a clue (-25 points)</p><div id="clue1" class="cl-element left"><img id="clue1-img" src="static/img/rightarrow.png" alt="->" height="50"class="clue-button-art"></div></div></li>'
     else:
         clue_txt = get_clue(team_name, 2);
         clue_container_content += '<li><div id="uncovered-clue1-container" class="cl-element hint"><p id="uncovered-clue1-txt" class="hint-main-txt uncovered">' + clue_txt + '</p>  </div>  </li>'
@@ -174,7 +195,7 @@ def clue_content(team_name):
     if (hint_level == 1):
         clue_container_content += ""
     elif (hint_level == 2):
-        clue_container_content += '<li><div id="clue2-container" class="cl-element hint"><p id="clue2-txt" class="hint-main-txt">Slide to reveal a photo (-100 points)</p><div id="clue2" class="cl-element left"><img id="clue2-img" src="static/img/rightarrow.png" alt="->" height="50"class="clue-button-art"></div></div></li>'
+        clue_container_content += '<li><div id="clue2-container" class="cl-element hint"><p id="clue2-txt" class="hint-main-txt">Slide to reveal a photo (-50 points)</p><div id="clue2" class="cl-element left"><img id="clue2-img" src="static/img/rightarrow.png" alt="->" height="50"class="clue-button-art"></div></div></li>'
     else:
         clue_txt = get_clue(team_name, 3);
         image_tag_content = "static/img/" + clue_txt;
@@ -212,8 +233,6 @@ def unlock_clue(teamid):
         clueid = cur.fetchall()
         cur.execute(''' INSERT INTO Used VALUES (%d, %d)''' % (int(clueid[0]['clueId']),int(teamid)))
         mysql.connection.commit()
-        cur.execute(''' UPDATE Score SET clueLevel=%d WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=%d and required=1) AND teamId=%d;''' %(clue_level,buildingid,int(teamid)))
-        mysql.connection.commit()
         return s
     if result[0]['count'] == 1:
         cur.execute(''' SELECT clue FROM BuildingClue WHERE buildingId=%d and clueLevel=%d ''' %(buildingid,clue_level))
@@ -224,8 +243,6 @@ def unlock_clue(teamid):
         cur.execute(''' SELECT clueId FROM BuildingClue WHERE buildingId=%d and clueLevel=%d ''' %(buildingid,clue_level))
         clueid = cur.fetchall()
         cur.execute(''' INSERT INTO Used VALUES (%d, %d)''' %(int(clueid[0]['clueId']),int(teamid)))
-        mysql.connection.commit()
-        cur.execute('''UPDATE Score SET clueLevel=%d WHERE taskId=(SELECT taskId FROM Task WHERE buildingId=%d and required=1) AND teamId=%d;''' %(clue_level,buildingid,int(teamid)))
         mysql.connection.commit()
         return s
 
@@ -257,6 +274,30 @@ def get_clue(teamid, clue_level):
         clueid = cur.fetchall()
         return s
 
+
+@app.route('/displayAchievements', methods=['GET'])
+def display_achievements_content():
+    if request.method == 'GET':
+        return display_achievements(1)
+    return main_app()
+
+def display_achievements(teamid):
+    cur = mysql.connection.cursor()
+    cur.execute(''' SELECT COUNT(*) AS count FROM visited WHERE teamId=%d; ''' %int(teamid))
+    result = cur.fetchall()
+    s = "<h2>Extra Achievements</h2><table><tr><th>Task Description</th><th>Points</th></tr>"
+    if result[0]['count'] == 0:
+        cur.execute(''' SELECT * FROM Task WHERE required=0 AND buildingId=6; ''')
+        task1 = cur.fetchall()
+        s += "<tr><td>"+ str(task1[0]['description']) +"</td><td>"+ str(task1[0]['points']) +"</td></tr></table>"
+        return s
+    else:
+        cur.execute(''' SELECT * FROM Task WHERE required=0 AND buildingId=(SELECT buildingId FROM visited WHERE teamId=%d LIMIT 1); '''%int(teamid))
+        tasks = cur.fetchall()
+        for x in tasks:
+            s += "<tr><td>"+ str(x['description']) +"</td><td>"+ str(x['points']) +"</td></tr>"
+        s += "</table>"
+        return s
 
 
 if __name__ == '__main__':

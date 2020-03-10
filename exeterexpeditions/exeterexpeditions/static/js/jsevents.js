@@ -42,7 +42,7 @@ function updateClueContent() {
   xhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200 && clueNotBeingLoaded && !(sliderSnappingBack)) {
     response_json = JSON.parse(this.responseText);
-    document.getElementById("clues-list").innerHTML = response_json['clue_list_content'];
+    document.getElementById("clues-").innerHTML = response_json['clue_list_content'];
     if(response_json['clue_level'] == 1) {
       initialiseDraggable("#clue1", "#clue1-img", "#clue1-container");
     } else if (response_json['clue_level'] == 2){
@@ -181,6 +181,14 @@ function achievements() {
 
 function loadAchievements() {
   document.getElementById("achievements-container").style.display = "block";
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("achievements-container").innerHTML = this.responseText;
+  }
+  };
+  xhttp.open("GET", "/displayAchievements", true);
+  //xhttp.send();
 }
 
 function chatbot() {

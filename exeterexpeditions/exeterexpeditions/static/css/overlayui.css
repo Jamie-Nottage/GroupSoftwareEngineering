@@ -90,6 +90,7 @@
   margin-left: 2%;
   margin-bottom: 2%;
   margin-top: 2%;
+  color: #484747;
 }
 
 .overlay {
@@ -223,9 +224,12 @@
   width: 100%;
 
   color: #FFFFFF;
+
+  box-shadow: 0px -2px 10px grey;
 }
 
 .faq-answer {
+  color: #676767;
   display: none;
   padding-right: 2vw;
 }

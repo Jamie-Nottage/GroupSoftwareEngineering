@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="static/css/centralui.css">
   <link rel="stylesheet" type="text/css" href="static/css/overlayui.css">
   <link rel="stylesheet" type="text/css" href="static/css/mapstyle.css">
+  <link rel="stylesheet" type="text/css" href="static/css/achievements.css">
   <title>Exeter Expeditions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1,
   user-scalable=no">
@@ -15,6 +16,9 @@
   <script src="static/js/jsevents.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="static/js/jqueries.js"></script>
+  <script src="static/js/mapscript.js"></script>
+  <script src="static/js/achievements.js"></script>
+
 
 </head>
 
@@ -146,7 +150,38 @@
       </div>
 
       <div id="achievements-container">
-        <div class="loader"></div>
+        <!-- <div class="loader"></div> -->
+        <h1 id="achievements-title">Achievements</h1>
+
+        <ul id="achievements-list">
+          <li>
+            <div class="achievement-head">
+              <div class="achievement-left">
+                <img class="achievement-badge-img" src="static/img/completed-achievement.png" height=46px>
+              </div>
+              <div class="achievement-right">
+                <div class="achievement-title-container"><p class="achievement-titles">HOW MUCH FOR CURLY FRIES???</p></div>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="achievement-head incomplete">
+              <div class="achievement-left incomplete">
+                <img class="achievement-badge-img" src="static/img/empty-achievement.png" height=46px>
+              </div>
+              <div class="achievement-right incomplete" onclick="achievementQButtonPressed(this)">
+                <div class="achievement-title-container incomplete"><p class="achievement-titles incomplete">OwO what's this?</p></div>
+              </div>
+              <div class="quiz-dropdown">
+                <p class="achievement-question-txt">What is the ISBN for discrete maths for beginners?</p>
+                <div class="achievement-answer-button">Big brain</div>
+                <div class="achievement-answer-button">Smöl brain</div>
+                <div class="achievement-answer-button">Medium brain</div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
 
       <div id="chatbot-container">
@@ -260,6 +295,7 @@
       document.getElementById("movable-sign-txt").style.marginTop = topMargin + "px";
     });
     </script>
+
 
     <script type="text/javascript">
       function onQRCodeScanned(scannedText)
