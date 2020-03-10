@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Route</title>
+        <link rel="stylesheet" type="text/css" href="static/css/AddRouteStyle.css">
+    </head>
+    <body>
+
+
+        <ul>
+            <li><img src="static/img/logo.PNG" alt="Exeter Expedition Logo" class="responsive" width="600" height="400"></li>
+            <li><a class="active" type="button" href='/game-keeper'>Home</a></li>
+            <li><a type="button" href='/add-route'>Add Route</a></li>
+            <li><a type="button" href='/add-tutor'>Add Tutor</a></li>
+            <li><a type="button" href='/add-game-keeper'>Add Game Keeper</a></li>
+            <li><a href="#LogOut">Log Out</a></li>
+        </ul>
+
+        <div class="account">
+            <h1>Game Keeper Account</h1>
+        </div>
+
+        <div class="addRoute-title">
+            <h3>Create New Route</h3>
+        </div>
+
+        <div class="instructions">
+            <i>
+                <p>What to do:</p>
+                <p style="text-indent: 50px;">To add new routes for the students to complete please select the route from the dropdown list below.</p>
+                <p style="text-indent: 50px;">As long as the beginning route is the Forum, the order in which buildings are visited is not restricted. </p>
+                <p style="text-indent: 50px;">Click 'Submit Route' for your route to be activated</p>
+            </i>
+        </div>
+
+        <div class="GK-form">
+            <h3>Route Order</h3>
+
+            <form>
+                <label for="building">First building:</label>
+                <select id="building">
+                    <option value="forum">Forum</option>
+                </select>
+
+                <label for="building">Second building:</label>
+                <select id="building">
+                    <option value="forum" disabled="disabled">Forum</option>
+                    <option value="streatham">Streatham Court</option>
+                    <option value="harrison">Harrison</option>
+                    <option value="devonshire">Devonshire House</option>
+                    <option value="queens">Queens</option>
+                    <option value="innovation">Innovation</option>
+                </select>
+
+                <label for="building">Third building:</label>
+                <select id="building">
+                    <option value="forum" disabled="disabled">Forum</option>
+                    <option value="streatham">Streatham Court</option>
+                    <option value="harrison">Harrison</option>
+                    <option value="devonshire">Devonshire House</option>
+                    <option value="queens">Queens</option>
+                    <option value="innovation">Innovation</option>
+                </select>
+                </br>
+
+                <label for="building">Fourth building:</label>
+                <select id="building">
+                    <option value="forum" disabled="disabled">Forum</option>
+                    <option value="streatham">Streatham Court</option>
+                    <option value="harrison">Harrison</option>
+                    <option value="devonshire">Devonshire House</option>
+                    <option value="queens">Queens</option>
+                    <option value="innovation">Innovation</option>
+                </select>
+
+                <label for="building">Fifth building:</label>
+                <select id="building">
+                    <option value="forum" disabled="disabled">Forum</option>
+                    <option value="streatham">Streatham Court</option>
+                    <option value="harrison">Harrison</option>
+                    <option value="devonshire">Devonshire House</option>
+                    <option value="queens">Queens</option>
+                    <option value="innovation">Innovation</option>
+                </select>
+
+                <label for="building">Sixth building:</label>
+                <select id="building">
+                    <option value="forum" disabled="disabled">Forum</option>
+                    <option value="streatham">Streatham Court</option>
+                    <option value="harrison">Harrison</option>
+                    <option value="devonshire">Devonshire House</option>
+                    <option value="queens">Queens</option>
+                    <option value="innovation">Innovation</option>
+                </select>
+				<div>
+					<button type="submit" class="submitTeamBtn">Add Route</button>
+				</div>
+            </form>
+        </div>
+    </body>
+</html>
+

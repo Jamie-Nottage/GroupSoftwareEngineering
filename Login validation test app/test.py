@@ -16,22 +16,22 @@ app.secret_key = b'\x8c\xec\xd3\x08T4b\xfd5\xee\x90Yy\x90\xd6\r'
 
 @app.route('/')
 def index():
-    """
-    Redirects to index page if the user is in the session if / is used
-    :return: returns HTML page for either index or home page depending on whether the user is in the session
-    :rtype: HTML page
-    """
+	"""
+	Redirects to index page if the user is in the session if / is used
+	:return: returns HTML page for either index or home page depending on whether the user is in the session
+	:rtype: HTML page
+	"""
 	if 'username' in session:
 		return redirect(url_for('main_app'))
 	return redirect(url_for('home_page'))
 	
 @app.route('/main')
 def main_app():
-    """
-    Redirects to index page if the user is in the session if the URL /main is used
-    :return: returns HTML page for either index or home page depending on whether the user is in the session
-    :rtype: HTML page
-    """
+	"""
+	Redirects to index page if the user is in the session if the URL /main is used
+	:return: returns HTML page for either index or home page depending on whether the user is in the session
+	:rtype: HTML page
+	"""
 	if 'username' in session:
 		return render_template('index.html')
 	else:
@@ -39,23 +39,23 @@ def main_app():
 	
 @app.route('/home')
 def home_page():
-    """
-    Redirects to index page if the user is in the session the URL /home is used
-    :return: returns HTML page for either index or home page depending on whether the user is in the session
-    :rtype: HTML page
-    """
+	"""
+	Redirects to index page if the user is in the session the URL /home is used
+	:return: returns HTML page for either index or home page depending on whether the user is in the session
+	:rtype: HTML page
+	"""
 	if 'username' in session:
 		return redirect(url_for('main_app'))
 	return render_template('home-page.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """
-    Redirecting the login page based on whether the login is a gamekeeper login or a user login.
-    If is a user login will redirect to the index page. If a gamekeeper will redirect to game keeper page
-    :return: HTML page based on the user logged in
-    :rtype: HTML page
-    """
+	"""
+	Redirecting the login page based on whether the login is a gamekeeper login or a user login.
+	If is a user login will redirect to the index page. If a gamekeeper will redirect to game keeper page
+	:return: HTML page based on the user logged in
+	:rtype: HTML page
+	"""
 	error = None
 	if 'username' in session:
 		return redirect(url_for('main_app'))
@@ -143,49 +143,49 @@ def verifySignup(name, surname, email, username, password, tutor):
 		cur.execute('''INSERT INTO Users (fName, lName, emailAddress, username, password, tutorId, teamId) VALUES (\'%s\',\'%s\',\'%s\',\'%s\',\'%s\',%d,%d)''' % (name, surname, email, username, hashedPassword, tutorID, tutorID))
 		mysql.connection.commit()
 		return 0
-		
+#ADDED GAME KEEPER CODE#
+@app.route('/add-route')
+def add_route():
+	if 'GKUsername' in session:
+		return render_template('add-route.html')
+	else:
+		return redirect(url_for('home_page'))
+	
 #BEN RAF CODE#
 @app.route('/game-keeper')
 def game_keeper():
-    return render_template('game-keeper-page.html', users=users_online(), teams=game_leader_board(), places=places_visited())
+	if 'GKUsername' in session:
+		return render_template('game-keeper-page.html', users=users_online(), teams=game_leader_board(), places=places_visited())
+	else:
+		return redirect(url_for('home_page'))
 
 @app.route('/add-tutor', methods=['POST', 'GET'])
 def add_tutor():
-    if request.method == 'POST':
-        title = request.form["title"]
-        name = request.form["firstname"]
-        surname = request.form["surname"]
-        add_tutor_db(title, name, surname)
-    return render_template('add-tutor.html')
+	if 'GKUsername' in session:
+		return render_template('add-tutor.html')
+	elif request.method == 'POST':
+		title = request.form["title"]
+		name = request.form["firstname"]
+		surname = request.form["surname"]
+		add_tutor_db(title, name, surname)
+		return render_template('add-tutor.html')		
+	else:
+		return redirect(url_for('home_page'))
 
 @app.route('/add-game-keeper', methods=['POST', 'GET'])
 def add_game_keeper():
-    if request.method == 'POST':
-        name = request.form["firstname"]
-        surname = request.form["surname"]
-        email = request.form["email"]
-        username = request.form["username"]
-        password = request.form["password"]
-        add_game_keeper_db(name, surname, email, username, password)
-    return render_template('add-game-keeper.html')
-
-@app.route('/get-leaderboard', methods=['POST', 'GET'])
-def get_leaderboard_gk():
-    if request.method == 'GET':
-        teams = game_leader_board()
-    return render_template('add-game-keeper.html', teams=teams)
-
-@app.route('/users-online', methods=['POST', 'GET'])
-def get_users():
-    if request.method == 'GET':
-        users = users_online()
-    return render_template('add-game-keeper.html', users=users)
-
-@app.route('/places-visited', methods=['POST', 'GET'])
-def get_places():
-    if request.method == 'GET':
-        places = places_visited()
-    return render_template('add-game-keeper.html', places=places)
+	if 'GKUsername' in session:
+		return render_template('add-game-keeper.html')
+	if request.method == 'POST':
+		name = request.form["firstname"]
+		surname = request.form["surname"]
+		email = request.form["email"]
+		username = request.form["username"]
+		password = request.form["password"]
+		add_game_keeper_db(name, surname, email, username, password)
+		return render_template('add-game-keeper.html')
+	else:
+		return redirect(url_for('home_page'))
 
 def add_tutor_db(title, firstname, lastname):
     cur = mysql.connection.cursor()
