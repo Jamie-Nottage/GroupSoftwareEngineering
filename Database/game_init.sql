@@ -57,8 +57,11 @@ CREATE TABLE IF NOT EXISTS Building(
 `buildingId` INT AUTO_INCREMENT NOT NULL,
 `buildingName` VARCHAR(100) NOT NULL,
 `verificationCode` VARCHAR(100) NOT NULL UNIQUE,
-`imageSource` VARCHAR(50),
-PRIMARY KEY (`buildingId`)
+`imageSource` VARCHAR(50) NOT NULL,
+`latitude` VARCHAR(50) NOT NULL,
+`longitude` VARCHAR(50) NOT NULL,
+PRIMARY KEY (`buildingId`),
+UNIQUE(`longitude`, `latitude` )
 );
 
 CREATE TABLE IF NOT EXISTS Task(
@@ -228,10 +231,10 @@ ORDER BY score DESC;
 
 CREATE OR REPLACE VIEW Routes AS
 
-SELECT r.pathId, b.buildingName, r.stopNo FROM
+SELECT r.pathId, b.buildingName, r.stopNo, b.latitude, b.longitude FROM
 	(SELECT * FROM Route) AS r
 		JOIN
-	(SELECT bl.buildingId, bl.buildingName FROM Building bl) AS b
+	(SELECT bl.buildingId, bl.buildingName, bl.latitude, bl.longitude FROM Building bl) AS b
 	ON b.buildingId=r.buildingId;
 
     
@@ -287,21 +290,21 @@ INSERT INTO Team VALUES
 (NULL, 'Team David Wakeling', 4, 4);
 
 INSERT INTO Users VALUES
-(NULL, 'Name1', 'Surname1', 'email1', 'username1', 'password1', DEFAULT, 1, 1),
-(NULL, 'Name2', 'Surname2', 'email2', 'username2', 'password2', DEFAULT, 1, 1),
-(NULL, 'Name3', 'Surname3', 'email3', 'username3', 'password3', DEFAULT, 2, 2),
-(NULL, 'Name4', 'Surname4', 'email4', 'username4', 'password4', DEFAULT, 3, 3);
+(NULL, 'Name1', 'Surname1', 'email1', 'username1', 'password1', 1, 1),
+(NULL, 'Name2', 'Surname2', 'email2', 'username2', 'password2', 1, 1),
+(NULL, 'Name3', 'Surname3', 'email3', 'username3', 'password3', 2, 2),
+(NULL, 'Name4', 'Surname4', 'email4', 'username4', 'password4', 3, 3);
 
 INSERT INTO Gamekeeper VALUES
 (NULL, 'group','o', 'groupO@exeter.ac.uk', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2');
 
 INSERT INTO Building VALUES
-(NULL, 'Devonshire House', 'code1', 'devonshirehouse.png'),
-(NULL, 'Queens', 'code2', 'queens.png'),
-(NULL, 'Harrison', 'code3', 'harrison.png'),
-(NULL, 'Innovation Centre', 'code4', 'innovation-grey.png'),
-(NULL, 'Streatham Court', 'code5', 'streathamcourt.png'),
-(NULL, 'Forum', 'code6', 'forum-grey.jpg');
+(NULL, 'Devonshire House', 'code1', 'devonshirehouse.png', '50.735167', '-3.534269'),
+(NULL, 'Queens', 'code2', 'queens.png', '50.734044', '-3.535082'),
+(NULL, 'Harrison', 'code3', 'harrison.png', '50.737739', '-3.532628'),
+(NULL, 'Innovation Centre', 'code4', 'innovation-grey.png', '50.738506', '-3.531004'),
+(NULL, 'Streatham Court', 'code5', 'streathamcourt.png', '50.73567', '-3.530897'),
+(NULL, 'Forum', 'code6', 'forum-grey.jpg', '50.735459', '-3.533207');
 
 INSERT INTO Task VALUES
 (NULL, 150, 'Find Devonshire House', 1, 1),
