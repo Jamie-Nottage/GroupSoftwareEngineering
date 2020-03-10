@@ -14,6 +14,20 @@ def get_right_answer(taskid):
     ans = cur.fetchall()
     return ans
 
+# if answer is wrong call this function
+def wrong_answer(userid, taskid):
+    cur = mysql.connection.cursor()
+    cur.execute(''' SELECT COUNT(*) AS count FROM UsersScore WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
+    result = cur.fetchall()
+    cur.execute(''' SELECT clueLevel FROM UsersScore WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
+    clues = cur.fetchall()
+    if result[0]['count'] == 0:
+        cur.execute(''' INSERT INTO UsersScore VALUES (NULL, 5, %d, %d) ''' %(taskid,int(userid)))
+        cur.connection.commit()
+    if result[0]['count'] == 1:
+        cur.execute(''' UPDATE UsersScore SET clueLevel=6 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
+        cur.connection.commit()
+
 # test answer is correct before calling this function
 def score(userid, taskid):
     cur = mysql.connection.cursor()
@@ -24,13 +38,11 @@ def score(userid, taskid):
     if result[0]['count'] == 0:
         cur.execute(''' INSERT INTO UsersScore VALUES (NULL, DEFAULT, %d, %d) ''' %(taskid,int(userid)))
         cur.connection.commit()
-        
     elif result[0]['count'] == 1 and clues[0]['clueLevel'] == 1:
         cur.execute(''' UPDATE UsersScore SET clueLevel=5 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
         cur.connection.commit()
-        
     elif result[0]['count'] == 1 and clues[0]['clueLevel'] == 5:
-        cur.execute(''' UPDATE AchievementUsed SET status=1, clueLevel=6 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
+        cur.execute(''' UPDATE UsersScore SET clueLevel=6 WHERE taskId=%d and userId=%d; ''' %(taskid,int(userid)))
         cur.connection.commit()
         
 def individual_leaderboard():
