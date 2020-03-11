@@ -330,7 +330,7 @@ INSERT INTO Task VALUES
 INSERT INTO Clue VALUES
 (NULL, 'Full marks', 0),
 (NULL, 'Click here for a text clue', 25),
-(NULL, 'Click here for an image clue', 75),
+(NULL, 'Click here for an image clue', 50),
 (NULL, 'Click here for a clue on the map', 100),
 (NULL, 'achievement try 1', 20),
 (NULL, 'achievement try 2', 40);
