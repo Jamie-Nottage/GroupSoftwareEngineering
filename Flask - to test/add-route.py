@@ -1,4 +1,12 @@
 def add_route(second, third, fourth, fifth, sixth):
+    """
+    Adding a new route to the database after the form has been submitted
+    :param second: Name of the second building in the new route
+    :param third: Name of the third building in the new route
+    :param fourth: Name of the fourth building in the new route
+    :param fifth: Name of the fifth building in the new route
+    :param sixth: Name of the sixth building in the new route
+    """
     cur = mysql.connection.cursor()
     cur.execute(''' INSERT INTO Paths VALUES (NULL, 6) ''')
     cur.connection.commit()
@@ -21,5 +29,5 @@ def add_route(second, third, fourth, fifth, sixth):
     six = cur.fetchall()
     buildingids.append(six[0]['buildingId'])
     for count in range(len(buildingids)):
-        cur.execute(''' INSERT INTO Route VALUES (%d, %d) ''' %(pathid[0]['pathId'], buildingids[count], count))
+        cur.execute(''' INSERT INTO Route VALUES (%d, %d, %d) ''' %(pathid[0]['pathId'], buildingids[count], count))
         cur.connection.commit()
