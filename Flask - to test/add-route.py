@@ -1,4 +1,4 @@
-def add_route(second, third, fourth, fifth, sixth):
+def add_route_db(second, third, fourth, fifth, sixth):
     """
     Adding a new route to the database after the form has been submitted
     :param second: Name of the second building in the new route
