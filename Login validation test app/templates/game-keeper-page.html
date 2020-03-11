@@ -52,13 +52,26 @@
 
 
         <div class="leaderTitle">
-            <p style="font-size:25px"><b>Leaderboard</b></p>
+            <p style="font-size:25px"><b>Team Leaderboard</b></p>
         </div>
 
         <div id="container">
             {% for team in teams %}
             <div class="row">
                 <div class="name">{{ team.teamName }}</div><div class="score">{{ team.score }}</div>
+            </div>
+            {% endfor %}
+
+        </div>
+		
+		<div class="leaderTitle">
+            <p style="font-size:25px"><b>Individual Leaderboard</b></p>
+        </div>
+
+        <div id="container">
+            {% for player in players %}
+            <div class="row">
+                <div class="name">{{ player.username }}</div><div class="score">{{ player.score }}</div>
             </div>
             {% endfor %}
 

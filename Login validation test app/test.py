@@ -146,7 +146,7 @@ def game_keeper():
     :rtype: HTML page.
     """
     if 'GKUsername' in session:
-        return render_template('game-keeper-page.html', users=users_online(), teams=game_leader_board(),
+        return render_template('game-keeper-page.html', users=users_online(), teams=game_leader_board(), players=individual_leaderboard_gk(),
                                places=places_visited())
     else:
         return redirect(url_for('home_page'))
@@ -241,14 +241,17 @@ def reset_password():
 	if request.method == 'POST':
 		username = request.form["username"]
 		oldPassword = request.form["current password"]
-		newPassword = request.form["new password"]
-		valid = reset_password(username, oldPassword, newPassword)
-		if valid == 0:
-			created = True
-			session.clear()
-			return redirect(url_for('login'))
-		else:
+		newPassword = request.form["new password"]	
+		if username != session['GKUsername']:
 			error = True
+		else:		
+			valid = reset_password(username, oldPassword, newPassword)
+			if valid == 0:
+				created = True
+				session.clear()
+				return redirect(url_for('login'))
+			else:
+				error = True
 		return render_template('reset-password.html', updatePasswordError=error)
 	elif 'GKUsername' in session:
 		return render_template('reset-password.html')
@@ -455,6 +458,11 @@ def game_leader_board():
     result = cur.fetchall()
     return result
 
+def individual_leaderboard_gk():
+    cur = mysql.connection.cursor()
+    cur.execute(''' SELECT * FROM individualLeaderboard; ''')
+    result = cur.fetchall()
+    return result
 
 def places_visited():
     """
@@ -467,7 +475,6 @@ def places_visited():
     result = cur.fetchall()
     return result
 
-
 def users_online():
     """
     Gets the number of users signed up to the game.
@@ -478,7 +485,6 @@ def users_online():
     cur.execute(''' SELECT COUNT(*) AS usersonline FROM Users''')
     result = cur.fetchall()
     return result
-
 
 # BEN RANG CODE #
 @app.route('/getSign', methods=['POST', 'GET'])
