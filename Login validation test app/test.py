@@ -44,14 +44,16 @@ def main_app():
 
 @app.route('/home')
 def home_page():
-    """
-    Redirects to index page if the user is in the session if the URL '/home' is used
-    :return: Returns HTML page for either index or home page depending on whether the user is in the session
-    :rtype: HTML page.
-    """
-    if 'username' in session:
-        return redirect(url_for('main_app'))
-    return render_template('home-page.html')
+	"""
+	Redirects to index page if the user is in the session if the URL '/home' is used
+	:return: Returns HTML page for either index or home page depending on whether the user is in the session
+	:rtype: HTML page.
+	"""
+	if 'username' in session:
+		return redirect(url_for('main_app'))
+	elif 'GKUsername' in session:
+		return redirect(url_for('game_keeper'))
+	return render_template('home-page.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -135,20 +137,6 @@ def privacy_page():
 
 
 # ADDED GAME KEEPER CODE
-@app.route('/add-route')
-def add_route():
-    """
-    Redirecting the gamekeeper to the add route page if the gamekeeper is in session
-    :return: Add route page
-    :rtype: HTML page.
-    """
-    if 'GKUsername' in session:
-        return render_template('add-route.html')
-    else:
-        return redirect(url_for('home_page'))
-
-
-# ADDED GAME KEEPER CODE
 @app.route('/game-keeper')
 def game_keeper():
     """
@@ -167,47 +155,95 @@ def game_keeper():
 # ADDED GAME KEEPER CODE
 @app.route('/add-tutor', methods=['POST', 'GET'])
 def add_tutor():
-    """
-    Directing to add tutor page if the gamekeeper is in session, requesting the tutor details from the form and
-    redirecting to the add tutor page after details have been submitted.
-    :return: Add tutor page
-    :rtype: HTML page.
-    """
-    if 'GKUsername' in session:
-        return render_template('add-tutor.html')
-    elif request.method == 'POST':
-        title = request.form["title"]
-        name = request.form["firstname"]
-        surname = request.form["surname"]
-        add_tutor_db(title, name, surname)
-        return render_template('add-tutor.html')
-    else:
-        return redirect(url_for('home_page'))
+	"""
+	Directing to add tutor page if the gamekeeper is in session, requesting the tutor details from the form and
+	redirecting to the add tutor page after details have been submitted.
+	:return: Add tutor page
+	:rtype: HTML page.
+	"""
+	error = None
+	created = None
+	if request.method == 'POST':
+		title = request.form["title"]
+		name = request.form["firstname"]
+		surname = request.form["surname"]
+		valid = add_tutor_db(title, name, surname)
+		if valid != 0:
+			error = True
+		else:
+			created = True
+		return render_template('add-tutor.html', addTutorError=error, tutorCreated=created)
+	elif 'GKUsername' in session:
+		return render_template('add-tutor.html')
+	else:
+		return redirect(url_for('home_page'))
 
 
 # ADDED GAME KEEPER CODE
 @app.route('/add-game-keeper', methods=['POST', 'GET'])
 def add_game_keeper():
-    """
-    Directing to add gamekeeper page if the gamekeeper is in session, requesting the gamekeeper signup details from the
-    form and redirecting to the same add gamekeeper page after details have been submitted.
-    :return: Add gamekeeper page
-    :rtype: HTML page.
-    """
-    if 'GKUsername' in session:
-        return render_template('add-game-keeper.html')
-    if request.method == 'POST':
-        name = request.form["firstname"]
-        surname = request.form["surname"]
-        email = request.form["email"]
-        username = request.form["username"]
-        password = request.form["password"]
-        add_game_keeper_db(name, surname, email, username, password)
-        return render_template('add-game-keeper.html')
-    else:
-        return redirect(url_for('home_page'))
+	"""
+	Directing to add gamekeeper page if the gamekeeper is in session, requesting the gamekeeper signup details from the
+	form and redirecting to the same add gamekeeper page after details have been submitted.
+	:return: Add gamekeeper page
+	:rtype: HTML page.
+	"""
+	error = None
+	created = None
+	if request.method == 'POST':
+		name = request.form["firstname"]
+		surname = request.form["surname"]
+		email = request.form["email"]
+		username = request.form["username"]
+		password = request.form["password"]
+		valid = add_game_keeper_db(name, surname, email, username, password)
+		if valid != 0:
+			error = True
+		else:
+			created = True
+		return render_template('add-game-keeper.html', addGKError=error, GKCreated=created)
+	elif 'GKUsername' in session:
+		return render_template('add-game-keeper.html')
+	else:
+		return redirect(url_for('home_page'))
+
+# ADDED GAME KEEPER CODE
+@app.route('/add-route', methods=['POST', 'GET'])
+def add_route():
+	"""
+	Redirecting the gamekeeper to the add route page if the gamekeeper is in session
+	:return: Add route page
+	:rtype: HTML page.
+	"""
+	error = None
+	created = None
+	if request.method == 'POST':
+		second = request.form["second"]
+		third = request.form["third"]
+		fourth = request.form["fourth"]
+		fifth = request.form["fifth"]
+		sixth = request.form["sixth"]
+		valid = add_route_db(second, third, fourth, fifth, sixth)
+		if valid != 0:
+			error = True
+		else:
+			created = True
+		return render_template('add-route.html', addRouteError=error, routeCreated=created)
+	elif 'GKUsername' in session:
+		return render_template('add-route.html')
+	else:
+		return redirect(url_for('home_page'))
 
 
+# ADDED GAME KEEPER CODE
+@app.route('/logout')
+def logout():
+	if 'username' in session or 'GKUsername' in session:
+		session.clear()
+	return redirect(url_for('home_page'))
+		
+
+##### Functions ######
 def tutor_list():
     """
     Selecting all of the available tutors in the drop down list so that they can be selected on signup
@@ -281,62 +317,96 @@ def verifySignup(name, surname, email, username, password, tutor):
         mysql.connection.commit()
         return 0
 
-
 def add_tutor_db(title, firstname, lastname):
-    """
-    Adding the tutor to the database after a gamekeeper has submitted the form details.
-    A route must be added before a tutor can be assigned to it.
-    :param title: Gamekeeper input of the tutors title in the HTML add tutor form
-    :param firstname: Gamekeeper input of the tutors first name in the HTML add tutor form
-    :param lastname: Gamekeeper input of the tutors surname in the HTML add tutor form
-    :return: Returns whether the tutor has been added successfully or not.
-    :rtype: Int.
-    """
-    cur = mysql.connection.cursor()
-    cur.execute(''' INSERT INTO Tutor VALUES (NULL, \'%s\', \'%s\', \'%s\')''' % (title, firstname, lastname))
-    mysql.connection.commit()
-    cur.execute(''' SELECT COUNT(*) AS count from Tutor; ''')
-    tutor_count = cur.fetchall()
-    cur.execute(''' SELECT COUNT(*) AS count from Paths; ''')
-    path_count = cur.fetchall()
-    if path_count[0]['count'] < tutor_count[0]['count']:
-        cur.execute(''' INSERT INTO Paths VALUES (NULL, 6)''')
-        mysql.connection.commit()
-    cur.execute(
-        '''SELECT COUNT(*) AS count FROM Route WHERE pathId=(SELECT tutorId FROM Tutor WHERE title=\'%s\' AND fName=\'%s\' AND lName=\'%s\')''' % (
-            title, firstname, lastname))
-    route_count = cur.fetchall()
-    if route_count[0]['count'] == 0:
-        # must enter a new route before can enter a new tutor.
-        # response must be done
-        return 1
-    teamname = "Team " + firstname + " " + lastname
-    cur.execute(
-        ''' INSERT INTO Team VALUES (NULL, \'%s\', (SELECT tutorId FROM Tutor WHERE title=\'%s\' AND fName=\'%s\' AND lName=\'%s\'), (SELECT tutorId FROM Tutor WHERE title=\'%s\' AND fName=\'%s\' AND lName=\'%s\') )''' % (
-            teamname, title, firstname, lastname, title, firstname, lastname))
-    mysql.connection.commit()
-    return 0
+	"""
+	Adding the tutor to the database after a gamekeeper has submitted the form details.
+	A route must be added before a tutor can be assigned to it.
+	:param title: Gamekeeper input of the tutors title in the HTML add tutor form
+	:param firstname: Gamekeeper input of the tutors first name in the HTML add tutor form
+	:param lastname: Gamekeeper input of the tutors surname in the HTML add tutor form
+	:return: Returns whether the tutor has been added successfully or not.
+	:rtype: Int.
+	"""
+	cur = mysql.connection.cursor()
+	cur.execute(''' SELECT COUNT(*) AS count from Tutor; ''')
+	tutor_count = cur.fetchall()
+	cur.execute(''' SELECT COUNT(*) AS count from Paths; ''')
+	path_count = cur.fetchall()
+	if path_count[0]['count'] <= tutor_count[0]['count']:
+		# must enter a new route before can enter a new tutor.
+		# response must be done in JS
+		return 1
+	teamname = "Team " + firstname + " " + lastname
+	cur.execute(''' INSERT INTO Tutor VALUES (NULL, \'%s\', \'%s\', \'%s\')''' %(title,firstname,lastname))
+	mysql.connection.commit()
+	cur.execute(''' INSERT INTO Team VALUES (NULL, \'%s\', (SELECT tutorId FROM Tutor WHERE title=\'%s\' AND fName=\'%s\' AND lName=\'%s\'), (SELECT tutorId FROM Tutor WHERE title=\'%s\' AND fName=\'%s\' AND lName=\'%s\') )''' %(teamname,title,firstname,lastname,title,firstname,lastname))
+	mysql.connection.commit()
+	return 0
 
 
 def add_game_keeper_db(name, surname, email, username, password):
-    """
-    Adds a new gamekeeper login to the database
-    :param name: Gamekeeper input of the new gamekeepers name in the HTML add gamekeeper form
-    :param surname: Gamekeeper input of the new gamekeepers surname in the HTML add gamekeeper form
-    :param email: Gamekeeper input of the new gamekeepers email address in the HTML add gamekeeper form
-    :param username: Gamekeeper input of the new gamekeepers username in the HTML add gamekeeper form
-    :param password: Gamekeeper input of the new gamekeepers password in the HTML add gamekeeper form
-    :return: returns 0 if game keeper has been added
-    :rtype: Int
-    """
-    cur = mysql.connection.cursor()
-    hashedPassword = sha256_crypt.hash(password)
-    cur.execute(
-        ''' INSERT INTO Gamekeeper (fName, lName, emailAddress, username, password) VALUES (\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')''' % (
-            name, surname, email, username, hashedPassword))
-    mysql.connection.commit()
-    return 0
+	"""
+	Adds a new gamekeeper login to the database
+	:param name: Gamekeeper input of the new gamekeepers name in the HTML add gamekeeper form
+	:param surname: Gamekeeper input of the new gamekeepers surname in the HTML add gamekeeper form
+	:param email: Gamekeeper input of the new gamekeepers email address in the HTML add gamekeeper form
+	:param username: Gamekeeper input of the new gamekeepers username in the HTML add gamekeeper form
+	:param password: Gamekeeper input of the new gamekeepers password in the HTML add gamekeeper form
+	:return: returns 0 if game keeper has been added
+	:rtype: Int
+	"""
+	cur = mysql.connection.cursor()
+	cur.execute('''SELECT * FROM Gamekeeper WHERE username=\'%s\' OR emailAddress=\'%s\';''' % (username, email))
+	GK = cur.fetchall()
+	if GK:
+		return 1
+	else:
+		cur = mysql.connection.cursor()
+		hashedPassword = sha256_crypt.hash(password)
+		cur.execute(
+			''' INSERT INTO Gamekeeper (fName, lName, emailAddress, username, password) VALUES (\'%s\',\'%s\',\'%s\',\'%s\',\'%s\')''' % (
+				name, surname, email, username, hashedPassword))
+		mysql.connection.commit()
+		return 0
 
+
+def add_route_db(second, third, fourth, fifth, sixth):
+	"""
+	Adding a new route to the database after the form has been submitted
+	:param second: Name of the second building in the new route
+	:param third: Name of the third building in the new route
+	:param fourth: Name of the fourth building in the new route
+	:param fifth: Name of the fifth building in the new route
+	:param sixth: Name of the sixth building in the new route
+	"""
+	cur = mysql.connection.cursor()
+	cur.execute(''' INSERT INTO Paths VALUES (NULL, 6) ''')
+	cur.connection.commit()
+	buildingids = [6]
+	cur.execute(''' SELECT pathId FROM Paths ORDER BY pathId DESC LIMIT 1 ''')
+	pathid = cur.fetchall()
+	cur.execute(''' SELECT buildingId FROM Building WHERE buildingName = \'%s\' ''' %second)
+	sec = cur.fetchall()
+	buildingids.append(sec[0]['buildingId'])
+	cur.execute(''' SELECT buildingId FROM Building WHERE buildingName = \'%s\' ''' %third)
+	thr = cur.fetchall()
+	buildingids.append(thr[0]['buildingId'])
+	cur.execute(''' SELECT buildingId FROM Building WHERE buildingName = \'%s\' ''' %fourth)
+	four = cur.fetchall()
+	buildingids.append(four[0]['buildingId'])
+	cur.execute(''' SELECT buildingId FROM Building WHERE buildingName = \'%s\' ''' %fifth)
+	fiv = cur.fetchall()
+	buildingids.append(fiv[0]['buildingId'])
+	cur.execute(''' SELECT buildingId FROM Building WHERE buildingName = \'%s \'''' %sixth)
+	six = cur.fetchall()
+	buildingids.append(six[0]['buildingId'])
+	if len(buildingids) != len(set(buildingids)):
+		return 1
+	else:
+		for count in range(len(buildingids)):
+			cur.execute(''' INSERT INTO Route VALUES (%d, %d, %d) ''' %(pathid[0]['pathId'], buildingids[count], count+1))
+			cur.connection.commit()
+		return 0
 
 def game_leader_board():
     """

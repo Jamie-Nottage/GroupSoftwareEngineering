@@ -9,11 +9,11 @@
 
         <ul>
             <li><img src="static/img/logo.PNG" alt="Exeter Expedition Logo" class="responsive" width="600" height="400"></li>
-            <li><a class="active" type="button" href='/game-keeper'>Home</a></li>
-            <li><a type="button" href='/add-route'>Add Route</a></li>
+            <li><a type="button" href='/game-keeper'>Home</a></li>
+            <li><a class="active" type="button" href='/add-route'>Add Route</a></li>
             <li><a type="button" href='/add-tutor'>Add Tutor</a></li>
             <li><a type="button" href='/add-game-keeper'>Add Game Keeper</a></li>
-            <li><a href="#LogOut">Log Out</a></li>
+            <li><a type="button" href='/logout'>Log Out</a></li>
         </ul>
 
         <div class="account">
@@ -36,62 +36,74 @@
         <div class="GK-form">
             <h3>Route Order</h3>
 
-            <form>
-                <label for="building">First building:</label>
-                <select id="building">
-                    <option value="forum">Forum</option>
-                </select>
+            <form action="/add-route" method="post">
+				<span style="white-space: nowrap">
+					<label for="building1">First building:</label>
+					<select class="building" id="building1">
+						<option value="forum">Forum</option>
+					</select>
+				</span>
+				
+				<span style="white-space: nowrap">
+					<label for="building2">Second building:</label>
+					<select class="building" id="building2" name="second">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
 
-                <label for="building">Second building:</label>
-                <select id="building">
-                    <option value="forum" disabled="disabled">Forum</option>
-                    <option value="streatham">Streatham Court</option>
-                    <option value="harrison">Harrison</option>
-                    <option value="devonshire">Devonshire House</option>
-                    <option value="queens">Queens</option>
-                    <option value="innovation">Innovation</option>
-                </select>
+				<span style="white-space: nowrap">
+					<label for="building3">Third building:</label>
+					<select class="building" id="building3" name="third">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+                </span>
+				</br>
+				<span style="white-space: nowrap">
+					<label for="building4">Fourth building:</label>
+					<select class="building" id="building4" name="fourth">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
 
-                <label for="building">Third building:</label>
-                <select id="building">
-                    <option value="forum" disabled="disabled">Forum</option>
-                    <option value="streatham">Streatham Court</option>
-                    <option value="harrison">Harrison</option>
-                    <option value="devonshire">Devonshire House</option>
-                    <option value="queens">Queens</option>
-                    <option value="innovation">Innovation</option>
-                </select>
-                </br>
+				<span style="white-space: nowrap">
+					<label for="building5">Fifth building:</label>
+					<select class="building" id="building5" name="fifth">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
 
-                <label for="building">Fourth building:</label>
-                <select id="building">
-                    <option value="forum" disabled="disabled">Forum</option>
-                    <option value="streatham">Streatham Court</option>
-                    <option value="harrison">Harrison</option>
-                    <option value="devonshire">Devonshire House</option>
-                    <option value="queens">Queens</option>
-                    <option value="innovation">Innovation</option>
-                </select>
-
-                <label for="building">Fifth building:</label>
-                <select id="building">
-                    <option value="forum" disabled="disabled">Forum</option>
-                    <option value="streatham">Streatham Court</option>
-                    <option value="harrison">Harrison</option>
-                    <option value="devonshire">Devonshire House</option>
-                    <option value="queens">Queens</option>
-                    <option value="innovation">Innovation</option>
-                </select>
-
-                <label for="building">Sixth building:</label>
-                <select id="building">
-                    <option value="forum" disabled="disabled">Forum</option>
-                    <option value="streatham">Streatham Court</option>
-                    <option value="harrison">Harrison</option>
-                    <option value="devonshire">Devonshire House</option>
-                    <option value="queens">Queens</option>
-                    <option value="innovation">Innovation</option>
-                </select>
+				<span style="white-space: nowrap">
+					<label for="building6">Sixth building:</label>
+					<select class="building" id="building6" name="sixth">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
+				</br>
+				{% if addRouteError %}
+					<p style="font-size: 15pt; color: #ff6666;">Route could not be added due to duplicate stops.</p>
+				{% elif routeCreated %}
+					<p style="font-size: 15pt; color: #0a8754;">New route added.</p>	
+				{% endif %}
 				<div>
 					<button type="submit" class="submitTeamBtn">Add Route</button>
 				</div>

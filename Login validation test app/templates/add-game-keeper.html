@@ -7,11 +7,11 @@
     <body>
         <ul>
             <li><img src="static/img/logo.PNG" alt="Exeter Expedition Logo" class="responsive" width="600" height="400"></li>
-            <li><a class="active" type="button" href='/game-keeper'>Home</a></li>
+            <li><a type="button" href='/game-keeper'>Home</a></li>
             <li><a type="button" href='/add-route'>Add Route</a></li>
             <li><a type="button" href='/add-tutor'>Add Tutor</a></li>
-            <li><a type="button" href='/add-game-keeper'>Add Game Keeper</a></li>
-            <li><a href="#LogOut">Log Out</a></li>
+            <li><a class="active" type="button" href='/add-game-keeper'>Add Game Keeper</a></li>
+            <li><a type="button" href='/logout'>Log Out</a></li>
         </ul>
 
         <div class="account">
@@ -25,7 +25,7 @@
         <div class="GK-form">
             <h3>Game Keeper Details</h3>
 
-            <form action="/add-game-keeper" method="post">
+            <form action="/add-game-keeper" method='post'>
                 <input type = "text" id = "firstname" placeholder="First Name" name="firstname" 
 					pattern="[A-Za-z]{1,}" 
 					required>
@@ -48,6 +48,12 @@
 					title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
 					required>
 				<br /><br />
+				{% if addGKError %}
+					<p style="font-size: 15pt; color: #ff6666;">Login already exists.</p>
+				{% elif GKCreated %}
+					<p style="font-size: 15pt; color: #0a8754">New game keeper added.</p>
+				{% endif %}
+				
 				<div>
 					<button type="submit" class="submitTeamBtn">Add Game Keeper</button>
 				</div>

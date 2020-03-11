@@ -16,7 +16,7 @@
 
 		<div class="signup">
 			<h2 style="font-size: 25pt; color: #FFFFFF;">BEGIN YOUR START TO UNIVERSITY</h2>
-            <form action="/signup" method="post" style="padding:10px 0;">
+            <form action="/signup" method='post' style="padding:10px 0;">
 				<input type = "text" id = "firstname" placeholder="First Name" name="firstname" 
 					pattern="[A-Za-z]{1,}" 
 					required>
@@ -50,7 +50,7 @@
 				<label style="font-size: larger; color: #FFFFFF;" for="terms"> I accept the following <a target="blank" href='/terms'>terms of service</a> and <a target = "blank" href= '/privacy'>privacy policy</a>.</label><br>
 				<br /><br />
 				{% if signupError %}
-					<p style="font-size: 20pt; color: #ff6666;">Username or email already in use!</p>
+					<p style="font-size: 20pt; color: #ff6666;">Login already exists.</p>
 				{% endif %}
 				<div class="left-button">
 					<button type="button" onclick="location.href= '/home';" class="btn"><img style="max-width: 80%; height: auto;" src="static/img/back.png" alt="back"></button>
