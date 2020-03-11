@@ -234,6 +234,26 @@ def add_route():
 	else:
 		return redirect(url_for('home_page'))
 
+@app.route('/reset-password', methods=['POST', 'GET'])
+def reset_password():
+	error = None
+	updated = None
+	if request.method == 'POST':
+		username = request.form["username"]
+		oldPassword = request.form["current password"]
+		newPassword = request.form["new password"]
+		valid = reset_password(username, oldPassword, newPassword)
+		if valid == 0:
+			created = True
+			session.clear()
+			return redirect(url_for('login'))
+		else:
+			error = True
+		return render_template('reset-password.html', updatePasswordError=error)
+	elif 'GKUsername' in session:
+		return render_template('reset-password.html')
+	else:
+		return redirect(url_for('home_page'))
 
 # ADDED GAME KEEPER CODE
 @app.route('/logout')
@@ -407,6 +427,22 @@ def add_route_db(second, third, fourth, fifth, sixth):
 			cur.execute(''' INSERT INTO Route VALUES (%d, %d, %d) ''' %(pathid[0]['pathId'], buildingids[count], count+1))
 			cur.connection.commit()
 		return 0
+		
+def reset_password(username, password, new_password):
+	hashpwd = sha256_crypt.hash(password)
+	new_hashpwd = sha256_crypt.hash(new_password)
+	cur = mysql.connection.cursor()
+	cur.execute(''' SELECT password FROM Gamekeeper WHERE username=\'%s\';''' %username)
+	dbpassword = cur.fetchall()
+	if not dbpassword:
+		return 1
+	hashedPassword = dbpassword[0]['password']#
+	if sha256_crypt.verify(password, hashedPassword):
+		cur. execute(''' UPDATE Gamekeeper SET password=\'%s\' WHERE password=\'%s\' ''' %(new_hashpwd, hashedPassword))
+		cur.connection.commit()
+		return 0
+	else:
+		return 1
 
 def game_leader_board():
     """
