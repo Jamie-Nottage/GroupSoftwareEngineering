@@ -19,7 +19,7 @@ def get_userid(username):
     :rtype: int.
     """
     cur = mysql.connection.cursor()
-    cur.execute(''' SELECT userId FROM Users WHERE username=%s ''' %username)
+    cur.execute(''' SELECT userId FROM Users WHERE username=\'%s\' ''' %username)
     result = cur.fetchall()
-    teamid = result[0]['userId']
-    return teamid
+    userid = result[0]['userId']
+    return userid
