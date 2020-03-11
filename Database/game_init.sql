@@ -281,8 +281,6 @@ INSERT INTO Paths VALUES
 (NULL, 6),
 (NULL, 6),
 (NULL, 6),
-(NULL, 6),
-(NULL, 6),
 (NULL, 6);
 
 INSERT INTO Team VALUES
@@ -419,3 +417,5 @@ INSERT INTO Route VALUES
 (4,4,4),
 (4,3,5),
 (4,2,6);
+
+select pathId from Paths order by pathId DESC LIMIT 1
