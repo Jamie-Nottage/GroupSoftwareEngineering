@@ -9,6 +9,7 @@
 * [Contributing](#contributing)
 * [Versioning](#versioning)
 * [Authors](#authors)
+* [Troubleshooting](#troubleshooting)
 * [Acknowledgments](#acknowledgments)
 
 ## General info
@@ -16,14 +17,15 @@ Exeter Expedition is a web app that allows users to navigate their way around th
 	
 ## Technologies
 This project is created with:
-* Flask Python --- add version 
-* Microsoft Azure version 1 
-* MySQL version 8.0.19 for OSX10
-* Apache 2 version 2.4.41
-* Selenium --- add version 
+* Flask, version 1.1.1
+* Microsoft Azure, version 1 
+* MySQL, version 8.0.19 (for OSX10)
+* Apache 2, version 2.4.41
+* Selenium, version 3.141.59
 
 ## Setup 
-1. To run this project, install [Apache 2 version 2.4.41](https://httpd.apache.org/download.cgi#apache24)
+1. It is necessary to create your own database and clone the [GitHub repository](https://github.com/Jamie-Nottage/GroupSoftwareEngineering). 
+2. To run this project, install [Apache 2 version 2.4.41](https://httpd.apache.org/download.cgi#apache24)
 2. Locate the [Github repository](https://github.com/Jamie-Nottage/GroupSoftwareEngineering) connected to Exeter Expedition. 
 3. Install *exeterexpeditions.wsgi* file into Apache 2 
 ```
@@ -32,6 +34,11 @@ exeterexpeditions/exeterexpeditions.wsgi
 4. After installation this should provide access to make modifications to the source code.
 
 ## Running the Testing
+
+#### *Selenium*
+Testing is completed through the Selenium extension of Google Chrome. 
+
+
 
 
 ## Features of App
@@ -78,6 +85,9 @@ This project was developed by the following students from University of Exeter:
 * Ben Rafert
 * Analise Cowie 
 
+## Troubleshooting 
+A common problem which occured was connecting to MySQL from Python in MacOS. This [tutorial](https://ruddra.com/posts/install-mysqlclient-macos/) provided guidance as to how manage 'pip' issues when running a MacOS. 
+
 ## Acknowledgments 
 We would like to acknowledge Dr Matt Collison the Learning Facilitator for this module ECM2434 and his contribution for acting as an end user and his guidance throughout this project. 
 
@@ -85,4 +95,6 @@ We would like to acknowledge Dr Matt Collison the Learning Facilitator for this 
 The people who participated in our survey at the beginning of this project were immensely helpful as we used this information to rather requirements to ensure we had the necessary features for a successful project. 
 
 
-Furthermore, we would like to acknowledge the other members of the ECM2434 module and their handy hints during the project. 
+Furthermore, we would like to acknowledge the other members of the ECM2434 module and their handy hints during the project.
+
+
