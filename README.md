@@ -100,7 +100,7 @@ This project was developed by the following students from University of Exeter:
 * Analise Cowie 
 
 ## Troubleshooting 
-A common problem which occured was connecting to MySQL from Python in MacOS. This [tutorial](https://ruddra.com/posts/install-mysqlclient-macos/) provided guidance as to how manage 'pip' issues when running a MacOS. 
+A common problem which occured was connecting to MySQL from Python in MacOS. This [tutorial](https://ruddra.com/posts/install-mysqlclient-macos/) provided guidance as to how manage 'pip' issues when running on MacOS. 
 
 ## Acknowledgments 
 We would like to acknowledge Dr Matt Collison the Learning Facilitator for this module ECM2434 and his contribution for acting as an end user and his guidance throughout this project. 
