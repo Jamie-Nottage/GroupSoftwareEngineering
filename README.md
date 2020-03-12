@@ -38,9 +38,23 @@ exeterexpeditions/exeterexpeditions.wsgi
 #### *Selenium*
 Testing is completed through the Selenium extension of Google Chrome. 
 
+An overview of how use Selenium IDE an be found [here](www.selenium.dev/selenium-ide/docs/en/introduction/getting-started)
+Selenium can be found [here](www.chrome.google.com/webstore/details/selenium-ide/mooikfkahbdckldjjndioackbalphopd)
 
+The different test methods are designed to test specific functions of the game for example signing up and logging in. 
 
-
+The testing suite must always begin with the ``setup_method()``
+```
+def setup_method(self, method):
+	self.driver = webdriver.Chrome()
+	self.vars = {}
+```
+The testing suite must always contain the ``teardown_method()`` so the testing suite can be returned to original format so subsequent tests can be run successfully. 
+```
+def teardown_method(self, method):
+	self.driver.quit()
+```
+	
 ## Features of App
 Exeter Expedition has been created for two different user profiles. Student users are the target auidence for the main app. These are predominately first year students to the University that will access the app primarily through a browser on a mobile device. The Game Keeper is a member of staff responsible for the students engaging with the app and its resources. Game Keepers have been created to allow them to configure and update the game and its resources through a desktop or laptop browser. 
 
