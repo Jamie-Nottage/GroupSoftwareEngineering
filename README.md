@@ -41,7 +41,7 @@ Testing is completed through the Selenium extension of Google Chrome.
 An overview of how use Selenium IDE an be found [here](www.selenium.dev/selenium-ide/docs/en/introduction/getting-started)
 Selenium can be found [here](www.chrome.google.com/webstore/details/selenium-ide/mooikfkahbdckldjjndioackbalphopd)
 
-The different test methods are designed to test specific functions of the game for example signing up and logging in. 
+The different test methods are designed to test specific functions of the game for example signing up and logging in. The testing file name is *test_appTest.py*
 
 The testing suite must always begin with the ``setup_method()``
 ```
