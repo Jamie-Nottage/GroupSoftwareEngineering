@@ -60,10 +60,6 @@
   display: none;
 }
 
-#leaderboard-container {
-  display: none;
-}
-
 #map-container {
   display: none;
 
@@ -79,12 +75,11 @@
 
 #achievements-container {
   display: none;
+  overflow: scroll;
 }
 
 #chatbot-container {
   display: none;
-
-  overflow: scroll;
 
   font-family: "Avenir", Verdana, Geneva, sans-serif;
   margin-left: 2%;
@@ -129,46 +124,6 @@
   width: 100%;
 }
 
-#leaderboard-table {
-  table-layout: fixed;
-  width: 100%;
-  height: 100%;
-
-  border-collapse: collapse;
-
-  text-align: center;
-  border-style: none;
-  border-color: #508CA4;
-  font-family: "Avenir", Verdana, Geneva, sans-serif;
-  color:  #676767;
-}
-
-.leaderboard-row {
-  font-size: 5vw;
-  border-style: solid;
-  border-width: 1vh;
-  border-color: #508CA4;
-}
-
-.leaderboard-header {
-  font-size: 10vw;
-
-  background-color: #508CA4;
-  color: #E2EAF0;
-
-  border-style: solid;
-  border-width: 1vh;
-  border-color: #508CA4;
-}
-
-
-.leaderboard-data {
-  border-style: solid;
-  border-width: 1vh;
-  border-color: #508CA4;
-  background-color: #E2EAF0;
-}
-
 .loader {
   position: fixed;
   left: calc(50% - 70px);
@@ -194,23 +149,22 @@
   border-top: 16px solid #0A8754;
 }
 
-#leaderboard-loader {
-  border: 16px solid #ACCEEA;
-  border-top: 16px solid #0A8754;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
 #photo-loader {
   position: absolute;
   left: calc(50% - 40px);
-  top: 20%;
+  top: 35%;
 
   width: 50px;
   height: 50px;
 }
+
+#photo-top-loader {
+  position: absolute;
+
+  width: 50px;
+  height: 50px;
+}
+
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -219,9 +173,13 @@
 
 .faq-question {
   position: relative;
-  left: -2vw;
+  left: -1vw;
   background-color: #508CA4;
-  width: 100%;
+
+  overflow: hidden;
+  width: 101%;
+
+  margin-bottom: 2vw;
 
   color: #FFFFFF;
 
@@ -232,9 +190,13 @@
   color: #676767;
   display: none;
   padding-right: 2vw;
+
+  overflow: hidden;
 }
 
 .faq-q-txt {
   padding-left: 4vw;
   padding-right: 2vw;
+
+  overflow: hidden;
 }

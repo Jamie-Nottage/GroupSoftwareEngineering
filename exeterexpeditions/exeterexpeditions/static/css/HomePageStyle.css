@@ -1,0 +1,28 @@
+body{
+    background: #BFD7EA;
+    text-align: center;
+	
+	overflow: auto;
+}
+
+h1{
+    color:#0A8754;
+    font-family: "Avenir", Verdana, Geneva, sans-serif;
+    font-size:25pt;
+}
+
+.logo{
+	height: 500px;
+}
+
+.left-button, .right-button{
+	margin-top: 60px;
+	width: 50%;
+	float: left;
+	cursor: pointer;
+}
+.btn {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}

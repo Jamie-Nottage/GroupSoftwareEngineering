@@ -4,8 +4,6 @@ var clueNotBeingLoaded = true;
 var sliderSnappingBack = false;
 var clue_image_source = "";
 
-tn = "1";
-
 function setSign() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -17,9 +15,8 @@ function setSign() {
     }
   }
   };
-  xhttp.open("POST", "/getSign", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("teamname="+tn);
+  xhttp.open("GET", "/getSign", true);
+  xhttp.send();
 }
 
 function setSignInitially() {
@@ -30,9 +27,8 @@ function setSignInitially() {
 
   }
   };
-  xhttp.open("POST", "/getSign", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("teamname="+tn);
+  xhttp.open("GET", "/getSign", true);
+  xhttp.send();
   updateVisitedLocations(true);
   updateClueContent();
 }
@@ -42,7 +38,7 @@ function updateClueContent() {
   xhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200 && clueNotBeingLoaded && !(sliderSnappingBack)) {
     response_json = JSON.parse(this.responseText);
-    document.getElementById("clues-").innerHTML = response_json['clue_list_content'];
+    document.getElementById("clues-list").innerHTML = response_json['clue_list_content'];
     if(response_json['clue_level'] == 1) {
       initialiseDraggable("#clue1", "#clue1-img", "#clue1-container");
     } else if (response_json['clue_level'] == 2){
@@ -65,9 +61,8 @@ function updateVisitedLocations(initialUpdate) {
     }
   }
   };
-  xhttp.open("POST", "/getCentralTable", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("teamname="+tn);
+  xhttp.open("GET", "/getCentralTable", true);
+  xhttp.send();
 }
 
 function showWelcomeScreen() {
@@ -92,40 +87,6 @@ function checkIn() {
     showQR();
   }
 
-}
-
-function leaderboard() {
-  if(document.getElementById("overlay-container").style.display == "block"){
-    if(document.getElementById("leaderboard-button").style.backgroundColor == "orange") {
-      hideOverlay();
-      resetButtonColours();
-    } else {
-      hideOverlay();
-      resetButtonColours();
-      showOverlay();
-      document.getElementById("leaderboard-button").style.backgroundColor = "orange";
-      loadLeaderboard();
-    }
-  } else {
-    hideOverlay();
-    showOverlay();
-    document.getElementById("leaderboard-button").style.backgroundColor = "orange";
-    loadLeaderboard();
-  }
-}
-
-function loadLeaderboard(){
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    document.getElementById("leaderboard-container").innerHTML = this.responseText;
-  }
-  };
-  xhttp.open("GET", "/getLeaderboard", true);
-  xhttp.send();
-  document.getElementById("leaderboard-container").style.display = "block";
-  document.getElementById("overlay-container").style.overflow = "scroll";
-  document.getElementById("overlay-container").style.backgroundColor = "#508CA4";
 }
 
 function map() {
@@ -153,42 +114,6 @@ function loadMap() {
   document.getElementById("overlay-container").style.width = "95%";
   document.getElementById("overlay-container").style.borderWidth = "0.5vh";
   document.getElementById("overlay-container").style.left = "2.5%";
-
-  $(function(){
-      $("#map-container").load("static/htmlcontent/map.html");
-    });
-}
-
-function achievements() {
-  if(document.getElementById("overlay-container").style.display == "block"){
-    if(document.getElementById("achievements-button").style.backgroundColor == "orange") {
-      hideOverlay();
-      resetButtonColours();
-    } else {
-      hideOverlay();
-      resetButtonColours();
-      showOverlay();
-      document.getElementById("achievements-button").style.backgroundColor = "orange";
-      loadAchievements();
-    }
-  } else {
-    hideOverlay();
-    showOverlay();
-    document.getElementById("achievements-button").style.backgroundColor = "orange";
-    loadAchievements();
-  }
-}
-
-function loadAchievements() {
-  document.getElementById("achievements-container").style.display = "block";
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    document.getElementById("achievements-container").innerHTML = this.responseText;
-  }
-  };
-  xhttp.open("GET", "/displayAchievements", true);
-  //xhttp.send();
 }
 
 function chatbot() {
@@ -238,15 +163,20 @@ function revealPhoto() {
   hideOverlay();
   resetButtonColours();
   showOverlay();
+  document.getElementById("photo-loader").style.display = "block";
   document.getElementById("overlay-container").style.overflow = "scroll";
   document.getElementById("photo-container").style.display = "block";
   document.getElementById("overlay-container").style.width = "95%";
   document.getElementById("overlay-container").style.height = ($("#overlay-container").width()) * 0.75 + "px";
   document.getElementById("overlay-container").style.top = ((($(window).height()) - ($("#overlay-container").height())) / 3) + "px";
   document.getElementById("overlay-container").style.left = "2.5%";
-  document.getElementById("photo-container").innerHTML = '<img id="photo-clue-img" src="'+ clue_image_source + '" alt="">'
+  document.getElementById("photo-top-container").innerHTML = '<img id="photo-clue-img" src="'+ clue_image_source + '" onload="clearPhotoLoader()" alt="">'
   document.getElementById("photo-clue-img").style.height = $("#overlay-container").height() + "px";
   document.getElementById("overlay-container").style.overflow = "hidden";
+}
+
+function clearPhotoLoader() {
+  document.getElementById("photo-loader").style.display = "none";
 }
 
 function hideOverlay() {
@@ -265,6 +195,7 @@ function hideOverlay() {
   document.getElementById("overlay-container").style.borderWidth = "2vh";
   document.getElementById("overlay-container").style.left = "10%";
   document.getElementById("overlay-container").style.top = "4%";
+  hideAllAchievementDropdowns();
 }
 
 function showOverlay() {

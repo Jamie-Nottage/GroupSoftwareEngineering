@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Route</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="static/css/AddRouteStyle.css">
+    </head>
+    <body>
+
+
+        <ul>
+            <li><img src="static/img/logo.png" alt="Exeter Expedition Logo" class="responsive" width="600" height="400"></li>
+            <li><a type="button" href='/game-keeper'>Home</a></li>
+            <li><a class="active" type="button" href='/add-route'>Add Route</a></li>
+            <li><a type="button" href='/add-tutor'>Add Tutor</a></li>
+            <li><a type="button" href='/add-game-keeper'>Add Game Keeper</a></li>
+            <li><a type="button" href='/reset-password'>Reset Password</a></li>
+            <li><a type="button" href='/logout'>Log Out</a></li>
+        </ul>
+
+        <div class="account">
+            <h1>Game Keeper Account</h1>
+        </div>
+
+        <div class="addRoute-title">
+            <h3>Create New Route</h3>
+        </div>
+
+        <div class="instructions">
+            <i>
+                <p>What to do:</p>
+                <p style="text-indent: 50px;">To add new routes for the students to complete please select the route from the dropdown list below.</p>
+                <p style="text-indent: 50px;">As long as the beginning route is the Forum, the order in which buildings are visited is not restricted. </p>
+                <p style="text-indent: 50px;">Click 'Submit Route' for your route to be activated</p>
+            </i>
+        </div>
+
+        <div class="GK-form">
+            <h3>Route Order</h3>
+
+            <form action="/add-route" method="post">
+				<span style="white-space: nowrap">
+					<label for="building1">First building:</label>
+					<select class="building" id="building1">
+						<option value="forum">Forum</option>
+					</select>
+				</span>
+
+				<span style="white-space: nowrap">
+					<label for="building2">Second building:</label>
+					<select class="building" id="building2" name="second">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
+
+				<span style="white-space: nowrap">
+					<label for="building3">Third building:</label>
+					<select class="building" id="building3" name="third">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+                </span>
+				</br>
+				<span style="white-space: nowrap">
+					<label for="building4">Fourth building:</label>
+					<select class="building" id="building4" name="fourth">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
+
+				<span style="white-space: nowrap">
+					<label for="building5">Fifth building:</label>
+					<select class="building" id="building5" name="fifth">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
+
+				<span style="white-space: nowrap">
+					<label for="building6">Sixth building:</label>
+					<select class="building" id="building6" name="sixth">
+						<option value="Streatham Court">Streatham Court</option>
+						<option value="Harrison">Harrison</option>
+						<option value="Devonshire House">Devonshire House</option>
+						<option value="Queens">Queens</option>
+						<option value="Innovation Centre">Innovation Centre</option>
+					</select>
+				</span>
+				</br>
+				{% if addRouteError %}
+					<p style="font-size: 15pt; color: #ff6666;">Route could not be added due to duplicate stops.</p>
+				{% elif routeCreated %}
+					<p style="font-size: 15pt; color: #0a8754;">New route added.</p>
+				{% endif %}
+				<div>
+					<button type="submit" class="submitTeamBtn">Add Route</button>
+				</div>
+            </form>
+        </div>
+    </body>
+</html>

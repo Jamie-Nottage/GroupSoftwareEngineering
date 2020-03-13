@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>Exeter Orientation</title>
+		<meta name="viewport" content="width=device-width, initial-scale=0.5,
+			user-scalable=no">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+		<link rel="stylesheet" type="text/css" href="static/css/HomePageStyle.css">
+    </head>
+    <body>
+        <div>
+			<img class="logo" src="static/img/logo.png" alt="Exeter Orientation Logo">
+        </div>
+
+		<div>
+			<h1>FIND YOUR START TO UNIVERSITY</h1>
+		</div>
+
+        <div class="left-button">
+			<button type="button" onclick="location.href= '/login';" class="btn"><img style="max-width: 80%; height: auto;" src="static/img/login.png" alt="login"></button>
+        </div>
+
+        <div class="right-button">
+			<button type="button" onclick="location.href = '/signup';" class="btn"><img style="max-width: 80%; height: auto;" src="static/img/signup.png" alt="signup"></button>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exeter Orientation</title>
+		    <meta name="viewport" content="width=device-width, initial-scale=0.5,
+			     user-scalable=no">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="static/css/LoginPageStyle.css">
+        <link rel="stylesheet" type="text/css" href="static/css/HomePageStyle.css">
+    </head>
+
+    <body>
+        <div>
+            <img class="logo" src="static/img/logo.png" alt="Exeter Orientation Logo">
+        </div>
+
+		<div class="login">
+			<h2 style="font-size: 25pt; color: #FFFFFF;">CONTINUE YOUR START TO UNIVERSITY</h2>
+            <form action="/login" method = 'post'>
+				<input type = "text" id = "username" name = "username" placeholder="Username" required>
+				<br /><br />
+				<input type = "password" id = "password" name = "password" placeholder="Password" required>
+				<br /><br />
+				{% if loginError %}
+					<p style="font-size: 20pt; color: #ff6666;">Invalid username or password.</p>
+				{% endif %}
+				<div class="left-button">
+					<button type="button" onclick="location.href= '/home';" class="btn"><img style="max-width: 80%; height: auto;" src="static/img/back.png" alt="back"></button>
+				</div>
+
+				<div class="right-button">
+					<button type="submit" class="btn"><img style="max-width: 80%; height: auto;" src="static/img/sign.png" alt="login"></button>
+				</div>
+            </form>
+        </div>
+    </body>
+</html>

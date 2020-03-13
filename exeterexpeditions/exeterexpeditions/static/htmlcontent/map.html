@@ -1,548 +1,629 @@
-	
-	<!--<button id="checkIn">Check In</button>
-	<button id="distance">Calculate Distance</button>-->
-	<script defer src="static/js/mapscript.js"></script>  
-	<div id = "distance"> You are currently: <p id="distance"></p></div>
-    <div id="map"></div>
-	<div data-modal-target="#modal" id="hint">
-	<img src="static/img/maphint.png" align = "center" alt="maphint" height="65" id="hintimg">
+
+
+	<script defer src="static/js/mapscript.js"></script>
+	<div id = "distance"> We can't seem to load your location to show how far you are!<p id="distance"></p></div>
+	<div id="map"></div>
+	<div id="hint">
+	<img data-modal-target="#modal" src="static/img/maphint.png" align = "center" alt="maphint" height="65" id="hintimg">
 	</div>
-	<div class="modal" id = "modal"> 
-		<div class="modal-header"> 
-			<div class="title">Hey! Need a hint?</div> 
-			<button data-close-button class="close-button">&times;</button> 
+	<div id="maploc">
+	<img src="static/img/dora.png" align = "center" padding= alt="maplocation" height="40" id="doraimg">
+	</div>
+	<div class="modal" id = "modal">
+		<div class="modal-header">
+			<div class="title" id="title">Hey! Need a hint?</div>
+			<button data-close-button class="close-button">&times;</button>
 		</div>
-		<div class="modal-body"> 
-			Do you want me to add a map marker for the next location for 50 points? 
+		<div class="modal-body" id = "modal">
+			Do you want me to add a map marker for the next location?
 			<div data-close-button class="close-button" id = "add"><p id="add-hint-txt">Yes</p></div>
 			<div data-close-button class="close-button" id = "nothing"><p id="add-hint-txt">No</p></div>
 		</div>
 	</div>
 	<div id="map-overlay"></div>
     <script>
-		
-		tn = 1;
-	
+
 		function initMap() {
-	
-        var exeterMap = new google.maps.StyledMapType(
-			[
-			  {
-				"elementType": "labels",
-				"stylers": [
-				  {
-					"visibility": "off"
-				  }
-				]
-			  },
-			  {
-				"featureType": "administrative",
-				"elementType": "geometry",
-				"stylers": [
-				  {
-					"visibility": "off"
-				  }
-				]
-			  },
-			  {
-				"featureType": "administrative.land_parcel",
-				"stylers": [
-				  {
-					"visibility": "off"
-				  }
-				]
-			  },
-			  {
-				"featureType": "administrative.neighborhood",
-				"stylers": [
-				  {
-					"visibility": "off"
-				  }
-				]
-			  },
-			  {
-				"featureType": "poi",
-				"stylers": [
-				  {
-					"visibility": "off"
-				  }
-				]
-			  },
-			  {
-				"featureType": "poi.school",
-				"elementType": "geometry.fill",
-				"stylers": [
-				  {
-					"color": "#48c77d"
-				  },
-				  {
-					"visibility": "on"
-				  }
-				]
-			  },
-			  {
-				"featureType": "poi.school",
-				"elementType": "geometry.stroke",
-				"stylers": [
-				  {
-					"color": "#3fabfc"
-				  },
-				  {
-					"visibility": "on"
-				  }
-				]
-			  },
-			  {
-				"featureType": "poi.school",
-				"elementType": "labels.icon",
-				"stylers": [
-				  {
-					"color": "#0080ff"
-				  },
-				  {
-					"visibility": "off"
-				  }
-				]
-			  },
-			  {
-				"featureType": "poi.school",
-				"elementType": "labels.text",
-				"stylers": [
-				  {
-					"color": "#bfd7ea"
-				  }
-				]
-			  },
-			  {
-				"featureType": "poi.school",
-				"elementType": "labels.text.fill",
-				"stylers": [
-				  {
-					"color": "#bfd7ea"
-				  }
-				]
-			  },
-			  {
-				"featureType": "poi.school",
-				"elementType": "labels.text.stroke",
-				"stylers": [
-				  {
-					"color": "#000000"
-				  },
-				  {
-					"weight": 5
-				  }
-				]
-			  },
-			  {
-				"featureType": "road",
-				"elementType": "geometry.fill",
-				"stylers": [
-				  {
-					"color": "#bfd7ea"
-				  },
-				  {
-					"weight": 2.5
-				  }
-				]
-			  },
-			  {
-				"featureType": "road",
-				"elementType": "geometry.stroke",
-				"stylers": [
-				  {
-					"color": "#000000"
-				  },
-				  {
-					"weight": 0.5
-				  }
-				]
-			  },
-			  {
-				"featureType": "road",
-				"elementType": "labels",
-				"stylers": [
-				  {
-					"color": "#bfd7ea"
-				  }
-				]
-			  },
-			  {
-				"featureType": "road",
-				"elementType": "labels.icon",
-				"stylers": [
-				  {
-					"visibility": "off"
-				  }
-				]
-			  },
-			  {
-				"featureType": "road",
-				"elementType": "labels.text",
-				"stylers": [
-				  {
-					"color": "#bfd7ea"
-				  },
-				  {
-					"visibility": "on"
-				  },
-				  {
-					"weight": 0.5
-				  }
-				]
-			  },
-			  {
-				"featureType": "road",
-				"elementType": "labels.text.stroke",
-				"stylers": [
-				  {
-					"color": "#4b4b4b"
-				  },
-				  {
-					"weight": 2.0
-				  }
-				]
-			  },
-			  {
-				"featureType": "road.local",
-				"elementType": "geometry.fill",
-				"stylers": [
-				  {
-					"visibility": "on"
-				  }
-				]
-			  },
-			  {
-				"featureType": "transit",
-				"stylers": [
-				  {
-					"visibility": "off"
-				  }
-				]
-			  }
-			],
-				{name: 'Styled Map'});
-		
-		var university = {lat:50.736137,lng:-3.534947}
-		var innovation = {lat: 50.738127, lng: -3.530620} 
-		var harrison = {lat:50.737739,lng:-3.532628} 
-		var streathamCourt = {lat:50.73567,lng:-3.530897}
-		var devonshireHouse ={lat:50.735167,lng:-3.534269}
-		var queens = {lat:50.734044,lng:-3.535082}
-		var forum = {lat:50.735459,lng:-3.533207}
-		var newman = {lat:50.736491,lng:-3.535967}
-		var innoMarker
-		var harrMarker
-		var streathamMarker
-		var devonshireMarker
-		var queensMarker
-		var forumMarker
-		var newmanMarker 
-		var fresherLocation
-		var buildingMarkers = [innoMarker,harrMarker,streathamMarker,devonshireMarker,queensMarker,forumMarker,newmanMarker]
-		var buildings = [ innovation, harrison, streathamCourt,devonshireHouse,queens,forum,newman] 
-		var building = [ "innovation", "harrison", "streathamCourt","devonshireHouse","queens","forum","newman"] 
-		var markerImg = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-		var infoImg = 'https://img.icons8.com/officexs/2x/info.png'
-		var userImg = 'static/img/dora.png'
-		var minZoomLevel = 15;
-		var infoWindow;
-		var hintWindow;
-		var pos;
-		var playerPos;
-        var map = new google.maps.Map(document.getElementById('map'), {
-			center: university,
-			zoom: minZoomLevel,
-			minZoom: minZoomLevel,
-			style:exeterMap,
-			disableDefaultUI: true,
-		});
-		map.mapTypes.set('styled_map', exeterMap);
-		map.setMapTypeId('styled_map');
-	  
-		infoWindow = new google.maps.InfoWindow; 
-		hintWindow = new google.maps.InfoWindow;
+			var visited;
+			var visitedBuildings;
+			var nextBuilding;
+			var nextLat;
+			var nextLng;
+			var next;
+			var hintLevel;
 
-		var InnoDesc = '<div id="content">'+
-			'<div id="siteNotice">'+
-			'</div>'+
-			'<h1 id="firstHeading" class="firstHeading">Innovation Centre </h1>'+
-			'<p>(You earned 50 points)</p> <div id= "bodyContent">' + 
-			'<p><b>Extra Tasks:</b> </p> <p> 1.????????? - 5pts </p>' + 
-			'<p> 2.????????? - 5pts </p> <p> 3.????????? - 5pts</p>'
-		var innovationInfo = new google.maps.InfoWindow({
-			content: InnoDesc
-		});
-	 
-		var harrisonDesc = '<div id="content">'+
-			'<div id="siteNotice">'+
-			'</div>'+
-			'<h1 id="firstHeading" class="firstHeading">Harrison</h1>' +
-			'<p>(You earned 50 points)</p> <div id= "bodyContent">' + 
-			'<p><b>Extra Tasks:</b> </p> <p> 1.????????? - 5pts </p>' + 
-			'<p> 2.????????? - 5pts </p> <p> 3.????????? - 5pts</p>'
-	  
-		var harrisonInfo = new google.maps.InfoWindow({
-			content: harrisonDesc
-		});
-	
-		var queensDesc = '<div id="content">'+
-			'<div id="siteNotice">'+
-		'</div>'+
-		'<h1 id="firstHeading" class="firstHeading">Queens</h1>' +
-		'<p>(You earned 50 points)</p> <div id= "bodyContent">' + 
-		'<p><b>Extra Tasks:</b> </p> <p> 1.????????? - 5pts </p>' + 
-		'<p> 2.????????? - 5pts </p> <p> 3.????????? - 5pts</p>'
 
-		var queensInfo = new google.maps.InfoWindow({
-			content: queensDesc
-		});
-	
-		var forumDesc = '<div id="content">'+
-			'<div id="siteNotice">'+
-			'</div>'+
-			'<h1 id="firstHeading" class="firstHeading">Forum</h1>' +
-			'<p>(You earned 50 points)</p> <div id= "bodyContent">' + 
-			'<p><b>Extra Tasks:</b> </p> <p> 1.????????? - 5pts </p>' + 
-			'<p> 2.????????? - 5pts </p> <p> 3.????????? - 5pts</p>'
-	  
-		var forumInfo = new google.maps.InfoWindow({
-			content: forumDesc
-		});
-	
-		var devonshireDesc = '<div id="content">'+
-			'<div id="siteNotice">'+
-			'</div>'+
-			'<h1 id="firstHeading" class="firstHeading">Devonshire House</h1>' +
-			'<p>(You earned 50 points)</p> <div id= "bodyContent">' + 
-			'<p><b>Extra Tasks:</b> </p> <p> 1.????????? - 5pts </p>' + 
-			'<p> 2.????????? - 5pts </p> <p> 3.????????? - 5pts</p>'
-	  
-		var devonshireInfo = new google.maps.InfoWindow({
-			content: devonshireDesc
-		});
-	
-		var streathamDesc = '<div id="content">'+
-			'<div id="siteNotice">'+
-			'</div>'+
-			'<h1 id="firstHeading" class="firstHeading">Streatham Court</h1>'+
-			'<p>(You earned 50 points)</p> <div id= "bodyContent">' + 
-			'<p><b>Extra Tasks:</b> </p> <p> 1.????????? - 5pts </p>' + 
-			'<p> 2.????????? - 5pts </p> <p> 3.????????? - 5pts</p>'
-		  
-		 var streathamInfo = new google.maps.InfoWindow({
-			content: streathamDesc
-		});
-			
-		var newmanDesc = '<div id="content">'+
-			'<div id="siteNotice">'+
-			'</div>'+
-			'<h1 id="firstHeading" class="firstHeading">Newman</h1>' +
-			'<p>(You earned 50 points)</p> <div id= "bodyContent">' + 
-			'<p><b>Extra Tasks:</b> </p> <p> 1.????????? - 5pts </p>' + 
-			'<p> 2.????????? - 5pts </p> <p> 3.????????? - 5pts</p>'
-
-		var newmanInfo = new google.maps.InfoWindow({
-			content: newmanDesc
-		});
-		
-		var info = [innovationInfo, harrisonInfo, streathamInfo,devonshireInfo,queensInfo,forumInfo,newmanInfo]
-		
-		// bounds of the desired area
-		//var allowedBounds = new google.maps.LatLngBounds(
-		//	new google.maps.LatLng(49.965784, -1.535464), 
-		//	new google.maps.LatLng(51.440728, -5.512514)
-		//);
-		//var lastValidCenter = map.getCenter();
-
-	//	google.maps.event.addListener(map, 'center_changed', function() {
-	//	if (allowedBounds.contains(map.getCenter())) {
-	//			// still within valid bounds, so save the last valid position
-	//			lastValidCenter = map.getCenter();
-	//	return; 
-    //}
-
-    // not valid anymore => return to last valid position
-    //map.panTo(lastValidCenter);
-	//});
-	
-//	xhttp.onreadystatechange = function() {
-//	if (this.readyState == 4 && this.status == 200) {
-//		var visitedBuildings = this.responseText;
-//		}
-//	};
-//	xhttp.open("POST", "/getVisted", true);
-//	xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded); 
-//	xhttp.send("teamName="+tn);
-	
-//	console.log(visitedBuildings); 
-					
-				fresherLocation = new google.maps.Marker({
-					position: pos,
-					map: map,
-					icon: userImg,
-					label: {
-						color: 'black',
-						fontWeight: 'bold',
-						fontSize: '15px',
-						textAlign: 'right',
-						text: 'YOU ARE HERE',					
-					},
-					icon: {
-						labelOrigin: new google.maps.Point(11, 50),
-						url: userImg,
-					},
-					draggable: false
-				}); 
-				
-	if (navigator.geolocation) {
-		navigator.geolocation.watchPosition(function(position) {
-		pos = {
-		lat: position.coords.latitude,
-		lng: position.coords.longitude
-		};
-		calculateDistance(pos);
-		fresherLocation.setPosition(pos); 
-		}, function() {
-				handleLocationError(true, infoWindow, map.getCenter());
-			  },{ 
-				enableHighAccuracy: true,
-				timeout: 1000,
-				maximumAge: 0});
-			} else {
-			  handleLocationError(false, infoWindow, map.getCenter());
+			function getVisited(){
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					visitedBuildings = this.responseText;
+					addVisitedMarkers();
+				}
+			};
+				xhttp.open("GET", "/getVisited", true);
+				xhttp.send();
 			}
-		
 
-		function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-			infoWindow.setPosition(pos);
-			infoWindow.setContent(browserHasGeolocation ?
-								'Error: The Geolocation service failed.' :
-								'Error: Your browser doesn\'t support geolocation.');
-			infoWindow.open(map);
+			function getFirst(){
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+							nextBuilding = this.responseText;
+							getNextMarker();
+							}
+					};
+				xhttp.open("GET", "/getNext", true);
+				xhttp.send();
+			}
+			getFirst();
+			function getNext(){
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					if(this.responseText !== nextBuilding){
+						nextBuilding = this.responseText;
+						getNextMarker();
+						}
+					}
+				};
+				xhttp.open("GET", "/getNext", true);
+				xhttp.send();
+			}
+			
+			function getHintLevel(){
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					if(this.responseText !== nextBuilding){
+						hintLevel = this.responseText;
+						}
+					}
+				};
+				xhttp.open("GET", "/getHintLevel", true);
+				xhttp.send();
+			}
+			window.setInterval(function(){getVisited()},3000);
+			window.setInterval(function(){getHintLevel()},3000);
+			window.setInterval(function(){getNext()},3000);
+
+			var exeterMap = new google.maps.StyledMapType(
+				[
+				  {
+					"elementType": "labels",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative",
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative.land_parcel",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative.neighborhood",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.school",
+					"elementType": "geometry.fill",
+					"stylers": [
+					  {
+						"color": "#48c77d"
+					  },
+					  {
+						"visibility": "on"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.school",
+					"elementType": "geometry.stroke",
+					"stylers": [
+					  {
+						"color": "#3fabfc"
+					  },
+					  {
+						"visibility": "on"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.school",
+					"elementType": "labels.icon",
+					"stylers": [
+					  {
+						"color": "#0080ff"
+					  },
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.school",
+					"elementType": "labels.text",
+					"stylers": [
+					  {
+						"color": "#bfd7ea"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.school",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#bfd7ea"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.school",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+					  {
+						"color": "#000000"
+					  },
+					  {
+						"weight": 5
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "geometry.fill",
+					"stylers": [
+					  {
+						"color": "#bfd7ea"
+					  },
+					  {
+						"weight": 2.5
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "geometry.stroke",
+					"stylers": [
+					  {
+						"color": "#000000"
+					  },
+					  {
+						"weight": 0.5
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "labels",
+					"stylers": [
+					  {
+						"color": "#bfd7ea"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "labels.icon",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "labels.text",
+					"stylers": [
+					  {
+						"color": "#bfd7ea"
+					  },
+					  {
+						"visibility": "on"
+					  },
+					  {
+						"weight": 0.5
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+					  {
+						"color": "#4b4b4b"
+					  },
+					  {
+						"weight": 2.0
+					  }
+					]
+				  },
+				  {
+					"featureType": "road.local",
+					"elementType": "geometry.fill",
+					"stylers": [
+					  {
+						"visibility": "on"
+					  }
+					]
+				  },
+				  {
+					"featureType": "transit",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  }
+				],
+				{name: 'Styled Map'});
+			var university = {lat:50.736137,lng:-3.534947}
+			var innovation = {lat: 50.738127, lng: -3.530620}
+			var harrison = {lat:50.737739,lng:-3.532628}
+			var streathamCourt = {lat:50.73567,lng:-3.530897}
+			var devonshireHouse ={lat:50.735167,lng:-3.534269}
+			var queens = {lat:50.734044,lng:-3.535082}
+			var forum = {lat:50.735459,lng:-3.533207}
+			var newman = {lat:50.736491,lng:-3.535967}
+			var innoMarker
+			var harrMarker
+			var streathamMarker
+			var devonshireMarker
+			var queensMarker
+			var forumMarker
+			var newmanMarker
+			var fresherLocation
+			var buildingMarkers = [innoMarker,harrMarker,streathamMarker,devonshireMarker,queensMarker,forumMarker,newmanMarker]
+			var buildings = [ innovation, harrison, streathamCourt,devonshireHouse,queens,forum,newman]
+			var building = [ "innovation", "harrison", "streathamCourt","devonshireHouse","queens","forum","newman"]
+			var markerImg = '/static/img/blueMarker.png'
+			var infoImg = '/static/img/maptick.png'
+			var userImg = 'static/img/dora.png'
+			var minZoomLevel = 15;
+			var infoWindow;
+			var hintWindow;
+			var pos;
+
+
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center: university,
+				zoom: minZoomLevel,
+				minZoom: minZoomLevel,
+				style:exeterMap,
+				disableDefaultUI: true,
+			});
+			map.mapTypes.set('styled_map', exeterMap);
+			map.setMapTypeId('styled_map');
+
+			infoWindow = new google.maps.InfoWindow;
+			hintWindow = new google.maps.InfoWindow;
+
+			var InnoDesc = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">Innovation Centre </h1>'+
+				'<p>(You earned 250 points)</p>'
+
+			var innovationInfo = new google.maps.InfoWindow({
+				content: InnoDesc
+			});
+
+			var harrisonDesc = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">Harrison</h1>' +
+				'<p>(You earned 200 points)</p> '
+
+			var harrisonInfo = new google.maps.InfoWindow({
+				content: harrisonDesc
+			});
+
+			var queensDesc = '<div id="content">'+
+				'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 id="firstHeading" class="firstHeading">Queens</h1>' +
+			'<p>(You earned 150 points)</p> '
+
+			var queensInfo = new google.maps.InfoWindow({
+				content: queensDesc
+			});
+
+			var forumDesc = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">Forum</h1>' +
+				'<p>(You earned 100 points)</p>'
+
+			var forumInfo = new google.maps.InfoWindow({
+				content: forumDesc
+			});
+
+			var devonshireDesc = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">Devonshire House</h1>' +
+				'<p>(You earned 150 points)</p>'
+
+			var devonshireInfo = new google.maps.InfoWindow({
+				content: devonshireDesc
+			});
+
+			var streathamDesc = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">Streatham Court</h1>'+
+				'<p>(You earned 150 points)</p>'
+
+			 var streathamInfo = new google.maps.InfoWindow({
+				content: streathamDesc
+			});
+
+			var newmanDesc = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">Newman</h1>' +
+				'<p>(You earned 50 points)</p>'
+
+			var newmanInfo = new google.maps.InfoWindow({
+				content: newmanDesc
+			});
+
+			var info = []
+
+		fresherLocation = new google.maps.Marker({
+			position: pos,
+			map: map,
+			icon: userImg,
+			label: {
+				color: 'black',
+				fontWeight: 'bold',
+				fontSize: '15px',
+				textAlign: 'right',
+				text: 'YOU ARE HERE',
+			},
+			icon: {
+				labelOrigin: new google.maps.Point(11, 50),
+				url: userImg,
+			},
+			draggable: false
+		});
+
+		if (navigator.geolocation) {
+			navigator.geolocation.watchPosition(function(position) {
+			pos = {
+			lat: position.coords.latitude,
+			lng: position.coords.longitude
+			};
+			calculateDistance(pos,nextLat,nextLng);
+			fresherLocation.setPosition(pos);
+			}, function() {
+					handleLocationError();
+					},{
+					enableHighAccuracy: true,
+					timeout: 1000,
+					maximumAge: 0});
+		} else {
+			handleLocationError();
 		}
-		
-		function calculateDistance(pos){
-			var distance = new google.maps.DistanceMatrixService();
-			distance.getDistanceMatrix(
-				{
-					origins: [pos],
-					destinations: [innovation],
-					travelMode: 'WALKING',
-				}, callback);
+
+		function handleLocationError() {
 		}
-		
+
+		function calculateDistance(pos,nextLng,nextLat){
+			if(nextLng && nextLat){
+				nextLat = parseFloat(next[1]);
+				nextLng = parseFloat(next[2]);
+				var distance = new google.maps.DistanceMatrixService();
+				distance.getDistanceMatrix(
+					{
+						origins: [pos],
+						destinations: [{lat: nextLat, lng:nextLng}],
+						travelMode: 'WALKING',
+					}, callback);
+			}
+			else{
+				document.getElementById("distance").innerHTML = "CONGRATS! YOU FOUND ALL THE LOCATIONS!";
+
+			}
+		}
+
 		function callback(response,status){
 			if (status == 'OK') {
 				var origins = response.originAddresses;
 				var destinations = response.destinationAddresses;
 				var distance = response.rows[0].elements[0].distance;
-				var distanceText = distance.text;
 				if (distance.value < 200){
-					var help = "Bingo! You're here!"; 
+					var help = "Bingo! You're here!";
 					document.getElementById("distance").classList.add('there');
-				} 
+				}
 				else if (distance.value < 350){
-					var help = "You should be able to see your next building now!"; 
+					var help = "You should be able to see your next building now!";
 					document.getElementById("distance").classList.add('near');
-				} 
+				}
 				else if (distance.value < 500){
-					var help = "Almost there!"; 
+					var help = "Almost there!";
 					document.getElementById("distance").classList.add('close');
 				}
 				else if (distance.value < 750){
-					var help  = "Making Progress!"; 
+					var help  = "Making Progress!";
 					document.getElementById("distance").classList.add('close');
 				}
-				else if (distance.value < 1000){
+				else if (distance.value < 1200){
 					var help = "You are near campus";
-				}else { 
+					document.getElementById("distance").classList.add('far');
+				}else {
 					var help = "It doesn't look like you're on campus";
+					document.getElementById("distance").classList.add('far');
 				}
-				document.getElementById("distance").innerHTML = help + " You're " + distance.value + "m from your next location";			
+				document.getElementById("distance").innerHTML = help + " You're " + distance.value + "m from your next location: " + next[0];
 			}
 		}
-		
+
 		function handleNearLocation(intWindow, pos) {
 			hintWindow.setPosition(pos);
 			hintWindow.setContent('YOURE NEAR A LOCATION!');
 			hintWindow.open(map);
 		}
-		
+
 		function foundBuilding(){
 			var i = buildingMarkers.length - buildings.length - 1
 			buildingMarkers[i].setIcon(infoImg);
 			var addListener = function(i){
-				google.maps.event.addListener(buildingMarkers[i],'click',function(){		
-					info[i].open(map,buildingMarkers[i]); 
+				google.maps.event.addListener(buildingMarkers[i],'click',function(){
+					info[i].open(map,buildingMarkers[i]);
 				});
 			}
-			addListener(0);
+			addListener(i);
 		}
-			
 
-		 
-		function addMarker(){
-			var i = buildingMarkers.length - buildings.length
-			var prevMarker = buildingMarkers[i - 1]
+		function addMarker(latitude,longitude,hintLevel){
+			if(hintLevel == "3"){
+				var i = buildingMarkers.length - buildings.length
+				var prevMarker = buildingMarkers[i - 1]
 			
-			if(i==0){
-				buildingMarkers[i] = new google.maps.Marker({
-				map: map,
-				draggable: false,
-				icon: markerImg,
-				animation: google.maps.Animation.DROP,	
-				position: buildings[0]
-				});
-				var addListener = function(i){
-					google.maps.event.addListener(buildingMarkers[0],'click',function(){
-						info[0].open(map,buildingMarkers[0]); 
-					});
-				}
-				buildings.shift();
-				
-			}
-		
-			else if(prevMarker.getPosition() == building[building.length-1]){
-				handleFinishedError(hintWindow, map.getCenter()); 
-				window.alert('Youve found all the locations of our map! Congrats!');
-
-			}
-			else if(prevMarker.getIcon() == infoImg){
-				buildingMarkers[i] = new google.maps.Marker({
+				if(i==0){
+					buildingMarkers[i] = new google.maps.Marker({
 					map: map,
 					draggable: false,
 					icon: markerImg,
-					animation: google.maps.Animation.DROP,	
-					position: buildings[0]	
+					animation: google.maps.Animation.DROP,
+					position: {lat: latitude, lng: longitude}
 					});
-					buildings.shift();					
+					var addListener = function(i){
+						google.maps.event.addListener(buildingMarkers[0],'click',function(){
+							info[0].open(map,buildingMarkers[0]);
+						});
+					}
+					buildings.shift();
+				}
+
+				else if(prevMarker.getIcon() == infoImg){
+					buildingMarkers[i] = new google.maps.Marker({
+						map: map,
+						draggable: false,
+						icon: markerImg,
+						animation: google.maps.Animation.DROP,
+						position: {lat: latitude, lng: longitude}
+						});
+						buildings.shift();
+				}
+				else {
+					handleDisplayError(hintWindow, prevMarker.getPosition());
+					}
+			}else { 
+				handleHintError(hintWindow, university);
 			}
-			else {
-				handleDisplayError(hintWindow, prevMarker.getPosition());
-				}	
 		}
-		
+			
 		function handleDisplayError(intWindow, pos) {
 			hintWindow.setPosition(pos);
 			hintWindow.setContent('The location of your next building is already displayed');
 			hintWindow.open(map);
 		}
 		
+		function handleHintError(intWindow, pos) {
+			hintWindow.setPosition(pos);
+			hintWindow.setContent('You can only show the next marker hint once you reveal the 2 other clues');
+			hintWindow.open(map);
+		}
+
 		function handleFinishedError(intWindow, pos) {
 			hintWindow.setPosition(pos);
 			hintWindow.setContent('Youve found all the locations of our map! Congrats!');
 			hintWindow.open(map);
 		}
-		
+
+		function addVisitedMarkers(){
+			visited = visitedBuildings.split("  ");
+			visited.pop();
+			var visitedList;
+			for(visitedList=1; visitedList<visited.length; visitedList+=3){
+				visitedlat = parseFloat(visited[visitedList]);
+				visitedlng = parseFloat(visited[visitedList+1]);
+				if (visited[visitedList-1] == "Forum" && !info.includes(forumInfo)){
+					info.push(forumInfo);
+					addMarker(visitedlat,visitedlng,"3");
+					foundBuilding();
+				}
+				else if (visited[visitedList-1] == "Devonshire House" && !info.includes(devonshireInfo)){
+					info.push(devonshireInfo);
+					addMarker(visitedlat,visitedlng,"3");
+					foundBuilding();
+				}
+				else if (visited[visitedList-1] == "Innovation Centre" && !info.includes(innovationInfo)){
+					info.push(innovationInfo);
+					addMarker(visitedlat,visitedlng,"3");
+					foundBuilding();
+				}
+				else if (visited[visitedList-1] == "Streatham Court" && !info.includes(streathamInfo)){
+					info.push(streathamInfo);
+					addMarker(visitedlat,visitedlng,"3");
+					foundBuilding();
+				}
+				else if (visited[visitedList-1] == "Harrison" && !info.includes(harrisonInfo)){
+					info.push(harrisonInfo);
+					addMarker(visitedlat,visitedlng,"3");
+					foundBuilding();
+				}
+				else if (visited[visitedList-1] == "Queens"&& !info.includes(queensInfo)){
+					info.push(queensInfo);
+					addMarker(visitedlat,visitedlng,"3");
+					foundBuilding();
+				}
+			}
+		}
+
+		function getNextMarker(){
+			next = nextBuilding.split("  ");
+			next.pop();
+			if(next){
+				if (next[0] == "Game Completed") {
+					handleFinishedError(hintWindow, map.getCenter());
+				}
+				else{
+					nextLat = parseFloat(next[1]);
+					nextLng = parseFloat(next[2]);
+				}
+			}
+		}
 
 		google.maps.event.addListener(map, 'zoom_changed', function() {
 			if (map.getZoom() < minZoomLevel) map.setZoom(minZoomLevel);
 		});
-		google.maps.event.addDomListener(document.getElementById('add'),'click',addMarker);
+		google.maps.event.addDomListener(document.getElementById('add'),'click',function(){
+			addMarker(nextLat,nextLng,hintLevel);});
+		google.maps.event.addDomListener(document.getElementById('maploc'),'click',function(){
+			map.setCenter(fresherLocation.getPosition());
+			map.setZoom(19)});
 	}
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR63gcZxCokH-0tp8YGK8ztlucu4epRzs&callback=initMap">
     </script>
- 

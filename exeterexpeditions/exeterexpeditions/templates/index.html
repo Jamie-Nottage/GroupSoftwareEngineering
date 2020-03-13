@@ -3,11 +3,12 @@
 <html>
 
 <head>
-
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="stylesheet" type="text/css" href="static/css/centralui.css">
   <link rel="stylesheet" type="text/css" href="static/css/overlayui.css">
   <link rel="stylesheet" type="text/css" href="static/css/mapstyle.css">
   <link rel="stylesheet" type="text/css" href="static/css/achievements.css">
+  <link rel="stylesheet" type="text/css" href="static/css/leaderboard.css">
   <title>Exeter Expeditions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1,
   user-scalable=no">
@@ -16,8 +17,8 @@
   <script src="static/js/jsevents.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="static/js/jqueries.js"></script>
-  <script src="static/js/mapscript.js"></script>
   <script src="static/js/achievements.js"></script>
+  <script src="static/js/leaderboard.js"></script>
 
 
 </head>
@@ -139,19 +140,34 @@
 
       <div id="photo-container">
         <div id="photo-loader" class="loader"></div>
+        <div id="photo-top-container"></div>
       </div>
 
       <div id="leaderboard-container">
-        <div id="leaderboard-loader" class="loader"></div>
+        <div id="team-leaderboard">
+          <div id="leaderboard-loader" class="loader"></div>
+        </div>
+        <div id="individual-leaderboard">
+          <div id="leaderboard-loader" class="loader"></div>
+        </div>
+        <div id="leaderboard-switcher">
+          <div id="team-leaderboard-button" onclick="loadTeamLeaderboard()">
+            <p class="leaderboard-switcher-text">Team</p>
+          </div>
+          <div id="individual-leaderboard-button" onclick="loadIndividualLeaderboard()">
+            <p class="leaderboard-switcher-text">Individual</p>
+          </div>
+        </div>
       </div>
+
 
       <div id="map-container">
         <div class="loader"></div>
       </div>
 
       <div id="achievements-container">
-        <!-- <div class="loader"></div> -->
-        <h1 id="achievements-title">Achievements</h1>
+        <div class="loader"></div>
+        <!--<h1 id="achievements-title">Achievements</h1>
 
         <ul id="achievements-list">
           <li>
@@ -171,7 +187,7 @@
                 <img class="achievement-badge-img" src="static/img/empty-achievement.png" height=46px>
               </div>
               <div class="achievement-right incomplete" onclick="achievementQButtonPressed(this)">
-                <div class="achievement-title-container incomplete"><p class="achievement-titles incomplete">OwO what's this?</p></div>
+                <div class="achievement-title-container incomplete"><p class="achievement-titles incomplete">Big brain</p></div>
               </div>
               <div class="quiz-dropdown">
                 <p class="achievement-question-txt">What is the ISBN for discrete maths for beginners?</p>
@@ -181,7 +197,41 @@
               </div>
             </div>
           </li>
-        </ul>
+
+          <li>
+            <div class="achievement-head incomplete">
+              <div class="achievement-left incomplete">
+                <img class="achievement-badge-img" src="static/img/empty-achievement.png" height=46px>
+              </div>
+              <div class="achievement-right incomplete" onclick="achievementQButtonPressed(this)">
+                <div class="achievement-title-container incomplete"><p class="achievement-titles incomplete">OwO what's this?</p></div>
+              </div>
+              <div class="quiz-dropdown">
+                <p class="achievement-question-txt">What is the best way to get into Hatherly labs?</p>
+                <div class="achievement-answer-button">Big walk</div>
+                <div class="achievement-answer-button">Smöl walk</div>
+                <div class="achievement-answer-button">Medium walk</div>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="achievement-head incomplete">
+              <div class="achievement-left incomplete">
+                <img class="achievement-badge-img" src="static/img/empty-achievement.png" height=46px>
+              </div>
+              <div class="achievement-right incomplete" onclick="achievementQButtonPressed(this)">
+                <div class="achievement-title-container incomplete"><p class="achievement-titles incomplete">Fine dining</p></div>
+              </div>
+              <div class="quiz-dropdown">
+                <p class="achievement-question-txt">What's the best pub in Exeter and in fact the entire history of the whole world ever?</p>
+                <div class="achievement-answer-button">Henry's bar</div>
+                <div class="achievement-answer-button">Henry's bar</div>
+                <div class="achievement-answer-button">Henry's bar</div>
+              </div>
+            </div>
+          </li>
+        </ul>-->
       </div>
 
       <div id="chatbot-container">
@@ -240,6 +290,7 @@
 
         <div id="q11" class="faq-question"><p class="faq-q-txt"><b>How can I contact you?</b></p></div>
         <div class="faq-answer"><p>For general enquiries please email us at exeterexpedition@exeter.ac.uk</p></div>
+        <a href="/logout"><div id="FAQ-logout"><p id="FAQ-logout-txt">Log out</p></div></a>
       </div>
 
       <div id="qr-scanner-container" class="row-element-set row-element-set-QRScanner">
@@ -320,7 +371,7 @@
         };
         xhttp.open("POST", "/checkIn", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("teamname="+tn+"&qrstring="+scannedText);
+        xhttp.send("qrstring="+scannedText);
       }
 
       //this function will be called when JsQRScanner is ready to use

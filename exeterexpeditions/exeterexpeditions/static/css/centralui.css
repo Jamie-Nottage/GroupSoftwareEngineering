@@ -520,3 +520,35 @@ img.clue-button-art {
   }
 
 }
+
+#FAQ-logout {
+  position: relative;
+  top: 15px;
+  left: 30%;
+
+  width: 40%;
+  height: 30px;
+
+  background-color: #508CA4;
+
+  border-style: solid;
+  border-width: 1px;
+  border-color: #6C6C6C;
+
+  box-shadow: 0px -3px 6px grey;
+
+  margin-bottom: 5vh;
+
+  overflow: hidden;
+}
+
+#FAQ-logout-txt {
+  position: absolute;
+  top: -12px;
+  left: 25%;
+
+  font-family: "Avenir", Verdana, Geneva, sans-serif;
+  font-size: 15px;
+  text-align: center;
+  color: #FFFFFF;
+}

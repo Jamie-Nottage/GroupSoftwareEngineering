@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exeter Orientation</title>
+		    <meta name="viewport" content="width=device-width, initial-scale=0.5,
+			     user-scalable=no">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="static/css/SignUpPageStyle.css">
+        <link rel="stylesheet" type="text/css" href="static/css/HomePageStyle.css">
+		<script src="static/js/tutors.js"></script>
+    </head>
+
+    <body onload="setTutorsInitially()">
+        <div>
+            <img class="logo" src="static/img/logo.png" alt="Exeter Orientation Logo" >
+        </div>
+
+		<div class="signup">
+			<h2 style="font-size: 25pt; color: #FFFFFF;">BEGIN YOUR START TO UNIVERSITY</h2>
+            <form action="/signup" method='post' style="padding:10px 0;">
+				<input type = "text" id = "firstname" placeholder="First Name" name="firstname"
+					pattern="[A-Za-z]{1,}"
+					required>
+				<br /><br />
+				<input type = "text" id = "surname" placeholder="Surname" name="surname"
+					pattern="[A-Za-z]{1,}"
+					required>
+				<br /><br />
+				<input type = "email" id = "email" placeholder="Email" name = "email"
+					pattern=".+@exeter.ac.uk"
+					title="Must by your @exeter.ac.uk email address"
+					required>
+				<br /><br />
+				<input type = "text" id = "username" placeholder="Username" name = "username"
+					pattern="[A-Za-z0-9]{1,15}"
+					required>
+				<br><br>
+				<input type = "password" id = "password" placeholder="Password" name="password"
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+					title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
+					required>
+				<br /><br />
+				<select id="tutors" name="tutor" required>
+					<!-- <option class="options" value="" disabled selected hidden>Please select a tutor</option>
+					<option class="options" value="Anna">Anna</option>
+					<option class="options" value="Mike">Mike</option>
+					<option class="options" value="John">John</option> -->
+				</select>
+				<br /><br />
+				<input type="checkbox" id="terms" name="terms" value="agree" required>
+				<label style="font-size: larger; color: #FFFFFF;" for="terms"> I accept the following <a target="blank" href='/terms'>terms of service</a> and <a target = "blank" href= '/privacy'>privacy policy</a>.</label><br>
+				<br /><br />
+				{% if signupError %}
+					<p style="font-size: 20pt; color: #ff6666;">Login already exists.</p>
+				{% endif %}
+				<div class="left-button">
+					<button type="button" onclick="location.href= '/home';" class="btn"><img style="max-width: 80%; height: auto;" src="static/img/back.png" alt="back"></button>
+				</div>
+				<div class="right-button">
+					<button type="submit" class="btn"><img style="max-width: 80%; height: auto;" src="static/img/SignUp.png" alt="signup"></button>
+				</div>
+			</form>
+        </div>
+    </body>
+</html>

@@ -14,10 +14,9 @@
 
 div.achievement-head {
   position: relative;
-  left: 2.5%;
+  left: 2%;
 
   width: 95%;
-  height: 50px;
 
   margin-bottom: 10px;
 }
@@ -27,9 +26,8 @@ div.achievement-head.incomplete {
   left: 2.5%;
 
   width: 95%;
-  height: 50px;
 
-  box-: 0px 1px 5px grey;
+  box-shadow: 0px 1px 5px grey;
 }
 
 div.achievement-left {
@@ -49,7 +47,7 @@ div.achievement-right {
   left: 50px;
 
   width: calc(100% - 50px);
-  height: 100%;
+  height: 50px;
 
   background-color: #E2EAF1;
 
@@ -89,7 +87,7 @@ img.achievement-badge-img {
 
 div.quiz-dropdown {
   display: none;
-  
+
   font-family: "Avenir", Verdana, Geneva, sans-serif;
   color: #676767;
   font-size: 12px;
